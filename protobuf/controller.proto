@@ -63,6 +63,8 @@ service Controller {
 
     rpc RunCrawl (RunCrawlRequest) returns (RunCrawlReply) {}
     rpc AbortCrawl (AbortCrawlRequest) returns (google.protobuf.Empty) {}
+
+    rpc GetOpenIdConnectIssuer (google.protobuf.Empty) returns (string) {}
 }
 
 // Specification of wich entities to get.
