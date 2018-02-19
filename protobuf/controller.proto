@@ -64,7 +64,7 @@ service Controller {
     rpc RunCrawl (RunCrawlRequest) returns (RunCrawlReply) {}
     rpc AbortCrawl (AbortCrawlRequest) returns (google.protobuf.Empty) {}
 
-    rpc GetOpenIdConnectIssuer (google.protobuf.Empty) returns (string) {}
+    rpc GetOpenIdConnectIssuer (google.protobuf.Empty) returns (OpenIdConnectIssuerReply) {}
 }
 
 // Specification of wich entities to get.
@@ -210,4 +210,8 @@ message RoleMappingsListReply {
     int64 count = 2;
     int32 page_size = 14;
     int32 page = 15;
+}
+
+message OpenIdConnectIssuerReply {
+    string open_id_connect_issuer = 1;
 }
