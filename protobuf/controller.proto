@@ -7,13 +7,56 @@ option java_outer_classname = "ControllerProto";
 
 import "config.proto";
 import "google/protobuf/empty.proto";
+import "third_party/googleapis/google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+    title: "Veidemann Controller API"
+    version: "0.2.0"
+    contact: {
+        name: "Veidemann"
+        url: "https://github.com/nlnwa"
+    }
+  }
+  schemes: HTTP
+  schemes: HTTPS
+  schemes: WS
+  schemes: WSS
+};
 
 // Service for communicating with controller.
 service Controller {
-    // List a set of entities
-    rpc ListCrawlEntities (ListRequest) returns (CrawlEntityListReply) {}
-    rpc SaveEntity (CrawlEntity) returns (CrawlEntity) {}
-    rpc DeleteEntity (CrawlEntity) returns (google.protobuf.Empty) {}
+    // Get a crawl entity by ID
+    rpc GetCrawlEntity (GetRequest) returns (CrawlEntity) {
+        option (google.api.http) = {
+            get: "/api/control/entities/{id}"
+        };
+    }
+    // List a set of crawl entities
+    rpc ListCrawlEntities (ListRequest) returns (CrawlEntityListReply) {
+        option (google.api.http) = {
+            post: "/api/control/entities"
+            body: "*"
+        };
+    }
+    // Save a crawl entity
+    rpc SaveEntity (CrawlEntity) returns (CrawlEntity) {
+        option (google.api.http) = {
+            put: "/api/control/entities"
+            body: "*"
+            additional_bindings {
+                post: "/api/control/entities/{id}"
+				body: "*"
+			}
+        };
+    }
+    // Delete a crawl entity
+    rpc DeleteEntity (CrawlEntity) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/control/entities/{id}"
+        };
+    }
 
     // List a set of seeds
     rpc ListSeeds (SeedListRequest) returns (SeedListReply) {}
@@ -67,12 +110,16 @@ service Controller {
     rpc GetOpenIdConnectIssuer (google.protobuf.Empty) returns (OpenIdConnectIssuerReply) {}
 }
 
+// Request for getting an object by id
+message GetRequest {
+    string id = 1;
+}
+
 // Specification of wich entities to get.
 message ListRequest {
     oneof qry {
-        string id = 1;
-        string name = 2;
-        Selector selector = 3;
+        string name = 1;
+        Selector selector = 2;
     }
     int32 page_size = 14;
     int32 page = 15;
