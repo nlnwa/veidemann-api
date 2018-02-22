@@ -6,6 +6,23 @@ option java_package = "no.nb.nna.veidemann.api";
 option java_outer_classname = "ReportProto";
 
 import "messages.proto";
+import "third_party/googleapis/google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+    title: "Veidemann Controller API"
+    version: "0.2.0"
+    contact: {
+        name: "Veidemann"
+        url: "https://github.com/nlnwa"
+    }
+  }
+  schemes: HTTP
+  schemes: HTTPS
+  schemes: WS
+  schemes: WSS
+};
 
 // Service for crawler reports.
 service Report {

@@ -7,6 +7,23 @@ option java_outer_classname = "StatusProto";
 
 import "messages.proto";
 import "google/protobuf/timestamp.proto";
+import "third_party/googleapis/google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+    title: "Veidemann Controller API"
+    version: "0.2.0"
+    contact: {
+        name: "Veidemann"
+        url: "https://github.com/nlnwa"
+    }
+  }
+  schemes: HTTP
+  schemes: HTTPS
+  schemes: WS
+  schemes: WSS
+};
 
 // Service for crawler status.
 service Status {
