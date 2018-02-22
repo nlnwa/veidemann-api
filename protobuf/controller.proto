@@ -7,7 +7,7 @@ option java_outer_classname = "ControllerProto";
 
 import "config.proto";
 import "google/protobuf/empty.proto";
-import "googleapis/google/api/annotations.proto";
+import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
