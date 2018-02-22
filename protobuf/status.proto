@@ -7,8 +7,8 @@ option java_outer_classname = "StatusProto";
 
 import "messages.proto";
 import "google/protobuf/timestamp.proto";
-import "../include/googleapis/google/api/annotations.proto";
-import "../include/grpc-gateway/protoc-gen-swagger/options/annotations.proto";
+import "googleapis/google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
   info: {
