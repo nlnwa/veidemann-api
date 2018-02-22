@@ -6,8 +6,8 @@ option java_package = "no.nb.nna.veidemann.api";
 option java_outer_classname = "ReportProto";
 
 import "messages.proto";
-import "third_party/googleapis/google/api/annotations.proto";
-import "protoc-gen-swagger/options/annotations.proto";
+import "include/googleapis/google/api/annotations.proto";
+import "include/protoc-gen-swagger/options/annotations.proto";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
   info: {
