@@ -58,56 +58,296 @@ service Controller {
         };
     }
 
+    // Get a seed by ID
+    rpc GetSeed (GetRequest) returns (Seed) {
+        option (google.api.http) = {
+            get: "/api/control/seeds/{id}"
+        };
+    }
     // List a set of seeds
-    rpc ListSeeds (SeedListRequest) returns (SeedListReply) {}
-    rpc SaveSeed (Seed) returns (Seed) {}
-    rpc DeleteSeed (Seed) returns (google.protobuf.Empty) {}
+    rpc ListSeeds (SeedListRequest) returns (SeedListReply) {
+        option (google.api.http) = {
+            post: "/api/control/seeds"
+            body: "*"
+        };
+    }
+    rpc SaveSeed (Seed) returns (Seed) {
+        option (google.api.http) = {
+            put: "/api/control/seeds"
+            body: "*"
+            additional_bindings {
+                post: "/api/control/seeds/{id}"
+				body: "*"
+			}
+        };
+    }
+    rpc DeleteSeed (Seed) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/control/seeds/{id}"
+        };
+    }
 
+    // Get a crawl job by ID
+    rpc GetCrawlJob (GetRequest) returns (CrawlJob) {
+        option (google.api.http) = {
+            get: "/api/control/crawljobs/{id}"
+        };
+    }
     // List a set of crawl jobs
-    rpc ListCrawlJobs (CrawlJobListRequest) returns (CrawlJobListReply) {}
-    rpc SaveCrawlJob (CrawlJob) returns (CrawlJob) {}
-    rpc DeleteCrawlJob (CrawlJob) returns (google.protobuf.Empty) {}
+    rpc ListCrawlJobs (CrawlJobListRequest) returns (CrawlJobListReply) {
+        option (google.api.http) = {
+            post: "/api/control/crawljobs"
+            body: "*"
+        };
+    }
+    rpc SaveCrawlJob (CrawlJob) returns (CrawlJob) {
+        option (google.api.http) = {
+            put: "/api/control/crawljobs"
+            body: "*"
+            additional_bindings {
+                post: "/api/control/crawljobs/{id}"
+				body: "*"
+			}
+        };
+    }
+    rpc DeleteCrawlJob (CrawlJob) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/control/crawljobs/{id}"
+        };
+    }
 
+    // Get a crawl config by ID
+    rpc GetCrawlConfig (GetRequest) returns (CrawlConfig) {
+        option (google.api.http) = {
+            get: "/api/control/crawlconfigs/{id}"
+        };
+    }
     // List a set of crawl configs
-    rpc ListCrawlConfigs (ListRequest) returns (CrawlConfigListReply) {}
-    rpc SaveCrawlConfig (CrawlConfig) returns (CrawlConfig) {}
-    rpc DeleteCrawlConfig (CrawlConfig) returns (google.protobuf.Empty) {}
+    rpc ListCrawlConfigs (ListRequest) returns (CrawlConfigListReply) {
+        option (google.api.http) = {
+            post: "/api/control/crawlconfigs"
+            body: "*"
+        };
+    }
+    rpc SaveCrawlConfig (CrawlConfig) returns (CrawlConfig) {
+        option (google.api.http) = {
+            put: "/api/control/crawlconfigs"
+            body: "*"
+            additional_bindings {
+                post: "/api/control/crawlconfigs/{id}"
+				body: "*"
+			}
+        };
+    }
+    rpc DeleteCrawlConfig (CrawlConfig) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/control/crawlconfigs/{id}"
+        };
+    }
 
+    // Get a crawl schedule config by ID
+    rpc GetCrawlScheduleConfig (GetRequest) returns (CrawlScheduleConfig) {
+        option (google.api.http) = {
+            get: "/api/control/crawlscheduleconfigs/{id}"
+        };
+    }
     // List a set of crawl schedule configs
-    rpc ListCrawlScheduleConfigs (ListRequest) returns (CrawlScheduleConfigListReply) {}
-    rpc SaveCrawlScheduleConfig (CrawlScheduleConfig) returns (CrawlScheduleConfig) {}
-    rpc DeleteCrawlScheduleConfig (CrawlScheduleConfig) returns (google.protobuf.Empty) {}
+    rpc ListCrawlScheduleConfigs (ListRequest) returns (CrawlScheduleConfigListReply) {
+        option (google.api.http) = {
+            post: "/api/control/crawlscheduleconfigs"
+            body: "*"
+        };
+    }
+    rpc SaveCrawlScheduleConfig (CrawlScheduleConfig) returns (CrawlScheduleConfig) {
+        option (google.api.http) = {
+            put: "/api/control/crawlscheduleconfigs"
+            body: "*"
+            additional_bindings {
+                post: "/api/control/crawlscheduleconfigs/{id}"
+				body: "*"
+			}
+        };
+    }
+    rpc DeleteCrawlScheduleConfig (CrawlScheduleConfig) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/control/crawlscheduleconfigs/{id}"
+        };
+    }
 
+    // Get a politeness config by ID
+    rpc GetPolitenessConfig (GetRequest) returns (PolitenessConfig) {
+        option (google.api.http) = {
+            get: "/api/control/politenessconfigs/{id}"
+        };
+    }
     // List a set of politeness configs
-    rpc ListPolitenessConfigs (ListRequest) returns (PolitenessConfigListReply) {}
-    rpc SavePolitenessConfig (PolitenessConfig) returns (PolitenessConfig) {}
-    rpc DeletePolitenessConfig (PolitenessConfig) returns (google.protobuf.Empty) {}
+    rpc ListPolitenessConfigs (ListRequest) returns (PolitenessConfigListReply) {
+        option (google.api.http) = {
+            post: "/api/control/politenessconfigs"
+            body: "*"
+        };
+    }
+    rpc SavePolitenessConfig (PolitenessConfig) returns (PolitenessConfig) {
+        option (google.api.http) = {
+            put: "/api/control/politenessconfigs"
+            body: "*"
+            additional_bindings {
+                post: "/api/control/politenessconfigs/{id}"
+				body: "*"
+			}
+        };
+    }
+    rpc DeletePolitenessConfig (PolitenessConfig) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/control/politenessconfigs/{id}"
+        };
+    }
 
+    // Get a browser config by ID
+    rpc GetBrowserConfig (GetRequest) returns (BrowserConfig) {
+        option (google.api.http) = {
+            get: "/api/control/browserconfigs/{id}"
+        };
+    }
     // List a set of browser configs
-    rpc ListBrowserConfigs (ListRequest) returns (BrowserConfigListReply) {}
-    rpc SaveBrowserConfig (BrowserConfig) returns (BrowserConfig) {}
-    rpc DeleteBrowserConfig (BrowserConfig) returns (google.protobuf.Empty) {}
+    rpc ListBrowserConfigs (ListRequest) returns (BrowserConfigListReply) {
+        option (google.api.http) = {
+            post: "/api/control/browserconfigs"
+            body: "*"
+        };
+    }
+    rpc SaveBrowserConfig (BrowserConfig) returns (BrowserConfig) {
+        option (google.api.http) = {
+            put: "/api/control/browserconfigs"
+            body: "*"
+            additional_bindings {
+                post: "/api/control/browserconfigs/{id}"
+				body: "*"
+			}
+        };
+    }
+    rpc DeleteBrowserConfig (BrowserConfig) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/control/browserconfigs/{id}"
+        };
+    }
 
-    rpc ListBrowserScripts (BrowserScriptListRequest) returns (BrowserScriptListReply) {}
-    rpc SaveBrowserScript (BrowserScript) returns (BrowserScript) {}
-    rpc DeleteBrowserScript (BrowserScript) returns (google.protobuf.Empty) {}
+    // Get a browser script by ID
+    rpc GetBrowserScript (GetRequest) returns (BrowserScript) {
+        option (google.api.http) = {
+            get: "/api/control/browserscripts/{id}"
+        };
+    }
+    // List a set of browser scripts
+    rpc ListBrowserScripts (BrowserScriptListRequest) returns (BrowserScriptListReply) {
+        option (google.api.http) = {
+            post: "/api/control/browserscripts"
+            body: "*"
+        };
+    }
+    rpc SaveBrowserScript (BrowserScript) returns (BrowserScript) {
+        option (google.api.http) = {
+            put: "/api/control/browserscripts"
+            body: "*"
+            additional_bindings {
+                post: "/api/control/browserscripts/{id}"
+				body: "*"
+			}
+        };
+    }
+    rpc DeleteBrowserScript (BrowserScript) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/control/browserscripts/{id}"
+        };
+    }
 
-    rpc ListCrawlHostGroupConfigs (ListRequest) returns (CrawlHostGroupConfigListReply) {}
-    rpc SaveCrawlHostGroupConfig (CrawlHostGroupConfig) returns (CrawlHostGroupConfig) {}
-    rpc DeleteCrawlHostGroupConfig (CrawlHostGroupConfig) returns (google.protobuf.Empty) {}
+    // Get a crawl host group config by ID
+    rpc GetCrawlHostGroupConfig (GetRequest) returns (CrawlHostGroupConfig) {
+        option (google.api.http) = {
+            get: "/api/control/crawlhostgroupconfigs/{id}"
+        };
+    }
+    // List a set of crawl host group configs
+    rpc ListCrawlHostGroupConfigs (ListRequest) returns (CrawlHostGroupConfigListReply) {
+        option (google.api.http) = {
+            post: "/api/control/crawlhostgroupconfigs"
+            body: "*"
+        };
+    }
+    rpc SaveCrawlHostGroupConfig (CrawlHostGroupConfig) returns (CrawlHostGroupConfig) {
+        option (google.api.http) = {
+            put: "/api/control/crawlhostgroupconfigs"
+            body: "*"
+            additional_bindings {
+                post: "/api/control/crawlhostgroupconfigs/{id}"
+				body: "*"
+			}
+        };
+    }
+    rpc DeleteCrawlHostGroupConfig (CrawlHostGroupConfig) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/control/crawlhostgroupconfigs/{id}"
+        };
+    }
 
-    rpc GetLogConfig (google.protobuf.Empty) returns (LogLevels) {}
-    rpc SaveLogConfig (LogLevels) returns (LogLevels) {}
+    rpc GetLogConfig (google.protobuf.Empty) returns (LogLevels) {
+        option (google.api.http) = {
+            get: "/api/control/logconfig"
+        };
+    }
+    rpc SaveLogConfig (LogLevels) returns (LogLevels) {
+        option (google.api.http) = {
+            post: "/api/control/logconfig"
+            body: "*"
+        };
+    }
 
-    rpc ListRoleMappings (RoleMappingsListRequest) returns (RoleMappingsListReply) {}
-    rpc SaveRoleMapping (RoleMapping) returns (RoleMapping) {}
-    rpc DeleteRoleMapping (RoleMapping) returns (google.protobuf.Empty) {}
-    rpc GetRolesForActiveUser (google.protobuf.Empty) returns (RoleList) {}
+    rpc ListRoleMappings (RoleMappingsListRequest) returns (RoleMappingsListReply) {
+        option (google.api.http) = {
+            get: "/api/control/rolemappings"
+        };
+    }
+    rpc SaveRoleMapping (RoleMapping) returns (RoleMapping) {
+        option (google.api.http) = {
+            put: "/api/control/rolemappings"
+            body: "*"
+            additional_bindings {
+                post: "/api/control/rolemappings/{id}"
+				body: "*"
+			}
+        };
+    }
+    rpc DeleteRoleMapping (RoleMapping) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/api/control/rolemappings/{id}"
+        };
+    }
 
-    rpc RunCrawl (RunCrawlRequest) returns (RunCrawlReply) {}
-    rpc AbortCrawl (AbortCrawlRequest) returns (google.protobuf.Empty) {}
+    rpc GetRolesForActiveUser (google.protobuf.Empty) returns (RoleList) {
+        option (google.api.http) = {
+            get: "/api/control/activeroles"
+        };
+    }
 
-    rpc GetOpenIdConnectIssuer (google.protobuf.Empty) returns (OpenIdConnectIssuerReply) {}
+    rpc RunCrawl (RunCrawlRequest) returns (RunCrawlReply) {
+        option (google.api.http) = {
+            post: "/api/control/runcrawl"
+            body: "*"
+        };
+    }
+    rpc AbortCrawl (AbortCrawlRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/api/control/abortcrawl"
+            body: "*"
+        };
+    }
+
+    // Get the configured OpenID connect issuer address
+    rpc GetOpenIdConnectIssuer (google.protobuf.Empty) returns (OpenIdConnectIssuerReply) {
+        option (google.api.http) = {
+            get: "/api/control/idp"
+        };
+    }
 }
 
 // Request for getting an object by id
@@ -135,11 +375,10 @@ message CrawlEntityListReply {
 
 message SeedListRequest {
     oneof qry {
-        string id = 1;
-        string name = 2;
-        string crawl_job_id = 3;
-        Selector selector = 4;
-        string entity_id = 5;
+        string name = 1;
+        string crawl_job_id = 2;
+        Selector selector = 3;
+        string entity_id = 4;
     }
     int32 page_size = 14;
     int32 page = 15;
@@ -154,9 +393,8 @@ message SeedListReply {
 
 message CrawlJobListRequest {
     oneof qry {
-        string id = 1;
-        string name = 2;
-        Selector selector = 3;
+        string name = 1;
+        Selector selector = 2;
     }
     // Expand dependencies (i.e. include the complete object graph)
     bool expand = 13;
@@ -202,9 +440,8 @@ message BrowserConfigListReply {
 // Specification of wich browserscripts to get.
 message BrowserScriptListRequest {
     oneof qry {
-        string id = 1;
-        string name = 2;
-        Selector selector = 4;
+        string name = 1;
+        Selector selector = 2;
     }
     int32 page_size = 14;
     int32 page = 15;

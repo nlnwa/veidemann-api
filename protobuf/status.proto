@@ -27,7 +27,12 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 
 // Service for crawler status.
 service Status {
-    rpc GetRunningExecutions (ExecutionsRequest) returns (stream ExecutionsListReply) {}
+    // Get status of running crawls
+    rpc GetRunningExecutions (ExecutionsRequest) returns (stream ExecutionsListReply) {
+        option (google.api.http) = {
+            get: "/api/status/executions"
+        };
+    }
 }
 
 message ExecutionsRequest {
