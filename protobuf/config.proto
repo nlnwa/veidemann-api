@@ -44,33 +44,17 @@ message Seed {
 message CrawlJob {
     string id = 1;
     Meta meta = 2;
-    oneof schedule_config_or_id {
-        string schedule_id = 3;
-        CrawlScheduleConfig schedule = 16;
-        Selector schedule_selector = 30;
-    }
+    string schedule_id = 3;
     CrawlLimitsConfig limits = 4;
-    oneof crawl_config_or_id {
-        string crawl_config_id = 5;
-        CrawlConfig crawl_config = 17;
-        Selector crawl_config_selector = 31;
-    }
+    string crawl_config_id = 5;
     bool disabled = 18;
 }
 
 message CrawlConfig {
     string id = 1;
     Meta meta = 2;
-    oneof browser_config_or_id {
-        string browser_config_id = 7;
-        BrowserConfig browser_config = 16;
-        Selector browser_config_selector = 17;
-    }
-    oneof politeness_or_id {
-        string politeness_id = 8;
-        PolitenessConfig politeness = 18;
-        Selector politeness_selector = 19;
-    }
+    string browser_config_id = 7;
+    string politeness_id = 8;
     ExtraConfig extra = 9;
     int32 minimum_dns_ttl_s = 10; // Not implemented
     bool depth_first = 20;
