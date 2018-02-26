@@ -15,14 +15,13 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
     title: "Veidemann Controller API"
     version: "0.2.0"
     contact: {
-        name: "Veidemann"
-        url: "https://github.com/nlnwa"
+      name: "Veidemann"
+      url: "https://github.com/nlnwa/veidemann-api"
     }
   }
-  schemes: HTTP
-  schemes: HTTPS
-  schemes: WS
-  schemes: WSS
+  schemes: [
+    HTTP, HTTPS, WS, WSS
+  ];
 };
 
 // Service for communicating with controller.
@@ -36,8 +35,7 @@ service Controller {
     // List a set of crawl entities
     rpc ListCrawlEntities (ListRequest) returns (CrawlEntityListReply) {
         option (google.api.http) = {
-            post: "/api/control/entities"
-            body: "*"
+            get: "/api/control/entities"
         };
     }
     // Save a crawl entity
@@ -67,8 +65,7 @@ service Controller {
     // List a set of seeds
     rpc ListSeeds (SeedListRequest) returns (SeedListReply) {
         option (google.api.http) = {
-            post: "/api/control/seeds"
-            body: "*"
+            get: "/api/control/seeds"
         };
     }
     rpc SaveSeed (Seed) returns (Seed) {
@@ -96,8 +93,7 @@ service Controller {
     // List a set of crawl jobs
     rpc ListCrawlJobs (ListRequest) returns (CrawlJobListReply) {
         option (google.api.http) = {
-            post: "/api/control/crawljobs"
-            body: "*"
+            get: "/api/control/crawljobs"
         };
     }
     rpc SaveCrawlJob (CrawlJob) returns (CrawlJob) {
@@ -125,8 +121,7 @@ service Controller {
     // List a set of crawl configs
     rpc ListCrawlConfigs (ListRequest) returns (CrawlConfigListReply) {
         option (google.api.http) = {
-            post: "/api/control/crawlconfigs"
-            body: "*"
+            get: "/api/control/crawlconfigs"
         };
     }
     rpc SaveCrawlConfig (CrawlConfig) returns (CrawlConfig) {
@@ -154,8 +149,7 @@ service Controller {
     // List a set of crawl schedule configs
     rpc ListCrawlScheduleConfigs (ListRequest) returns (CrawlScheduleConfigListReply) {
         option (google.api.http) = {
-            post: "/api/control/crawlscheduleconfigs"
-            body: "*"
+            get: "/api/control/crawlscheduleconfigs"
         };
     }
     rpc SaveCrawlScheduleConfig (CrawlScheduleConfig) returns (CrawlScheduleConfig) {
@@ -183,8 +177,7 @@ service Controller {
     // List a set of politeness configs
     rpc ListPolitenessConfigs (ListRequest) returns (PolitenessConfigListReply) {
         option (google.api.http) = {
-            post: "/api/control/politenessconfigs"
-            body: "*"
+            get: "/api/control/politenessconfigs"
         };
     }
     rpc SavePolitenessConfig (PolitenessConfig) returns (PolitenessConfig) {
@@ -212,8 +205,7 @@ service Controller {
     // List a set of browser configs
     rpc ListBrowserConfigs (ListRequest) returns (BrowserConfigListReply) {
         option (google.api.http) = {
-            post: "/api/control/browserconfigs"
-            body: "*"
+            get: "/api/control/browserconfigs"
         };
     }
     rpc SaveBrowserConfig (BrowserConfig) returns (BrowserConfig) {
@@ -239,10 +231,9 @@ service Controller {
         };
     }
     // List a set of browser scripts
-    rpc ListBrowserScripts (BrowserScriptListRequest) returns (BrowserScriptListReply) {
+    rpc ListBrowserScripts (ListRequest) returns (BrowserScriptListReply) {
         option (google.api.http) = {
-            post: "/api/control/browserscripts"
-            body: "*"
+            get: "/api/control/browserscripts"
         };
     }
     rpc SaveBrowserScript (BrowserScript) returns (BrowserScript) {
@@ -270,8 +261,7 @@ service Controller {
     // List a set of crawl host group configs
     rpc ListCrawlHostGroupConfigs (ListRequest) returns (CrawlHostGroupConfigListReply) {
         option (google.api.http) = {
-            post: "/api/control/crawlhostgroupconfigs"
-            body: "*"
+            get: "/api/control/crawlhostgroupconfigs"
         };
     }
     rpc SaveCrawlHostGroupConfig (CrawlHostGroupConfig) returns (CrawlHostGroupConfig) {
@@ -357,10 +347,8 @@ message GetRequest {
 
 // Specification of wich entities to get.
 message ListRequest {
-    oneof qry {
-        string name = 1;
-        Selector selector = 2;
-    }
+    string name = 1;
+    Selector selector = 2;
     int32 page_size = 14;
     int32 page = 15;
 }
@@ -374,12 +362,10 @@ message CrawlEntityListReply {
 }
 
 message SeedListRequest {
-    oneof qry {
-        string name = 1;
-        string crawl_job_id = 2;
-        Selector selector = 3;
-        string entity_id = 4;
-    }
+    string name = 1;
+    string crawl_job_id = 2;
+    string entity_id = 3;
+    Selector selector = 4;
     int32 page_size = 14;
     int32 page = 15;
 }
@@ -422,16 +408,6 @@ message PolitenessConfigListReply {
 message BrowserConfigListReply {
     repeated BrowserConfig value = 1;
     int64 count = 2;
-    int32 page_size = 14;
-    int32 page = 15;
-}
-
-// Specification of wich browserscripts to get.
-message BrowserScriptListRequest {
-    oneof qry {
-        string name = 1;
-        Selector selector = 2;
-    }
     int32 page_size = 14;
     int32 page = 15;
 }

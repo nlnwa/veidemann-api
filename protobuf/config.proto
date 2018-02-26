@@ -17,8 +17,22 @@ message Meta {
     repeated Label label = 7;
 }
 
+// Select objects by label
 message Selector {
-    repeated Label label = 1;
+    // A string representing a label query. The query matches if at least one label matches the query.
+    // If there are multiple queries, then each query must match at least one label.
+    // Label quries are case insensitive. The basic format is <key>:<value> where both key and label must match.
+    // If value ends with '*' then the key must match and value must match up until the '*'.
+    // If value is empty, all labels matching the key will match.
+    // If key is empty, then the matching is done on the value for all keys.
+    // Examples:
+    //   foo:bar  - matches exactly labels with key=foo and value=bar
+    //   foo:     - matches all labels with key=foo
+    //   :bar     - matches all labels with value=bar
+    //   foo:ba*  - matches labels with key=foo and value=bar, but not with value=ber
+    //   :ba*     - matches labels with any key and value=bar, but not with value=ber
+    //   :        - matches every label
+    repeated string label = 1;
 }
 
 message Label {
