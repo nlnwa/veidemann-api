@@ -84,14 +84,14 @@ message BrowserConfig {
     int32 window_width = 4;
     int32 window_height = 5;
     int64 page_load_timeout_ms = 6;
-    // Select objects by label
+    // Select scripts by label
     // A string representing a label query. The query matches if at least one label matches the query.
     // If there are multiple queries, then each query must match at least one label.
     // Label quries are case insensitive. The basic format is <code>key:value</code> where both key and value must match.
-    // If value ends with "*" then the key must match and value must match up until the "*".
+    // If value ends with <code>&ast;</code> then the key must match and value must match up until the <code>&ast;</code>.
     // If value is empty, all labels matching the key will match.
     // If key is empty, then the matching is done on the value for all keys.
-    // If key is empty, then the ":" might be ommitted.
+    // If key is empty, then the <code>:</code> might be ommitted.
     // <pre>
     // Examples:
     //   "foo:bar"  - matches exactly labels with key=foo and value=bar
@@ -134,14 +134,14 @@ message PolitenessConfig {
     float delay_factor = 6;
     int32 max_retries = 7; // The maximum number of retries before giving up fetching a uri
     int32 retry_delay_seconds = 8;
-    // Select objects by label
+    // Select crawl host groups by label
     // A string representing a label query. The query matches if at least one label matches the query.
     // If there are multiple queries, then each query must match at least one label.
-    // Label quries are case insensitive. The basic format is "key:value" where both key and value must match.
-    // If value ends with "*" then the key must match and value must match up until the "*".
+    // Label quries are case insensitive. The basic format is <code>key:value</code> where both key and value must match.
+    // If value ends with <code>&ast;</code> then the key must match and value must match up until the <code>&ast;</code>.
     // If value is empty, all labels matching the key will match.
     // If key is empty, then the matching is done on the value for all keys.
-    // If key is empty, then the ":" might be ommitted.
+    // If key is empty, then the <code>:</code> might be ommitted.
     // <pre>
     // Examples:
     //   "foo:bar"  - matches exactly labels with key=foo and value=bar
