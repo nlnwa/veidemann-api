@@ -87,7 +87,7 @@ message BrowserConfig {
     // Select objects by label
     // A string representing a label query. The query matches if at least one label matches the query.
     // If there are multiple queries, then each query must match at least one label.
-    // Label quries are case insensitive. The basic format is "key:value" where both key and value must match.
+    // Label quries are case insensitive. The basic format is <code>key:value</code> where both key and value must match.
     // If value ends with "*" then the key must match and value must match up until the "*".
     // If value is empty, all labels matching the key will match.
     // If key is empty, then the matching is done on the value for all keys.
