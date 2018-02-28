@@ -350,7 +350,7 @@ message ListRequest {
     // Select objects by id
     repeated string id = 1;
     // Select objects by name
-    // The name qury is a case insensitive regular expresion search on name.
+    // The name query is a case insensitive regular expresion search on name.
     // <pre>
     // Examples:
     //   "foo"       - matches all names containing the phrase foo
@@ -392,9 +392,17 @@ message CrawlEntityListReply {
 }
 
 message SeedListRequest {
-    string name = 1;
-    string crawl_job_id = 2;
-    string entity_id = 3;
+    // Select objects by id
+    repeated string id = 1;
+    // Select objects by name
+    // The name query is a case insensitive regular expresion search on name.
+    // <pre>
+    // Examples:
+    //   "foo"       - matches all names containing the phrase foo
+    //   "^foo$"     - matches the exact name foo
+    //   "foo.*bar$" - matches names containing foo followed by zero or more tokens and ends with bar
+    // </pre>
+    string name = 2;
     // Select objects by label
     // A string representing a label query. The query matches if at least one label matches the query.
     // If there are multiple queries, then each query must match at least one label.
@@ -415,7 +423,11 @@ message SeedListRequest {
     //   ":"        - matches every label
     //   ""         - matches every label
     // </pre>
-    repeated string label_selector = 4;
+    repeated string label_selector = 3;
+    // Select objects by crawl job id
+    string crawl_job_id = 4;
+    // Select objects by entity id
+    string entity_id = 5;
     int32 page_size = 14;
     int32 page = 15;
 }
