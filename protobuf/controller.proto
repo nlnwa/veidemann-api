@@ -348,7 +348,7 @@ message GetRequest {
 // Specification of wich entities to get.
 message ListRequest {
     // Select objects by name
-    // The name qury is a case insensitive regular expresion search on name.
+    // The name query is a case insensitive regular expresion search on name.
     // <pre>
     // Examples:
     //   "foo"       - matches all names containing the phrase foo
