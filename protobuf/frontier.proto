@@ -14,6 +14,7 @@ service Frontier {
 }
 
 message CrawlSeedRequest {
+    string job_execution_id = 1;
     CrawlJob job = 5;
     Seed seed = 6;
 }

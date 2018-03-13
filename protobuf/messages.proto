@@ -8,6 +8,8 @@ option java_outer_classname = "MessagesProto";
 import "google/protobuf/timestamp.proto";
 import "config.proto";
 
+// Metadata about a crawl execution.
+// A crawl execution is the complete harvest of a seed as specified in the connected job's configuration.
 message CrawlExecutionStatus {
     enum State {
         UNDEFINED = 0;
@@ -37,6 +39,34 @@ message CrawlExecutionStatus {
     int64 documents_retried = 13;
     int64 documents_denied = 14;
     string current_uri = 20;
+    string job_execution_id = 21;
+}
+
+// Metadata about an execution of a job.
+// A job execution is the sum of all crawl executions for a job at a specific time.
+message JobExecutionStatus {
+    enum State {
+        UNDEFINED = 0;
+        CREATED = 1;
+        RUNNING = 2;
+        FINISHED = 3;
+        ABORTED_MANUAL = 4;
+        FAILED = 5;
+        DIED = 6;
+    }
+
+    string id = 1;
+    State state = 2;
+    string job_id = 3;
+    google.protobuf.Timestamp start_time = 6;
+    google.protobuf.Timestamp end_time = 7;
+    int64 documents_crawled = 8;
+    int64 bytes_crawled = 9;
+    int64 uris_crawled = 10;
+    int64 documents_failed = 11;
+    int64 documents_out_of_scope = 12;
+    int64 documents_retried = 13;
+    int64 documents_denied = 14;
 }
 
 message CrawlLog {
@@ -70,6 +100,7 @@ message CrawlLog {
     string execution_id = 19;
     int32 retries = 20; // Number of times this uri has been retried. Zero means success on first attempt.
     FetchError error = 21; // Contains the error reason if fetch failed
+    string job_execution_id = 22;
 }
 
 // Log for each page including discovered resources and links
@@ -85,12 +116,14 @@ message PageLog {
         string discovery_path = 7;
         string warc_id = 8;
         string referrer = 9;
+        FetchError error = 10; // Contains the error reason if fetch failed
     }
 
     string warc_id = 1;
     string uri = 2;
     string execution_id = 3;
     string referrer = 4;
+    string job_execution_id = 5;
     repeated Resource resource = 10;
     repeated string outlink = 11;
 }
@@ -150,6 +183,7 @@ message QueuedUri {
     string crawl_host_group_id = 14; // The Crawl Host Group calculated for this uri
     string politeness_id = 15; // Id of the politeness config used when discovering this uri
     FetchError error = 16; // Contains the error reason if fetch failed
+    string job_execution_id = 17;
 }
 
 message Cookie {
@@ -176,7 +210,7 @@ message Cookie {
 }
 
 message Screenshot {
-    string id = 1;
+    string id = 1; // The Screenshot ID should be the same as the PageLog ID for which this screenshot is captured.
     string execution_id = 2;
     string uri = 3;
     bytes img = 4;
