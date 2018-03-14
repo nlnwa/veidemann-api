@@ -28,19 +28,61 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 // Service for crawler status.
 service Status {
     // Get status of running crawls
-    rpc GetRunningExecutions (ExecutionsRequest) returns (stream ExecutionsListReply) {
+    rpc GetRunningExecutions (RunningExecutionsRequest) returns (stream RunningExecutionsListReply) {
         option (google.api.http) = {
             get: "/api/status/executions"
         };
     }
+
+    // Get a crawl execution by ID
+    rpc GetExecution (ExecutionId) returns (CrawlExecutionStatus) {
+        option (google.api.http) = {
+            get: "/api/status/seed/executions/{id}"
+        };
+    }
+    // List a set of crawl executions
+    rpc ListExecutions (ListExecutionsRequest) returns (ExecutionsListReply) {
+        option (google.api.http) = {
+            get: "/api/status/seed/executions"
+        };
+    }
+    // Abort a crawl execution
+    rpc AbortExecution (ExecutionId) returns (CrawlExecutionStatus) {
+        option (google.api.http) = {
+            post: "/api/status/seed/executions/{id}/abort"
+            body: "*"
+        };
+    }
+
+
+    // Get a job execution by ID
+    rpc GetJobExecution (ExecutionId) returns (JobExecutionStatus) {
+        option (google.api.http) = {
+            get: "/api/status/job/executions/{id}"
+        };
+    }
+    // List a set of job executions
+    rpc ListJobExecutions (ListJobExecutionsRequest) returns (JobExecutionsListReply) {
+        option (google.api.http) = {
+            get: "/api/status/job/executions"
+        };
+    }
+    // Abort a job execution
+    rpc AbortJobExecution (ExecutionId) returns (JobExecutionStatus) {
+        option (google.api.http) = {
+            post: "/api/status/job/executions/{id}/abort"
+            body: "*"
+        };
+    }
+
 }
 
-message ExecutionsRequest {
+message RunningExecutionsRequest {
     int32 page_size = 14;
     int32 page = 15;
 }
 
-message ExecutionsListReply {
+message RunningExecutionsListReply {
     repeated StatusDetail value = 1;
     int64 count = 2;
     int32 page_size = 14;
@@ -63,4 +105,58 @@ message StatusDetail {
     int64 documents_denied = 13;
     int64 queue_size = 14;
     string current_uri = 20;
+}
+
+
+// Request for getting an execution by id
+message ExecutionId {
+    string id = 1;
+}
+
+// Specification of wich executions to get.
+message ListExecutionsRequest {
+    // Select executions by id
+    repeated string id = 1;
+    // Select executions by state
+    repeated string state = 2;
+    // Select executions by seed
+    string seed_id = 3;
+    // Select executions by crawl job
+    string job_id = 4;
+    // Select executions by job execution
+    string job_execution_id = 5;
+    int32 page_size = 14;
+    int32 page = 15;
+}
+
+// Specification of wich executions to get.
+message ListJobExecutionsRequest {
+    // Select job executions by id
+    repeated string id = 1;
+    // Select job executions by state
+    repeated string state = 2;
+    // Select executions by crawl job
+    string job_id = 4;
+    int32 page_size = 14;
+    int32 page = 15;
+}
+
+// A list of crawl executions
+message ExecutionsListReply {
+    repeated CrawlExecutionStatus value = 1;
+    int64 count = 2;
+    int32 page_size = 14;
+    int32 page = 15;
+}
+
+// A list of job executions
+message JobExecutionsListReply {
+    repeated JobExecutionStatus value = 1;
+    int64 count = 2;
+    int32 page_size = 14;
+    int32 page = 15;
+}
+
+message AbortCrawlRequest {
+    string id = 1;
 }

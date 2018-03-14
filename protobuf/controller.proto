@@ -325,12 +325,6 @@ service Controller {
             body: "*"
         };
     }
-    rpc AbortCrawl (AbortCrawlRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/api/control/abortcrawl"
-            body: "*"
-        };
-    }
 
     // Get the configured OpenID connect issuer address
     rpc GetOpenIdConnectIssuer (google.protobuf.Empty) returns (OpenIdConnectIssuerReply) {
@@ -499,11 +493,7 @@ message RunCrawlRequest {
 }
 
 message RunCrawlReply {
-    repeated string seed_execution_id = 1;
-}
-
-message AbortCrawlRequest {
-    string execution_id = 1;
+    string job_execution_id = 1;
 }
 
 message RoleList {
