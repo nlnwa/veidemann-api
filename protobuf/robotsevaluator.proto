@@ -13,10 +13,11 @@ service RobotsEvaluator {
 }
 
 message IsAllowedRequest {
-    string execution_id = 1;
-    string uri = 2;
-    string user_agent = 3;
-    PolitenessConfig politeness = 4;
+    string job_execution_id = 1;
+    string execution_id = 2;
+    string uri = 3;
+    string user_agent = 4;
+    PolitenessConfig politeness = 5;
 }
 
 message IsAllowedReply {
