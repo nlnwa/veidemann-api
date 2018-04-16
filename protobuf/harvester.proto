@@ -21,8 +21,8 @@ message HarvestPageRequest {
     CrawlConfig crawl_config = 2;
 }
 
-// Response from harvesting a page. Response is a stream where the first object should include all fields.
-// Subsequent objects should only contain a outlink until all outlinks are sent
+// Response from harvesting a page. Response is a stream where the first object should include uri_count and bytes_downloaded.
+// Subsequent objects should only contain a outlink until all outlinks are sent.
 message HarvestPageReply {
     // The outlinks found in the harvested page
     QueuedUri outlink = 1;
