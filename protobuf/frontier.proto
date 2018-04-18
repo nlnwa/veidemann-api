@@ -30,7 +30,7 @@ message CrawlSeedRequest {
 // Subsequent objects contain outlinks until all outlinks are sent.
 // Finally the client should complete the request.
 message PageHarvest {
-    message metrics {
+    message Metrics {
         // The number of uri's downloaded. The requested uri + embedded resources
         int32 uri_count = 1;
         // Byte count for the resources downloaded. Includes embedded resources
@@ -41,7 +41,7 @@ message PageHarvest {
         // True if this is the initial request to start a new fetch
         bool requestNextPage = 1;
         // Collected metrics for the page fetched
-        metrics metrics = 2;
+        Metrics metrics = 2;
         // The outlinks found in the harvested page
         QueuedUri outlink = 3;
     }
