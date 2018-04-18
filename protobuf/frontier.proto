@@ -24,18 +24,27 @@ message CrawlSeedRequest {
 }
 
 // Message sent from Harvester to request a new page to fetch and also used to return the harvest result.
-// First message should be empty to tell frontier to respond with a page to fetch.
+// First message should set requestNextPage to true to tell frontier to respond with a page to fetch.
 // When the fetch is done, a stream of PageHarvest objects are returned:
-// The first object contains uri_count and bytes_downloaded.
-// Subsequent objects should only contain a outlink until all outlinks are sent.
+// The first object contains metrics.
+// Subsequent objects contain outlinks until all outlinks are sent.
 // Finally the client should complete the request.
 message PageHarvest {
-    // The outlinks found in the harvested page
-    QueuedUri outlink = 1;
-    // The number of uri's downloaded. The requested uri + embedded resources
-    int32 uri_count = 2;
-    // Byte count for the resources downloaded. Includes embedded resources
-    int64 bytes_downloaded = 3;
+    message metrics {
+        // The number of uri's downloaded. The requested uri + embedded resources
+        int32 uri_count = 1;
+        // Byte count for the resources downloaded. Includes embedded resources
+        int64 bytes_downloaded = 2;
+    }
+
+    oneof msg {
+        // True if this is the initial request to start a new fetch
+        bool requestNextPage = 1;
+        // Collected metrics for the page fetched
+        metrics metrics = 2;
+        // The outlinks found in the harvested page
+        QueuedUri outlink = 3;
+    }
 }
 
 // A specification of the page to fetch.
