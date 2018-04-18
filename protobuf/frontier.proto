@@ -11,10 +11,37 @@ import "messages.proto";
 // Service for controlling frontier.
 service Frontier {
     rpc CrawlSeed (CrawlSeedRequest) returns (CrawlExecutionStatus) {}
+
+    // Request a URI from the Frontiers queue
+    // Used by a Harvester to fetch a new page
+    rpc GetNextPage (stream PageHarvest) returns (PageHarvestSpec) {}
 }
 
 message CrawlSeedRequest {
     string job_execution_id = 1;
     CrawlJob job = 5;
     Seed seed = 6;
+}
+
+// Message sent from Harvester to request a new page to fetch and also used to return the harvest result.
+// First message should be empty to tell frontier to respond with a page to fetch.
+// When the fetch is done, a stream of PageHarvest objects are returned:
+// The first object contains uri_count and bytes_downloaded.
+// Subsequent objects should only contain a outlink until all outlinks are sent.
+// Finally the request is closed.
+message PageHarvest {
+    // The outlinks found in the harvested page
+    QueuedUri outlink = 1;
+    // The number of uri's downloaded. The requested uri + embedded resources
+    int32 uri_count = 2;
+    // Byte count for the resources downloaded. Includes embedded resources
+    int64 bytes_downloaded = 3;
+}
+
+// A specification of the page to fetch.
+message PageHarvestSpec {
+    // The URI to fetch
+    QueuedUri queued_uri = 1;
+    // The configuration for the fetch
+    CrawlConfig crawl_config = 2;
 }
