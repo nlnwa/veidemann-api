@@ -45,7 +45,7 @@ message PageHarvest {
         // The outlinks found in the harvested page
         QueuedUri outlink = 3;
         // If the overall page fetch failed. Should not be used for a singel uri failure
-        Error = 4;
+        Error error = 4;
     }
 }
 
