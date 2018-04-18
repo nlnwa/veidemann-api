@@ -14,7 +14,7 @@ service Frontier {
 
     // Request a URI from the Frontiers queue
     // Used by a Harvester to fetch a new page
-    rpc GetNextPage (stream PageHarvest) returns (PageHarvestSpec) {}
+    rpc GetNextPage (stream PageHarvest) returns (stream PageHarvestSpec) {}
 }
 
 message CrawlSeedRequest {
@@ -28,7 +28,7 @@ message CrawlSeedRequest {
 // When the fetch is done, a stream of PageHarvest objects are returned:
 // The first object contains uri_count and bytes_downloaded.
 // Subsequent objects should only contain a outlink until all outlinks are sent.
-// Finally the request is closed.
+// Finally the client should complete the request.
 message PageHarvest {
     // The outlinks found in the harvested page
     QueuedUri outlink = 1;
