@@ -152,6 +152,7 @@ message CrawlHostGroup {
     string politeness_id = 2; // The politeness config this group is valid for
     google.protobuf.Timestamp next_fetch_time = 3; // The earliest time a URI from this group might be fetched
     bool busy = 4; // True if crawler is busy with fetching a URI from this group
+    int64 queued_uri_count = 5; // The number of queued Uri's belonging to this CrawlHostGroup
 }
 
 message Error {
@@ -188,6 +189,7 @@ message QueuedUri {
     string politeness_id = 15; // Id of the politeness config used when discovering this uri
     Error error = 16; // Contains the error reason if fetch failed
     string job_execution_id = 17;
+    bool unresolved = 18; // If true, then this uri is just added to the queue and no resolution of ip or robots.txt checks are done yet.
 }
 
 message Cookie {
