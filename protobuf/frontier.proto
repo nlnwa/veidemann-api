@@ -10,7 +10,7 @@ import "messages.proto";
 
 // Service for controlling frontier.
 service Frontier {
-    rpc CrawlSeed (CrawlSeedRequest) returns (ExecutionId) {}
+    rpc CrawlSeed (CrawlSeedRequest) returns (CrawlExecutionId) {}
 
     // Request a URI from the Frontiers queue
     // Used by a Harvester to fetch a new page
