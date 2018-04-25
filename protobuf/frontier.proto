@@ -10,7 +10,7 @@ import "messages.proto";
 
 // Service for controlling frontier.
 service Frontier {
-    rpc CrawlSeed (CrawlSeedRequest) returns (CrawlExecutionStatus) {}
+    rpc CrawlSeed (CrawlSeedRequest) returns (ExecutionId) {}
 
     // Request a URI from the Frontiers queue
     // Used by a Harvester to fetch a new page
@@ -21,6 +21,11 @@ message CrawlSeedRequest {
     string job_execution_id = 1;
     CrawlJob job = 5;
     Seed seed = 6;
+}
+
+// The execution id for a seed crawl
+message CrawlExecutionId {
+    string id = 1;
 }
 
 // Message sent from Harvester to request a new page to fetch and also used to return the harvest result.
