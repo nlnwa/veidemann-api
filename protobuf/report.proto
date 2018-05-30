@@ -119,10 +119,5 @@ message ExecuteDbQueryRequest {
 }
 
 message ExecuteDbQueryReply {
-    enum Type {
-        JSON = 0;
-        DATUM = 1;
-    }
     string record = 1;
-    Type type = 2;
 }
