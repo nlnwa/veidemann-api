@@ -38,7 +38,9 @@ message CrawlExecutionStatus {
     int64 documents_out_of_scope = 12;
     int64 documents_retried = 13;
     int64 documents_denied = 14;
-    string current_uri = 20;
+    google.protobuf.Timestamp last_state_change_time = 15;
+    google.protobuf.Timestamp created_time = 16;
+    QueuedUri current_uri = 20;
     string job_execution_id = 21;
     Error error = 22; // Extra description of error state
 }
@@ -190,6 +192,7 @@ message QueuedUri {
     Error error = 16; // Contains the error reason if fetch failed
     string job_execution_id = 17;
     bool unresolved = 18; // If true, then this uri is just added to the queue and no resolution of ip or robots.txt checks are done yet.
+    google.protobuf.Timestamp fetch_start_time_stamp = 19;
 }
 
 message Cookie {
