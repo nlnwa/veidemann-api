@@ -29,8 +29,8 @@ message CrawlExecutionStatus {
     string job_id = 3;
     string seed_id = 4;
     CrawlScope scope = 5;
-    google.protobuf.Timestamp start_time = 6;
-    google.protobuf.Timestamp end_time = 7;
+    google.protobuf.Timestamp start_time = 6; // When this crawl execution started crawling
+    google.protobuf.Timestamp end_time = 7; // When this crawl execution ended
     int64 documents_crawled = 8;
     int64 bytes_crawled = 9;
     int64 uris_crawled = 10;
@@ -38,11 +38,28 @@ message CrawlExecutionStatus {
     int64 documents_out_of_scope = 12;
     int64 documents_retried = 13;
     int64 documents_denied = 14;
-    google.protobuf.Timestamp last_state_change_time = 15;
-    google.protobuf.Timestamp created_time = 16;
-    QueuedUri current_uri = 20;
+    google.protobuf.Timestamp last_change_time = 15; // When this record was last updated
+    google.protobuf.Timestamp created_time = 16; // When this crawl execution was created
+    repeated QueuedUri current_uri = 20;
     string job_execution_id = 21;
     Error error = 22; // Extra description of error state
+}
+
+message CrawlExecutionStatusChange {
+    string id = 1;
+    CrawlExecutionStatus.State state = 2;
+    google.protobuf.Timestamp start_time = 3; // When this crawl execution started crawling
+    google.protobuf.Timestamp end_time = 4; // When this crawl execution ended
+    int64 add_documents_crawled = 5;
+    int64 add_bytes_crawled = 6;
+    int64 add_uris_crawled = 7;
+    int64 add_documents_failed = 8;
+    int64 add_documents_out_of_scope = 9;
+    int64 add_documents_retried = 10;
+    int64 add_documents_denied = 11;
+    QueuedUri add_current_uri = 12;
+    QueuedUri delete_current_uri = 13;
+    Error error = 14; // Extra description of error state
 }
 
 // Metadata about an execution of a job.
