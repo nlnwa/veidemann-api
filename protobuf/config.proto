@@ -155,6 +155,8 @@ message PolitenessConfig {
     //   ""         - matches every label
     // </pre>
     repeated string crawl_host_group_selector = 9;
+    // If true, use hostname instead of ip for politeness
+    bool use_hostname = 10;
 }
 
 message ExtraConfig {
