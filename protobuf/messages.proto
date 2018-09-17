@@ -48,7 +48,6 @@ message CrawlExecutionStatus {
 message CrawlExecutionStatusChange {
     string id = 1;
     CrawlExecutionStatus.State state = 2;
-    google.protobuf.Timestamp start_time = 3; // When this crawl execution started crawling
     google.protobuf.Timestamp end_time = 4; // When this crawl execution ended
     int64 add_documents_crawled = 5;
     int64 add_bytes_crawled = 6;
