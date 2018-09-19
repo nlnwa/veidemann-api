@@ -40,7 +40,7 @@ message CrawlExecutionStatus {
     int64 documents_denied = 14;
     google.protobuf.Timestamp last_change_time = 15; // When this record was last updated
     google.protobuf.Timestamp created_time = 16; // When this crawl execution was created
-    repeated QueuedUri current_uri = 20;
+    repeated string current_uri_id = 20;
     string job_execution_id = 21;
     Error error = 22; // Extra description of error state
 }
