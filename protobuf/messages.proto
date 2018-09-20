@@ -209,6 +209,8 @@ message QueuedUri {
     string job_execution_id = 17;
     bool unresolved = 18; // If true, then this uri is just added to the queue and no resolution of ip or robots.txt checks are done yet.
     google.protobuf.Timestamp fetch_start_time_stamp = 19;
+    // The weighting between jobs when two jobs compete on fetching resources from the same hosts.
+    int32 priority_weight = 20;
 }
 
 message Cookie {
