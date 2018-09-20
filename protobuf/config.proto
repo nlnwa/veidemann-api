@@ -57,7 +57,7 @@ message CrawlConfig {
     // The job will be randomly choosed, but weighted such that if that two jobs with weight 1.0 and one job with
     // weight 2.0 compete, then the two first jobs will each have 25% probability of beeing choosed and the the third
     // job will have 50% probability of beeing choosed.
-    int32 priority_weight = 11;
+    double priority_weight = 11;
     bool depth_first = 20; // Not implemented
 }
 
