@@ -53,7 +53,12 @@ message CrawlConfig {
     string politeness_id = 8;
     ExtraConfig extra = 9;
     int32 minimum_dns_ttl_s = 10; // Not implemented
-    bool depth_first = 20;
+    // The weighting between jobs when two jobs compete on fetching resources from the same hosts.
+    // The job will be randomly choosed, but weighted such that if that two jobs with weight 1.0 and one job with
+    // weight 2.0 compete, then the two first jobs will each have 25% probability of beeing choosed and the the third
+    // job will have 50% probability of beeing choosed.
+    double priority_weight = 11;
+    bool depth_first = 20; // Not implemented
 }
 
 message CrawlScheduleConfig {
@@ -155,6 +160,8 @@ message PolitenessConfig {
     //   ""         - matches every label
     // </pre>
     repeated string crawl_host_group_selector = 9;
+    // If true, use hostname instead of ip for politeness
+    bool use_hostname = 10;
 }
 
 message ExtraConfig {
