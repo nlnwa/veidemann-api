@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package veidemann.api;
-option go_package = "veidemann_api";
+option go_package = "github.com/nlnwa/veidemann-api-go/veidemann_api;veidemann_api";
 option java_package = "no.nb.nna.veidemann.api";
 option java_outer_classname = "DnsResolverProto";
 

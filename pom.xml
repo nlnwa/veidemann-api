@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>veidemann-api</artifactId>
-    <groupId>no.nb.nna</groupId>
-    <version>1.0.0-SNAPSHOT</version>
+    <groupId>com.github.nlnwa</groupId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     <name>Veidemann-API</name>
 
@@ -52,15 +52,38 @@
                 <version>0.6.1</version>
                 <executions>
                     <execution>
+                        <id>swagger</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <protoSourceRoot>
+                                ${basedir}/include
+                            </protoSourceRoot>
+                            <includes>
+                                <include>protoc-gen-swagger/options/*</include>
+                            </includes>
+                            <protocArtifact>
+                                com.google.protobuf:protoc:${com.google.protobuf.protoc.version}:exe:${os.detected.classifier}
+                            </protocArtifact>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>java</id>
                         <goals>
                             <goal>compile</goal>
                             <goal>compile-custom</goal>
                         </goals>
                         <configuration>
+                            <clearOutputDirectory>false</clearOutputDirectory>
                             <protoSourceRoot>
                                 ${basedir}/protobuf
                             </protoSourceRoot>
+                            <additionalProtoPathElements>
+                                <additionalProtoPathElement>
+                                    ${basedir}/include
+                                </additionalProtoPathElement>
+                            </additionalProtoPathElements>
                             <protocArtifact>
                                 com.google.protobuf:protoc:${com.google.protobuf.protoc.version}:exe:${os.detected.classifier}
                             </protocArtifact>
