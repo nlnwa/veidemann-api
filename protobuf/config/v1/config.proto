@@ -2,9 +2,7 @@ syntax = "proto3";
 
 package veidemann.config.v1;
 
-import "google/protobuf/timestamp.proto";
 import "config/v1/resources.proto";
-import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
