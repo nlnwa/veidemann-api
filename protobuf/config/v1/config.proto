@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package veidemann.config.v1;
+package veidemann.api.config.v1;
 
 import "config/v1/resources.proto";
 import "google/api/annotations.proto";
@@ -28,27 +28,27 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 // Service for working with config.
 service Config {
     // Get a config object by ID
-    rpc GetConfigObject (veidemann.config.v1.GetRequest) returns (veidemann.config.v1.ConfigObject) {
+    rpc GetConfigObject (veidemann.api.config.v1.GetRequest) returns (veidemann.api.config.v1.ConfigObject) {
         option (google.api.http) = {
             get: "/api/config/{kind}/{id}"
         };
     }
     // List a set of config objects
-    rpc ListConfigObjects (veidemann.config.v1.ListRequest) returns (stream veidemann.config.v1.ConfigObject) {
+    rpc ListConfigObjects (veidemann.api.config.v1.ListRequest) returns (stream veidemann.api.config.v1.ConfigObject) {
         option (google.api.http) = {
             get: "/api/config/{kind}"
             body: "*"
         };
     }
     // Count config objects
-    rpc CountConfigObjects (veidemann.config.v1.ListRequest) returns (veidemann.config.v1.ListCountResponse) {
+    rpc CountConfigObjects (veidemann.api.config.v1.ListRequest) returns (veidemann.api.config.v1.ListCountResponse) {
         option (google.api.http) = {
             get: "/api/config/{kind}/count"
             body: "*"
         };
     }
     // Save a config object
-    rpc SaveConfigObject (veidemann.config.v1.ConfigObject) returns (veidemann.config.v1.ConfigObject) {
+    rpc SaveConfigObject (veidemann.api.config.v1.ConfigObject) returns (veidemann.api.config.v1.ConfigObject) {
         option (google.api.http) = {
             put: "/api/config/{kind}"
             body: "*"
@@ -59,20 +59,20 @@ service Config {
         };
     }
     // Update config objects
-    rpc UpdateConfigObjects (veidemann.config.v1.UpdateRequest) returns (veidemann.config.v1.UpdateResponse) {
+    rpc UpdateConfigObjects (veidemann.api.config.v1.UpdateRequest) returns (veidemann.api.config.v1.UpdateResponse) {
         option (google.api.http) = {
             patch: "/api/config/{kind}"
             body: "*"
         };
     }
     // Delete a config object
-    rpc DeleteConfigObject (veidemann.config.v1.ConfigObject) returns (veidemann.config.v1.DeleteResponse) {
+    rpc DeleteConfigObject (veidemann.api.config.v1.ConfigObject) returns (veidemann.api.config.v1.DeleteResponse) {
         option (google.api.http) = {
             delete: "/api/config/{kind}/{id}"
         };
     }
 
-    rpc GetLabelKeys (veidemann.config.v1.GetRequest) returns (veidemann.config.v1.LabelKeysResponse) {
+    rpc GetLabelKeys (veidemann.api.config.v1.GetRequest) returns (veidemann.api.config.v1.LabelKeysResponse) {
         option (google.api.http) = {
             delete: "/api/config/{kind}/labelkeys"
         };
@@ -81,13 +81,13 @@ service Config {
 
 // Request for getting an object by id
 message GetRequest {
-    Kind kind = 2;
+    veidemann.api.config.v1.Kind kind = 2;
     string id = 3;
 }
 
 // Specification of wich entities to get.
 message ListRequest {
-    veidemann.config.v1.Kind kind = 1;
+    veidemann.api.config.v1.Kind kind = 1;
     // Select objects by one or more id's
     repeated string id = 2;
     // Select objects by name
@@ -120,7 +120,7 @@ message ListRequest {
     //   ""         - matches every label
     // </pre>
     repeated string label_selector = 4;
-    veidemann.config.v1.ConfigObject query_template = 5;
+    veidemann.api.config.v1.ConfigObject query_template = 5;
     FieldMask query_mask = 6;
     FieldMask returned_fields_mask = 7;
     string order_by_path = 8;
@@ -132,7 +132,7 @@ message ListRequest {
 message UpdateRequest {
     ListRequest list_request = 1;
     FieldMask update_mask = 3;
-    veidemann.config.v1.ConfigObject update_template = 4;
+    veidemann.api.config.v1.ConfigObject update_template = 4;
 }
 
 message UpdateResponse {

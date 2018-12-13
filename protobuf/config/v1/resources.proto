@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package veidemann.config.v1;
+package veidemann.api.config.v1;
 
 import "google/protobuf/timestamp.proto";
 
@@ -15,16 +15,16 @@ message ConfigObject {
     Kind kind = 3;
     Meta meta = 4;
     oneof spec {
-        veidemann.config.v1.CrawlEntity crawl_entity = 5;
-        veidemann.config.v1.Seed seed = 6;
-        veidemann.config.v1.CrawlJob crawl_job = 7;
-        veidemann.config.v1.CrawlConfig crawl_config = 8;
-        veidemann.config.v1.CrawlScheduleConfig crawl_schedule_config = 9;
-        veidemann.config.v1.BrowserConfig browser_config = 10;
-        veidemann.config.v1.PolitenessConfig politeness_config = 11;
-        veidemann.config.v1.BrowserScript browser_script = 12;
-        veidemann.config.v1.CrawlHostGroupConfig crawl_host_group_config = 13;
-        veidemann.config.v1.RoleMapping role_mapping = 14;
+        veidemann.api.config.v1.CrawlEntity crawl_entity = 5;
+        veidemann.api.config.v1.Seed seed = 6;
+        veidemann.api.config.v1.CrawlJob crawl_job = 7;
+        veidemann.api.config.v1.CrawlConfig crawl_config = 8;
+        veidemann.api.config.v1.CrawlScheduleConfig crawl_schedule_config = 9;
+        veidemann.api.config.v1.BrowserConfig browser_config = 10;
+        veidemann.api.config.v1.PolitenessConfig politeness_config = 11;
+        veidemann.api.config.v1.BrowserScript browser_script = 12;
+        veidemann.api.config.v1.CrawlHostGroupConfig crawl_host_group_config = 13;
+        veidemann.api.config.v1.RoleMapping role_mapping = 14;
     }
 }
 
