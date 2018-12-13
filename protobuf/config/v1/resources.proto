@@ -136,7 +136,8 @@ message BrowserConfig {
     repeated string script_id = 8;
     map<string, string> headers = 16;
     map<string, string> script_parameters = 17; // Not implemented
-    int64 sleep_after_pageload_ms = 18;
+    // Max time to wait for network activity
+    int64 max_inactivity_time_ms = 18;
 }
 
 message PolitenessConfig {
