@@ -1,0 +1,157 @@
+syntax = "proto3";
+
+package veidemann.api.config.v1;
+
+import "config/v1/resources.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option go_package = "github.com/nlnwa/veidemann-api-go/config/v1;config";
+option java_multiple_files = true;
+option java_package = "no.nb.nna.veidemann.api.config.v1";
+option java_outer_classname = "ConfigService";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+  info: {
+    title: "Veidemann Config API"
+    version: "1.0.0"
+    contact: {
+      name: "Veidemann"
+      url: "https://github.com/nlnwa/veidemann-api"
+    }
+  }
+  schemes: [
+    HTTP, HTTPS, WS, WSS
+  ];
+};
+
+// Service for working with config.
+service Config {
+    // Get a config object by ID
+    rpc GetConfigObject (veidemann.api.config.v1.GetRequest) returns (veidemann.api.config.v1.ConfigObject) {
+        option (google.api.http) = {
+            get: "/api/config/{kind}/{id}"
+        };
+    }
+    // List a set of config objects
+    rpc ListConfigObjects (veidemann.api.config.v1.ListRequest) returns (stream veidemann.api.config.v1.ConfigObject) {
+        option (google.api.http) = {
+            get: "/api/config/{kind}"
+            body: "*"
+        };
+    }
+    // Count config objects
+    rpc CountConfigObjects (veidemann.api.config.v1.ListRequest) returns (veidemann.api.config.v1.ListCountResponse) {
+        option (google.api.http) = {
+            get: "/api/config/{kind}/count"
+            body: "*"
+        };
+    }
+    // Save a config object
+    rpc SaveConfigObject (veidemann.api.config.v1.ConfigObject) returns (veidemann.api.config.v1.ConfigObject) {
+        option (google.api.http) = {
+            put: "/api/config/{kind}"
+            body: "*"
+            additional_bindings {
+                post: "/api/config/{kind}/{id}"
+				body: "*"
+			}
+        };
+    }
+    // Update config objects
+    rpc UpdateConfigObjects (veidemann.api.config.v1.UpdateRequest) returns (veidemann.api.config.v1.UpdateResponse) {
+        option (google.api.http) = {
+            patch: "/api/config/{kind}"
+            body: "*"
+        };
+    }
+    // Delete a config object
+    rpc DeleteConfigObject (veidemann.api.config.v1.ConfigObject) returns (veidemann.api.config.v1.DeleteResponse) {
+        option (google.api.http) = {
+            delete: "/api/config/{kind}/{id}"
+        };
+    }
+
+    rpc GetLabelKeys (veidemann.api.config.v1.GetRequest) returns (veidemann.api.config.v1.LabelKeysResponse) {
+        option (google.api.http) = {
+            delete: "/api/config/{kind}/labelkeys"
+        };
+    }
+}
+
+// Request for getting an object by id
+message GetRequest {
+    veidemann.api.config.v1.Kind kind = 2;
+    string id = 3;
+}
+
+// Specification of wich entities to get.
+message ListRequest {
+    veidemann.api.config.v1.Kind kind = 1;
+    // Select objects by one or more id's
+    repeated string id = 2;
+    // Select objects by name
+    // The name query is a case insensitive regular expresion search on name.
+    // <pre>
+    // Examples:
+    //   "foo"       - matches all names containing the phrase foo
+    //   "^foo$"     - matches the exact name foo
+    //   "foo.*bar$" - matches names containing foo followed by zero or more tokens and ends with bar
+    // </pre>
+    string name_regex = 3;
+    // Select objects by label
+    // A string representing a label query. The query matches if at least one label matches the query.
+    // If there are multiple queries, then each query must match at least one label.
+    // Label quries are case insensitive. The basic format is <code>key:value</code> where both key and value must match.
+    // If value ends with <code>&ast;</code> then the key must match and value must match up until the <code>&ast;</code>.
+    // If value is empty, all labels matching the key will match.
+    // If key is empty, then the matching is done on the value for all keys.
+    // If key is empty, then the <code>:</code> might be ommitted.
+    // <pre>
+    // Examples:
+    //   "foo:bar"  - matches exactly labels with key=foo and value=bar
+    //   "foo:"     - matches all labels with key=foo
+    //   ":bar"     - matches all labels with value=bar
+    //   "bar"      - matches all labels with value=bar
+    //   "foo:ba*"  - matches labels with key=foo and value starting with ba (e.g. matches bar, but not ber)
+    //   ":ba*"     - matches labels with any key and value starting with ba (e.g. matches bar, but not ber)
+    //   "ba*"      - matches labels with any key and value starting with ba (e.g. matches bar, but not ber)
+    //   ":"        - matches every label
+    //   ""         - matches every label
+    // </pre>
+    repeated string label_selector = 4;
+    veidemann.api.config.v1.ConfigObject query_template = 5;
+    FieldMask query_mask = 6;
+    FieldMask returned_fields_mask = 7;
+    string order_by_path = 8;
+    bool order_descending = 9;
+    int32 page_size = 14;
+    int32 offset = 15;
+}
+
+message UpdateRequest {
+    ListRequest list_request = 1;
+    FieldMask update_mask = 3;
+    veidemann.api.config.v1.ConfigObject update_template = 4;
+}
+
+message UpdateResponse {
+    int64 updated = 1;
+}
+
+message ListCountResponse {
+    int64 count = 1;
+    bool approximate = 2;
+}
+
+message DeleteResponse {
+    bool deleted = 1;
+}
+
+message LabelKeysResponse {
+    repeated string key = 1;
+}
+
+message FieldMask {
+    repeated string paths = 1;
+}

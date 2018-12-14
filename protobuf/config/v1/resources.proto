@@ -1,11 +1,46 @@
 syntax = "proto3";
 
-package veidemann.api;
-option go_package = "veidemann_api";
-option java_package = "no.nb.nna.veidemann.api";
-option java_outer_classname = "ConfigProto";
+package veidemann.api.config.v1;
 
 import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nlnwa/veidemann-api-go/config/v1;config";
+option java_multiple_files = true;
+option java_package = "no.nb.nna.veidemann.api.config.v1";
+option java_outer_classname = "ConfigResources";
+
+message ConfigObject {
+    string id = 1;
+    string apiVersion = 2;
+    Kind kind = 3;
+    Meta meta = 4;
+    oneof spec {
+        veidemann.api.config.v1.CrawlEntity crawl_entity = 5;
+        veidemann.api.config.v1.Seed seed = 6;
+        veidemann.api.config.v1.CrawlJob crawl_job = 7;
+        veidemann.api.config.v1.CrawlConfig crawl_config = 8;
+        veidemann.api.config.v1.CrawlScheduleConfig crawl_schedule_config = 9;
+        veidemann.api.config.v1.BrowserConfig browser_config = 10;
+        veidemann.api.config.v1.PolitenessConfig politeness_config = 11;
+        veidemann.api.config.v1.BrowserScript browser_script = 12;
+        veidemann.api.config.v1.CrawlHostGroupConfig crawl_host_group_config = 13;
+        veidemann.api.config.v1.RoleMapping role_mapping = 14;
+    }
+}
+
+enum Kind {
+    undefined = 0;
+    crawlEntity = 5;
+    seed = 6;
+    crawlJob = 7;
+    crawlConfig = 8;
+    crawlScheduleConfig = 9;
+    browserConfig = 10;
+    politenessConfig = 11;
+    browserScript = 12;
+    crawlHostGroupConfig = 13;
+    roleMapping = 14;
+}
 
 message Meta {
     string name = 1;
@@ -24,13 +59,9 @@ message Label {
 
 // A crawl entity (might be an organisation with one or more seeds)
 message CrawlEntity {
-    string id = 1;
-    Meta meta = 2;
 }
 
 message Seed {
-    string id = 1;
-    Meta meta = 2;
     string entity_id = 3;
     CrawlScope scope = 4;
     repeated string job_id = 5;
@@ -38,8 +69,6 @@ message Seed {
 }
 
 message CrawlJob {
-    string id = 1;
-    Meta meta = 2;
     string schedule_id = 3;
     CrawlLimitsConfig limits = 4;
     string crawl_config_id = 5;
@@ -47,8 +76,6 @@ message CrawlJob {
 }
 
 message CrawlConfig {
-    string id = 1;
-    Meta meta = 2;
     string browser_config_id = 7;
     string politeness_id = 8;
     ExtraConfig extra = 9;
@@ -58,12 +85,9 @@ message CrawlConfig {
     // weight 2.0 compete, then the two first jobs will each have 25% probability of beeing choosed and the the third
     // job will have 50% probability of beeing choosed.
     double priority_weight = 11;
-    bool depth_first = 20; // Not implemented
 }
 
 message CrawlScheduleConfig {
-    string id = 1;
-    Meta meta = 2;
     string cron_expression = 3;
     google.protobuf.Timestamp valid_from = 4;
     google.protobuf.Timestamp valid_to = 5;
@@ -83,8 +107,6 @@ message CrawlLimitsConfig {
 }
 
 message BrowserConfig {
-    string id = 1;
-    Meta meta = 2;
     string user_agent = 3;
     int32 window_width = 4;
     int32 window_height = 5;
@@ -113,7 +135,8 @@ message BrowserConfig {
     repeated string script_id = 8;
     map<string, string> headers = 16;
     map<string, string> script_parameters = 17; // Not implemented
-    int64 sleep_after_pageload_ms = 18;
+    // Max time to wait for network activity
+    int64 max_inactivity_time_ms = 18;
 }
 
 message PolitenessConfig {
@@ -122,8 +145,6 @@ message PolitenessConfig {
         IGNORE_ROBOTS = 1;
         CUSTOM_ROBOTS = 2;
     }
-    string id = 1;
-    Meta meta = 2;
     RobotsPolicy robots_policy = 3;
     int32 minimum_robots_validity_duration_s = 11;
     string custom_robots = 20;
@@ -171,8 +192,6 @@ message ExtraConfig {
 
 // Message containing a javascript to be run in a browser
 message BrowserScript {
-    string id = 1;
-    Meta meta = 2;
     string script = 3;
     string url_regexp = 4; // Not implemented
 }
@@ -182,28 +201,7 @@ message CrawlHostGroupConfig {
         string ip_from = 1;
         string ip_to = 2;
     }
-    string id = 1;
-    Meta meta = 2;
     repeated IpRange ip_range = 3;
-}
-
-message LogLevels {
-    enum Level {
-        UNDEFINED = 0;
-        ALL = 1;
-        TRACE = 2;
-        DEBUG = 3;
-        INFO = 4;
-        WARN = 5;
-        ERROR = 6;
-        FATAL = 7;
-        OFF = 8;
-    }
-    message LogLevel {
-        string logger = 1;
-        Level level = 2;
-    }
-    repeated LogLevel log_level = 1;
 }
 
 enum Role {
@@ -220,7 +218,6 @@ enum Role {
 }
 
 message RoleMapping {
-    string id = 1;
     oneof email_or_group {
         string email = 2;
         string group = 3;
