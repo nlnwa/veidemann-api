@@ -1,12 +1,15 @@
 syntax = "proto3";
 
-package veidemann.api;
-option go_package = "github.com/nlnwa/veidemann-api-go/veidemann_api;veidemann_api";
-option java_package = "no.nb.nna.veidemann.api";
-option java_outer_classname = "FrontierProto";
+package veidemann.api.frontier.v1;
 
-import "veidemann_api/config.proto";
-import "veidemann_api/messages.proto";
+import "commons/v1/resources.proto";
+import "config/v1/resources.proto";
+import "frontier/v1/resources.proto";
+
+option go_package = "github.com/nlnwa/veidemann-api-go/frontier/v1;frontier";
+option java_multiple_files = true;
+option java_package = "no.nb.nna.veidemann.api.frontier.v1";
+option java_outer_classname = "FrontierService";
 
 // Service for controlling frontier.
 service Frontier {
@@ -19,8 +22,8 @@ service Frontier {
 
 message CrawlSeedRequest {
     string job_execution_id = 1;
-    CrawlJob job = 5;
-    Seed seed = 6;
+    veidemann.api.config.v1.ConfigObject job = 5;
+    veidemann.api.config.v1.ConfigObject seed = 6;
 }
 
 // The execution id for a seed crawl
@@ -48,16 +51,16 @@ message PageHarvest {
         // Collected metrics for the page fetched
         Metrics metrics = 2;
         // The outlinks found in the harvested page
-        QueuedUri outlink = 3;
+        veidemann.api.frontier.v1.QueuedUri outlink = 3;
         // If the overall page fetch failed. Should not be used for a singel uri failure
-        Error error = 4;
+        veidemann.api.commons.v1.Error error = 4;
     }
 }
 
 // A specification of the page to fetch.
 message PageHarvestSpec {
     // The URI to fetch
-    QueuedUri queued_uri = 1;
+    veidemann.api.frontier.v1.QueuedUri queued_uri = 1;
     // The configuration for the fetch
-    CrawlConfig crawl_config = 2;
+    veidemann.api.config.v1.ConfigObject crawl_config = 2;
 }

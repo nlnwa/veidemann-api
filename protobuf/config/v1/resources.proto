@@ -25,6 +25,7 @@ message ConfigObject {
         veidemann.api.config.v1.BrowserScript browser_script = 12;
         veidemann.api.config.v1.CrawlHostGroupConfig crawl_host_group_config = 13;
         veidemann.api.config.v1.RoleMapping role_mapping = 14;
+        veidemann.api.config.v1.Collection collection = 15;
     }
 }
 
@@ -40,6 +41,7 @@ enum Kind {
     browserScript = 12;
     crawlHostGroupConfig = 13;
     roleMapping = 14;
+    collection = 15;
 }
 
 message Meta {
@@ -57,33 +59,40 @@ message Label {
     string value = 2;
 }
 
+// Reference to another ConfigObject
+message ConfigRef {
+    Kind kind = 1;
+    string id = 2;
+}
+
 // A crawl entity (might be an organisation with one or more seeds)
 message CrawlEntity {
 }
 
 message Seed {
-    string entity_id = 3;
+    veidemann.api.config.v1.ConfigRef entity_ref = 3;
     CrawlScope scope = 4;
-    repeated string job_id = 5;
+    repeated veidemann.api.config.v1.ConfigRef job_ref = 5;
     bool disabled = 18;
 }
 
 message CrawlJob {
-    string schedule_id = 3;
+    veidemann.api.config.v1.ConfigRef schedule_ref = 3;
     CrawlLimitsConfig limits = 4;
-    string crawl_config_id = 5;
+    veidemann.api.config.v1.ConfigRef crawl_config_ref = 5;
     bool disabled = 18;
 }
 
 message CrawlConfig {
-    string browser_config_id = 7;
-    string politeness_id = 8;
+    veidemann.api.config.v1.ConfigRef collection_ref = 6;
+    veidemann.api.config.v1.ConfigRef browser_config_ref = 7;
+    veidemann.api.config.v1.ConfigRef politeness_ref = 8;
     ExtraConfig extra = 9;
     int32 minimum_dns_ttl_s = 10; // Not implemented
     // The weighting between jobs when two jobs compete on fetching resources from the same hosts.
-    // The job will be randomly choosed, but weighted such that if that two jobs with weight 1.0 and one job with
-    // weight 2.0 compete, then the two first jobs will each have 25% probability of beeing choosed and the the third
-    // job will have 50% probability of beeing choosed.
+    // The job will be randomly chosen, but weighted such that if two jobs with weight 1.0 and one job with
+    // weight 2.0 compete, then the two first jobs will each have 25% probability of being chosen and the the third
+    // job will have 50% probability of being chosen.
     double priority_weight = 11;
 }
 
@@ -132,7 +141,7 @@ message BrowserConfig {
     //   ""         - matches every label
     // </pre>
     repeated string script_selector = 7;
-    repeated string script_id = 8;
+    repeated veidemann.api.config.v1.ConfigRef script_ref = 8;
     map<string, string> headers = 16;
     map<string, string> script_parameters = 17; // Not implemented
     // Max time to wait for network activity
@@ -223,4 +232,30 @@ message RoleMapping {
         string group = 3;
     }
     repeated Role role = 4;
+}
+
+message Collection {
+    enum RotationPolicy {
+        NONE = 0;
+        HOURLY = 1;
+        DAILY = 2;
+        MONTHLY = 3;
+        YEARLY = 4;
+    }
+
+    enum SubCollectionType {
+        UNDEFINED = 0;
+        SCREENSHOT = 1;
+    }
+
+    message SubCollection {
+        SubCollectionType type = 1;
+        string name = 2;
+    }
+
+    RotationPolicy collection_dedup_policy = 1;
+    RotationPolicy file_rotation_policy = 2;
+    bool compress = 3;
+    int64 file_size = 4;
+    repeated SubCollection sub_collections = 10;
 }

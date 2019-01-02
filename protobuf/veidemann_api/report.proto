@@ -5,6 +5,7 @@ option go_package = "github.com/nlnwa/veidemann-api-go/veidemann_api;veidemann_a
 option java_package = "no.nb.nna.veidemann.api";
 option java_outer_classname = "ReportProto";
 
+import "frontier/v1/resources.proto";
 import "veidemann_api/messages.proto";
 import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
@@ -74,7 +75,7 @@ message CrawlLogListRequest {
 }
 
 message CrawlLogListReply {
-    repeated CrawlLog value = 1;
+    repeated veidemann.api.frontier.v1.CrawlLog value = 1;
     int64 count = 2;
     int32 page_size = 14;
     int32 page = 15;
@@ -89,7 +90,7 @@ message PageLogListRequest {
 }
 
 message PageLogListReply {
-    repeated PageLog value = 1;
+    repeated veidemann.api.frontier.v1.PageLog value = 1;
     int64 count = 2;
     int32 page_size = 14;
     int32 page = 15;
