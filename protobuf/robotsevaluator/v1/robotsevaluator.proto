@@ -5,7 +5,7 @@ package veidemann.api.robotsevaluator.v1;
 option go_package = "github.com/nlnwa/veidemann-api-go/robotsevaluator/v1;robotsevaluator";
 option java_multiple_files = true;
 option java_package = "no.nb.nna.veidemann.api.robotsevaluator.v1";
-option java_outer_classname = "RobotsevaluatorService";
+option java_outer_classname = "RobotsEvaluatorService";
 
 import "config/v1/resources.proto";
 

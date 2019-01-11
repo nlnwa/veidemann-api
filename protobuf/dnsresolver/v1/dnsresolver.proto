@@ -5,7 +5,7 @@ package veidemann.api.dnsresolver.v1;
 option go_package = "github.com/nlnwa/veidemann-api-go/dnsresolver/v1;dnsresolver";
 option java_multiple_files = true;
 option java_package = "no.nb.nna.veidemann.api.dnsresolver.v1";
-option java_outer_classname = "DnsresolverService";
+option java_outer_classname = "DnsResolverService";
 
 // Service for resolving, caching and logging dns requests.
 service DnsResolver {
