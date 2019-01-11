@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package veidemann.api.dnsresolver.v1;
 
+import "config/v1/resources.proto";
+
 option go_package = "github.com/nlnwa/veidemann-api-go/dnsresolver/v1;dnsresolver";
 option java_multiple_files = true;
 option java_package = "no.nb.nna.veidemann.api.dnsresolver.v1";
@@ -15,6 +17,7 @@ service DnsResolver {
 message ResolveRequest {
     string host = 1;
     int32 port = 2;
+    veidemann.api.config.v1.ConfigRef collection_ref = 7;
 }
 
 message ResolveReply {
