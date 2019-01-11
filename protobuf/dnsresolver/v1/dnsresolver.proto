@@ -1,9 +1,11 @@
 syntax = "proto3";
 
-package veidemann.api;
-option go_package = "github.com/nlnwa/veidemann-api-go/veidemann_api;veidemann_api";
-option java_package = "no.nb.nna.veidemann.api";
-option java_outer_classname = "DnsResolverProto";
+package veidemann.api.dnsresolver.v1;
+
+option go_package = "github.com/nlnwa/veidemann-api-go/dnsresolver/v1;dnsresolver";
+option java_multiple_files = true;
+option java_package = "no.nb.nna.veidemann.api.dnsresolver.v1";
+option java_outer_classname = "DnsresolverService";
 
 // Service for resolving, caching and logging dns requests.
 service DnsResolver {

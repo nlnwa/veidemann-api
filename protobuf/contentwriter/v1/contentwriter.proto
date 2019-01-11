@@ -29,7 +29,6 @@ enum RecordType {
     REVISIT = 5;
     CONVERSION = 6;
     CONTINUATION = 7;
-    VM_SCREENSHOT = 12;
 }
 
 message Data {
