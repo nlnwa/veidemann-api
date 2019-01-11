@@ -6,7 +6,6 @@ option java_package = "no.nb.nna.veidemann.api";
 option java_outer_classname = "StatusProto";
 
 import "frontier/v1/resources.proto";
-import "veidemann_api/messages.proto";
 import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
