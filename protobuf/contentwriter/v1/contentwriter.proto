@@ -16,8 +16,6 @@ option java_outer_classname = "ContentWriterService";
 // Service for writing archival data to persistent storage.
 service ContentWriter {
     rpc write (stream WriteRequest) returns (WriteReply) {}
-    rpc flush (google.protobuf.Empty) returns (google.protobuf.Empty) {}
-    rpc delete (google.protobuf.Empty) returns (google.protobuf.Empty) {}
 }
 
 enum RecordType {
@@ -78,6 +76,7 @@ message WriteResponseMeta {
         string block_digest = 5;
         string payload_digest = 6;
         string warc_refers_to = 7;
+        string collection_final_name = 8;
     }
 
     map<int32, RecordMeta> record_meta = 1;

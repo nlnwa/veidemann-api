@@ -20,6 +20,7 @@ message IsAllowedRequest {
     string uri = 3;
     string user_agent = 4;
     veidemann.api.config.v1.ConfigObject politeness = 5;
+    veidemann.api.config.v1.ConfigRef collection_ref = 6;
 }
 
 message IsAllowedReply {

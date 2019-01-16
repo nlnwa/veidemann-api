@@ -246,6 +246,7 @@ message Collection {
     enum SubCollectionType {
         UNDEFINED = 0;
         SCREENSHOT = 1;
+        DNS = 2;
     }
 
     message SubCollection {

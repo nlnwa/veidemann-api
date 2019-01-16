@@ -191,6 +191,7 @@ message CrawlLog {
     int32 retries = 20; // Number of times this uri has been retried. Zero means success on first attempt.
     veidemann.api.commons.v1.Error error = 21; // Contains the error reason if fetch failed
     string job_execution_id = 22;
+    string collection_final_name = 23;
 }
 
 // Log for each page including discovered resources and links
@@ -214,6 +215,7 @@ message PageLog {
     string execution_id = 3;
     string referrer = 4;
     string job_execution_id = 5;
+    string collection_final_name = 6;
     repeated Resource resource = 10;
     repeated string outlink = 11;
 }
