@@ -96,6 +96,11 @@ message CrawlConfig {
     double priority_weight = 11;
 }
 
+message ExtraConfig {
+    bool extract_text = 5; // Not implemented
+    bool create_screenshot = 6;
+}
+
 message CrawlScheduleConfig {
     string cron_expression = 3;
     google.protobuf.Timestamp valid_from = 4;
@@ -192,11 +197,6 @@ message PolitenessConfig {
     repeated string crawl_host_group_selector = 9;
     // If true, use hostname instead of ip for politeness
     bool use_hostname = 10;
-}
-
-message ExtraConfig {
-    bool extract_text = 5; // Not implemented
-    bool create_snapshot = 6;
 }
 
 // Message containing a javascript to be run in a browser
