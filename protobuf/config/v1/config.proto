@@ -28,7 +28,7 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
 // Service for working with config.
 service Config {
     // Get a config object by ID
-    rpc GetConfigObject (veidemann.api.config.v1.GetRequest) returns (veidemann.api.config.v1.ConfigObject) {
+    rpc GetConfigObject (veidemann.api.config.v1.ConfigRef) returns (veidemann.api.config.v1.ConfigObject) {
         option (google.api.http) = {
             get: "/api/config/{kind}/{id}"
         };
@@ -72,17 +72,15 @@ service Config {
         };
     }
 
-    rpc GetLabelKeys (veidemann.api.config.v1.GetRequest) returns (veidemann.api.config.v1.LabelKeysResponse) {
+    rpc GetLabelKeys (veidemann.api.config.v1.GetLabelKeysRequest) returns (veidemann.api.config.v1.LabelKeysResponse) {
         option (google.api.http) = {
             delete: "/api/config/{kind}/labelkeys"
         };
     }
 }
 
-// Request for getting an object by id
-message GetRequest {
-    veidemann.api.config.v1.Kind kind = 2;
-    string id = 3;
+message GetLabelKeysRequest {
+    veidemann.api.config.v1.Kind kind = 1;
 }
 
 // Specification of wich entities to get.

@@ -5,7 +5,7 @@ option go_package = "github.com/nlnwa/veidemann-api-go/veidemann_api;veidemann_a
 option java_package = "no.nb.nna.veidemann.api";
 option java_outer_classname = "StatusProto";
 
-import "veidemann_api/messages.proto";
+import "frontier/v1/resources.proto";
 import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
@@ -35,7 +35,7 @@ service Status {
     }
 
     // Get a crawl execution by ID
-    rpc GetExecution (ExecutionId) returns (CrawlExecutionStatus) {
+    rpc GetExecution (ExecutionId) returns (veidemann.api.frontier.v1.CrawlExecutionStatus) {
         option (google.api.http) = {
             get: "/api/status/seed/executions/{id}"
         };
@@ -47,7 +47,7 @@ service Status {
         };
     }
     // Abort a crawl execution
-    rpc AbortExecution (ExecutionId) returns (CrawlExecutionStatus) {
+    rpc AbortExecution (ExecutionId) returns (veidemann.api.frontier.v1.CrawlExecutionStatus) {
         option (google.api.http) = {
             post: "/api/status/seed/executions/{id}/abort"
             body: "*"
@@ -56,7 +56,7 @@ service Status {
 
 
     // Get a job execution by ID
-    rpc GetJobExecution (ExecutionId) returns (JobExecutionStatus) {
+    rpc GetJobExecution (ExecutionId) returns (veidemann.api.frontier.v1.JobExecutionStatus) {
         option (google.api.http) = {
             get: "/api/status/job/executions/{id}"
         };
@@ -68,7 +68,7 @@ service Status {
         };
     }
     // Abort a job execution
-    rpc AbortJobExecution (ExecutionId) returns (JobExecutionStatus) {
+    rpc AbortJobExecution (ExecutionId) returns (veidemann.api.frontier.v1.JobExecutionStatus) {
         option (google.api.http) = {
             post: "/api/status/job/executions/{id}/abort"
             body: "*"
@@ -91,7 +91,7 @@ message RunningExecutionsListReply {
 
 message StatusDetail {
     string id = 1;
-    CrawlExecutionStatus.State state = 2;
+    veidemann.api.frontier.v1.CrawlExecutionStatus.State state = 2;
     string jobId = 3;
     string seed = 4;
     google.protobuf.Timestamp start_time = 5;
@@ -143,7 +143,7 @@ message ListJobExecutionsRequest {
 
 // A list of crawl executions
 message ExecutionsListReply {
-    repeated CrawlExecutionStatus value = 1;
+    repeated veidemann.api.frontier.v1.CrawlExecutionStatus value = 1;
     int64 count = 2;
     int32 page_size = 14;
     int32 page = 15;
@@ -151,7 +151,7 @@ message ExecutionsListReply {
 
 // A list of job executions
 message JobExecutionsListReply {
-    repeated JobExecutionStatus value = 1;
+    repeated veidemann.api.frontier.v1.JobExecutionStatus value = 1;
     int64 count = 2;
     int32 page_size = 14;
     int32 page = 15;
