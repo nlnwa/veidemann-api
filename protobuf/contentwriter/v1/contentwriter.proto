@@ -45,6 +45,7 @@ message WriteRequestMeta {
         int64 size = 7;
         string warc_refers_to = 8;
         veidemann.api.config.v1.Collection.SubCollectionType sub_collection = 9;
+        repeated string warc_concurrent_to = 10;
     }
 
     string execution_id = 1;
