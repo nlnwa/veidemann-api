@@ -23,12 +23,12 @@ enum RecordType {
 message CrawledContent {
     string digest = 1;
     string warc_id = 2;
+    string target_uri = 3;
+    google.protobuf.Timestamp date = 4;
 }
 
 message StorageRef {
     string warc_id = 1;
     RecordType record_type = 2;
     string storage_ref = 3;
-    string target_uri = 4;
-    google.protobuf.Timestamp date = 5;
 }
