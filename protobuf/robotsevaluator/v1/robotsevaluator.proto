@@ -24,5 +24,13 @@ message IsAllowedRequest {
 }
 
 message IsAllowedReply {
+    message OtherField {
+        string name = 1;
+        string value = 2;
+    }
     bool is_allowed = 1;
+    float crawl_delay = 2;
+    float cache_delay = 3;
+    repeated string sitemap = 4;
+    repeated OtherField other_fields = 5;
 }
