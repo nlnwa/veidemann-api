@@ -5,7 +5,7 @@
 
     <artifactId>veidemann-api</artifactId>
     <groupId>com.github.nlnwa</groupId>
-    <version>v1.0.0-beta4</version>
+    <version>0</version>
     <packaging>jar</packaging>
     <name>Veidemann-API</name>
 
