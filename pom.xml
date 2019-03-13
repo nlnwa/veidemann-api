@@ -10,6 +10,10 @@
     <name>Veidemann-API</name>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
         <io.grpc.version>1.17.1</io.grpc.version>
         <io.grpc.protoc-gen-grpc-java.version>1.17.1</io.grpc.protoc-gen-grpc-java.version>
         <com.google.protobuf.protoc.version>3.6.1</com.google.protobuf.protoc.version>
