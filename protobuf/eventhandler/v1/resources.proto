@@ -26,6 +26,7 @@ message EventObject {
     repeated Activity activity = 8;
     repeated Data data = 9;
     Severity severity = 10;
+    repeated string label = 11;
 }
 
 message EventRef {
