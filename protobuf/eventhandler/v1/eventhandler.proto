@@ -50,7 +50,7 @@ service EventHandler {
         };
     }
     // Save an event object
-    rpc SaveEventObject (veidemann.api.eventhandler.v1.EventObject) returns (veidemann.api.eventhandler.v1.EventObject) {
+    rpc SaveEventObject (veidemann.api.eventhandler.v1.SaveRequest) returns (veidemann.api.eventhandler.v1.EventObject) {
         option (google.api.http) = {
             get: "/api/event/{id}"
             body: "*"
@@ -89,6 +89,12 @@ message UpdateRequest {
     ListRequest list_request = 1;
     veidemann.api.commons.v1.FieldMask update_mask = 3;
     veidemann.api.eventhandler.v1.EventObject update_template = 4;
+    string comment = 5;
+}
+
+message SaveRequest {
+    veidemann.api.eventhandler.v1.EventObject object = 1;
+    string comment = 2;
 }
 
 message UpdateResponse {

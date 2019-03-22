@@ -12,21 +12,20 @@ option java_outer_classname = "EventHandlerResources";
 message EventObject {
     enum State {
         UNDEFINED = 0;
-        NEW  = 1;
-        CLOSED = 2;
+        NEW = 1;
+        OPEN = 2;
+        CLOSED = 3;
     }
 
     string id = 1;
     string type = 2;
     string source = 3;
-    google.protobuf.Timestamp lastUpdated = 4;
-    google.protobuf.Timestamp created = 5;
-    State state = 6;
-    string assignee = 7;
-    repeated Activity activity = 8;
-    repeated Data data = 9;
-    Severity severity = 10;
-    repeated string label = 11;
+    State state = 4;
+    string assignee = 5;
+    repeated Data data = 6;
+    Severity severity = 7;
+    repeated string label = 8;
+    repeated Activity activity = 9;
 }
 
 message EventRef {
@@ -35,9 +34,21 @@ message EventRef {
 }
 
 message Activity {
-    string last_modified_by = 1;
-    google.protobuf.Timestamp last_modified = 2;
-    string description = 3;
+    enum ChangeType {
+        CREATED = 0;
+        VALUE_CHANGED = 1;
+        ARRAY_ADD = 2;
+        ARRAY_DEL = 3;
+    }
+    message Change {
+        ChangeType type = 1;
+        string field = 2;
+        string old_val = 3;
+        string new_val = 4;
+    }
+    string modified_by = 1;
+    google.protobuf.Timestamp modified_time = 2;
+    repeated Change description = 3;
     string comment = 4;
 }
 
