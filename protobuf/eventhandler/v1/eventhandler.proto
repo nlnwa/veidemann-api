@@ -78,9 +78,7 @@ message ListRequest {
     repeated string id = 1;
     veidemann.api.eventhandler.v1.EventObject query_template = 2;
     veidemann.api.commons.v1.FieldMask query_mask = 3;
-    veidemann.api.commons.v1.FieldMask returned_field_mask = 4;
-    string order_by_path = 5;
-    bool order_descending = 6;
+    veidemann.api.commons.v1.FieldMask returned_fields_mask = 4;
     int32 page_size = 7;
     int32 offset = 8;
 }
