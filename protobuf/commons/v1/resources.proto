@@ -12,3 +12,7 @@ message Error {
     string msg = 2;
     string detail = 3;
 }
+
+message FieldMask {
+    repeated string paths = 1;
+}

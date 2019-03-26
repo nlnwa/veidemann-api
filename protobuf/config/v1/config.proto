@@ -3,6 +3,7 @@ syntax = "proto3";
 package veidemann.api.config.v1;
 
 import "config/v1/resources.proto";
+import "commons/v1/resources.proto";
 import "google/api/annotations.proto";
 import "protoc-gen-swagger/options/annotations.proto";
 
@@ -119,8 +120,8 @@ message ListRequest {
     // </pre>
     repeated string label_selector = 4;
     veidemann.api.config.v1.ConfigObject query_template = 5;
-    FieldMask query_mask = 6;
-    FieldMask returned_fields_mask = 7;
+    veidemann.api.commons.v1.FieldMask query_mask = 6;
+    veidemann.api.commons.v1.FieldMask returned_fields_mask = 7;
     string order_by_path = 8;
     bool order_descending = 9;
     int32 page_size = 14;
@@ -129,7 +130,7 @@ message ListRequest {
 
 message UpdateRequest {
     ListRequest list_request = 1;
-    FieldMask update_mask = 3;
+    veidemann.api.commons.v1.FieldMask update_mask = 3;
     veidemann.api.config.v1.ConfigObject update_template = 4;
 }
 
@@ -148,8 +149,4 @@ message DeleteResponse {
 
 message LabelKeysResponse {
     repeated string key = 1;
-}
-
-message FieldMask {
-    repeated string paths = 1;
 }
