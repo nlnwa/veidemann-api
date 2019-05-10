@@ -28,6 +28,7 @@ message NotifyActivity {
         DATA_RECEIVED = 0;
         ALL_DATA_RECEIVED = 1;
     }
+    Activity activity = 1;
 }
 
 message Completed {
