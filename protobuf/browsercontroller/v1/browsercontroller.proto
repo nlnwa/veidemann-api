@@ -40,7 +40,6 @@ message DoRequest {
         RegisterNew new = 1;
         NotifyActivity notify = 2;
         Completed completed = 3;
-        veidemann.api.commons.v1.Error error = 4;
     }
 }
 
