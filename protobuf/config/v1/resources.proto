@@ -155,9 +155,25 @@ message BrowserConfig {
 
 message PolitenessConfig {
     enum RobotsPolicy {
+        // Obey robots.txt on a page level. The requested URI is evaluated, but any embedded resources are
+        // fetched without respecting robots.txt
         OBEY_ROBOTS = 0;
+        // Ignore robots.txt completely
         IGNORE_ROBOTS = 1;
+        // Use submitted robots.txt instead of the one served by the target site. Only the requested URI is
+        // evaluated.
         CUSTOM_ROBOTS = 2;
+        // Obey robots.txt for all URI's
+        OBEY_ROBOTS_CLASSIC = 3;
+        // Use submitted robots.txt instead of the one served by the target site. All URI's are
+        // evaluated.
+        CUSTOM_ROBOTS_CLASSIC = 4;
+        // Use submitted robots.txt if no one is served by the target site. Only the requested URI is
+        // evaluated.
+        CUSTOM_IF_MISSING = 5;
+        // Use submitted robots.txt if no one is served by the target site. All URI's are
+        // evaluated.
+        CUSTOM_IF_MISSING_CLASSIC = 6;
     }
     RobotsPolicy robots_policy = 3;
     int32 minimum_robots_validity_duration_s = 11;
