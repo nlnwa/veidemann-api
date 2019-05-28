@@ -21,6 +21,9 @@ service BrowserController {
 message RegisterNew {
     int32 proxy_id = 1;
     string uri = 2;
+    string crawl_execution_id = 3;
+    string job_execution_id = 4;
+    veidemann.api.config.v1.ConfigRef collection_ref = 5;
 }
 
 message NotifyActivity {
