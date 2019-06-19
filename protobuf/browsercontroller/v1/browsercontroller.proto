@@ -36,6 +36,7 @@ message NotifyActivity {
 
 message Completed {
     veidemann.api.frontier.v1.CrawlLog crawl_log = 1;
+    bool cached = 2;
 }
 
 message DoRequest {
