@@ -192,6 +192,7 @@ message CrawlLog {
     veidemann.api.commons.v1.Error error = 21; // Contains the error reason if fetch failed
     string job_execution_id = 22;
     string collection_final_name = 23;
+    string method = 24; // The HTTP method (GET, POST, HEAD, ...)
 }
 
 // Log for each page including discovered resources and links
@@ -208,6 +209,7 @@ message PageLog {
         string warc_id = 8;
         string referrer = 9;
         veidemann.api.commons.v1.Error error = 10; // Contains the error reason if fetch failed
+        string method = 11; // The HTTP method (GET, POST, HEAD, ...)
     }
 
     string warc_id = 1;
@@ -216,6 +218,7 @@ message PageLog {
     string referrer = 4;
     string job_execution_id = 5;
     string collection_final_name = 6;
+    string method = 7; // The HTTP method (GET, POST, HEAD, ...)
     repeated Resource resource = 10;
     repeated string outlink = 11;
 }

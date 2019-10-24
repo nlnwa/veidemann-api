@@ -24,6 +24,7 @@ message RegisterNew {
     string crawl_execution_id = 3;
     string job_execution_id = 4;
     veidemann.api.config.v1.ConfigRef collection_ref = 5;
+    string method = 6; // The HTTP method (GET, POST, HEAD, ...)
 }
 
 message NotifyActivity {
