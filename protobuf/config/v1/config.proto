@@ -37,7 +37,7 @@ message GetLabelKeysRequest {
     veidemann.api.config.v1.Kind kind = 1;
 }
 
-// Specification of wich entities to get.
+// Specification of which entities to get.
 message ListRequest {
     veidemann.api.config.v1.Kind kind = 1;
     // Select objects by one or more id's

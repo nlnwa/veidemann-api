@@ -3,7 +3,6 @@ syntax = "proto3";
 package veidemann.api.config.v1;
 
 import "google/protobuf/timestamp.proto";
-import "google/protobuf/duration.proto";
 
 option go_package = "github.com/nlnwa/veidemann-api-go/config/v1;config";
 option java_multiple_files = true;
@@ -248,8 +247,8 @@ enum Role {
 }
 
 message ApiKey {
-    string api_key=1;
-    google.protobuf.Duration validTime=2;
+    string token=1;
+    google.protobuf.Timestamp validUntil=2;
 }
 
 message RoleMapping {
