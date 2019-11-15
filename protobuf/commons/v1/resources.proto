@@ -16,3 +16,14 @@ message Error {
 message FieldMask {
     repeated string paths = 1;
 }
+
+message ExtractedText {
+    string warc_id = 1;
+    string text = 2;
+    int64 sentence_count = 3;
+    int64 word_count = 4;
+    int64 long_word_count = 5;
+    int64 character_count = 6;
+    int64 lix = 7;
+    string language = 8;
+}
