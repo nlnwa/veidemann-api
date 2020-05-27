@@ -217,6 +217,12 @@ message PolitenessConfig {
 
 // Message containing a javascript to be run in a browser
 message BrowserScript {
+    enum Type {
+        EXTRACT_OUTLINKS = 0;
+        REPLACEMENT = 1;
+        ON_LOAD = 2;
+        ON_NEW_DOCUMENT = 3;
+    }
     string script = 3;
     repeated string url_regexp = 4;
 }
