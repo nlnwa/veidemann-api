@@ -217,7 +217,7 @@ message PolitenessConfig {
 
 // Message containing a javascript to be run in a browser
 message BrowserScript {
-    enum Type {
+    enum BrowserScriptType {
         EXTRACT_OUTLINKS = 0;
         REPLACEMENT = 1;
         ON_LOAD = 2;
@@ -225,7 +225,7 @@ message BrowserScript {
     }
     string script = 3;
     repeated string url_regexp = 4;
-    Type type = 5;
+    BrowserScriptType browser_script_type = 5;
 }
 
 message CrawlHostGroupConfig {
