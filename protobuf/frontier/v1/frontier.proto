@@ -5,6 +5,7 @@ package veidemann.api.frontier.v1;
 import "commons/v1/resources.proto";
 import "config/v1/resources.proto";
 import "frontier/v1/resources.proto";
+import "google/protobuf/empty.proto";
 
 option go_package = "github.com/nlnwa/veidemann-api-go/frontier/v1;frontier";
 option java_multiple_files = true;
@@ -13,11 +14,24 @@ option java_outer_classname = "FrontierService";
 
 // Service for controlling frontier.
 service Frontier {
+    // Start crawling seed
     rpc CrawlSeed (CrawlSeedRequest) returns (CrawlExecutionId) {}
 
     // Request a URI from the Frontiers queue
     // Used by a Harvester to fetch a new page
     rpc GetNextPage (stream PageHarvest) returns (stream PageHarvestSpec) {}
+
+    // The number of busy CrawlHostGroups which essentiently is the number of web pages currently downloading
+    rpc BusyCrawlHostGroupCount (google.protobuf.Empty) returns (CountResponse) {}
+
+    // Total number of queued URI's
+    rpc QueueCountTotal (google.protobuf.Empty) returns (CountResponse) {}
+
+    // Number of queued URI's for a CrawlExecution
+    rpc QueueCountForCrawlExecution (CrawlExecutionId) returns (CountResponse) {}
+
+    // Number of queued URI's for a CrawlHostGroup
+    rpc QueueCountForCrawlHostGroup (veidemann.api.frontier.v1.CrawlHostGroup) returns (CountResponse) {}
 }
 
 message CrawlSeedRequest {
@@ -63,4 +77,8 @@ message PageHarvestSpec {
     veidemann.api.frontier.v1.QueuedUri queued_uri = 1;
     // The configuration for the fetch
     veidemann.api.config.v1.ConfigObject crawl_config = 2;
+}
+
+message CountResponse {
+    int64 count = 1;
 }
