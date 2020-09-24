@@ -21,7 +21,7 @@ service Frontier {
     // Used by a Harvester to fetch a new page
     rpc GetNextPage (stream PageHarvest) returns (stream PageHarvestSpec) {}
 
-    // The number of busy CrawlHostGroups which essentiently is the number of web pages currently downloading
+    // The number of busy CrawlHostGroups which essentially is the number of web pages currently downloading
     rpc BusyCrawlHostGroupCount (google.protobuf.Empty) returns (CountResponse) {}
 
     // Total number of queued URI's

@@ -70,7 +70,7 @@ enum RunStatus {
 
 message CrawlerStatus {
     RunStatus runStatus = 1;
-    // The number of busy CrawlHostGroups which essentiently is the number of web pages currently downloading
+    // The number of busy CrawlHostGroups which essentially is the number of web pages currently downloading
     int64 busyCrawlHostGroupCount = 2;
     // Total number of queued URI's
     int64 queueSize = 3;
