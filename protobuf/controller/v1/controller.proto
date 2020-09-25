@@ -3,6 +3,7 @@ syntax = "proto3";
 package veidemann.api.controller.v1;
 
 import "controller/v1/resources.proto";
+import "frontier/v1/frontier.proto";
 import "frontier/v1/resources.proto";
 import "config/v1/resources.proto";
 import "google/protobuf/empty.proto";
@@ -32,6 +33,12 @@ service Controller {
     rpc UnPauseCrawler (google.protobuf.Empty) returns (google.protobuf.Empty) {}
 
     rpc Status (google.protobuf.Empty) returns (CrawlerStatus) {}
+
+    // Number of queued URI's for a CrawlExecution
+    rpc QueueCountForCrawlExecution (veidemann.api.frontier.v1.CrawlExecutionId) returns (veidemann.api.frontier.v1.CountResponse) {}
+
+    // Number of queued URI's for a CrawlHostGroup
+    rpc QueueCountForCrawlHostGroup (veidemann.api.frontier.v1.CrawlHostGroup) returns (veidemann.api.frontier.v1.CountResponse) {}
 }
 
 // Kick of a crawl job immediately
@@ -63,4 +70,8 @@ enum RunStatus {
 
 message CrawlerStatus {
     RunStatus runStatus = 1;
+    // The number of busy CrawlHostGroups which essentially is the number of web pages currently downloading
+    int64 busyCrawlHostGroupCount = 2;
+    // Total number of queued URI's
+    int64 queueSize = 3;
 }
