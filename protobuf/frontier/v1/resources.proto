@@ -72,8 +72,6 @@ message Cookie {
 message CrawlHostGroup {
     string id = 1; // SHA-1 hash of uri or crawlgroup config id
     string politeness_id = 2; // The politeness config this group is valid for
-    google.protobuf.Timestamp next_fetch_time = 3; // The earliest time a URI from this group might be fetched
-    bool busy = 4; // True if crawler is busy with fetching a URI from this group
     int64 queued_uri_count = 5; // The number of queued Uri's belonging to this CrawlHostGroup
 }
 
