@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package veidemann.api.urlcanonicalizer.v1;
+
+import "frontier/v1/resources.proto";
+
+option go_package = "github.com/nlnwa/veidemann-api/go/urlcanonicalizer/v1;urlcanonicalizer";
+option java_multiple_files = true;
+option java_package = "no.nb.nna.veidemann.api.urlcanonicalizer.v1";
+option java_outer_classname = "UrlCanonicalizer";
+
+// Service for URL canonicalization.
+service UrlCanonicalizerService {
+    // Canonicalize URL
+    rpc CanonicalizeUrl (veidemann.api.frontier.v1.QueuedUri) returns (veidemann.api.frontier.v1.QueuedUri) {
+    }
+}

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package veidemann.api.scopechecker.v1;
+
+import "config/v1/resources.proto";
+import "frontier/v1/resources.proto";
+
+option go_package = "github.com/nlnwa/veidemann-api/go/scopechecker/v1;scopechecker";
+option java_multiple_files = true;
+option java_package = "no.nb.nna.veidemann.api.scopechecker.v1";
+option java_outer_classname = "ScopeChecker";
+
+// Service for URL scope check.
+service ScopesCheckerService {
+    // Check if URL is in scope for this crawl
+    rpc ScopeCheck (veidemann.api.scopechecker.v1.ScopeCheckRequest) returns (veidemann.api.scopechecker.v1.ScopeCheckResponse) {
+    }
+}
+
+message ScopeCheckRequest {
+    veidemann.api.frontier.v1.QueuedUri queued_uri = 1;
+    veidemann.api.config.v1.ConfigObject seed = 2;
+    veidemann.api.config.v1.ConfigObject scope_script = 3;
+}
+
+message ScopeCheckResponse {
+    enum Evaluation {
+        INCLUDE = 0;
+        EXCLUDE = 1;
+        CRAWLER_TRAP = 2;
+    }
+    Evaluation evaluation = 1;
+}
