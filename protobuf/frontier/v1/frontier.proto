@@ -8,7 +8,7 @@ import "frontier/v1/resources.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/nlnwa/veidemann-api-go/frontier/v1;frontier";
+option go_package = "github.com/nlnwa/veidemann-api/go/frontier/v1;frontier";
 option java_multiple_files = true;
 option java_package = "no.nb.nna.veidemann.api.frontier.v1";
 option java_outer_classname = "FrontierService";
@@ -41,6 +41,8 @@ message CrawlSeedRequest {
     veidemann.api.config.v1.ConfigObject seed = 6;
     // When this seed should stop crawling. Absence of this value indicates no timeout
     google.protobuf.Timestamp timeout = 7;
+    // Annotations used as parameters to scripts.
+    repeated veidemann.api.config.v1.Annotation annotation = 8;
 }
 
 // The execution id for a seed crawl
