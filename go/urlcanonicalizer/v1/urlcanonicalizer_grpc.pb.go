@@ -18,8 +18,17 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UrlCanonicalizerServiceClient interface {
-	// Canonicalize URL
-	CanonicalizeUrl(ctx context.Context, in *v1.QueuedUri, opts ...grpc.CallOption) (*v1.QueuedUri, error)
+	// Canonicalize URL for crawling.
+	// Examples of canonicalization could be:
+	// * Remove port numbers for well known schemes (i.e. http://example.com:80 => http://example.com)
+	// * Normalize slash for empty path (i.e. http://example.com => http://example.com/)
+	// * Normalize double slashes in path (i.e. http://example.com/a//b => http://example.com/a/b)
+	CanonicalizeCrawlUrl(ctx context.Context, in *v1.QueuedUri, opts ...grpc.CallOption) (*v1.QueuedUri, error)
+	// Canonicalize URL for checking against already crawled queue.
+	// Examples of canonicalization could be:
+	// * Removing well known session id's (e.g. jsessionid) from query parameters.
+	// * Canonicalize according to the rules described for Google Safe Browsing (https://developers.google.com/safe-browsing/v4/urls-hashing)
+	CanonicalizeAlreadyIncludedUrl(ctx context.Context, in *v1.QueuedUri, opts ...grpc.CallOption) (*v1.QueuedUri, error)
 }
 
 type urlCanonicalizerServiceClient struct {
@@ -30,9 +39,18 @@ func NewUrlCanonicalizerServiceClient(cc grpc.ClientConnInterface) UrlCanonicali
 	return &urlCanonicalizerServiceClient{cc}
 }
 
-func (c *urlCanonicalizerServiceClient) CanonicalizeUrl(ctx context.Context, in *v1.QueuedUri, opts ...grpc.CallOption) (*v1.QueuedUri, error) {
+func (c *urlCanonicalizerServiceClient) CanonicalizeCrawlUrl(ctx context.Context, in *v1.QueuedUri, opts ...grpc.CallOption) (*v1.QueuedUri, error) {
 	out := new(v1.QueuedUri)
-	err := c.cc.Invoke(ctx, "/veidemann.api.urlcanonicalizer.v1.UrlCanonicalizerService/CanonicalizeUrl", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/veidemann.api.urlcanonicalizer.v1.UrlCanonicalizerService/CanonicalizeCrawlUrl", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *urlCanonicalizerServiceClient) CanonicalizeAlreadyIncludedUrl(ctx context.Context, in *v1.QueuedUri, opts ...grpc.CallOption) (*v1.QueuedUri, error) {
+	out := new(v1.QueuedUri)
+	err := c.cc.Invoke(ctx, "/veidemann.api.urlcanonicalizer.v1.UrlCanonicalizerService/CanonicalizeAlreadyIncludedUrl", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -43,8 +61,17 @@ func (c *urlCanonicalizerServiceClient) CanonicalizeUrl(ctx context.Context, in 
 // All implementations must embed UnimplementedUrlCanonicalizerServiceServer
 // for forward compatibility
 type UrlCanonicalizerServiceServer interface {
-	// Canonicalize URL
-	CanonicalizeUrl(context.Context, *v1.QueuedUri) (*v1.QueuedUri, error)
+	// Canonicalize URL for crawling.
+	// Examples of canonicalization could be:
+	// * Remove port numbers for well known schemes (i.e. http://example.com:80 => http://example.com)
+	// * Normalize slash for empty path (i.e. http://example.com => http://example.com/)
+	// * Normalize double slashes in path (i.e. http://example.com/a//b => http://example.com/a/b)
+	CanonicalizeCrawlUrl(context.Context, *v1.QueuedUri) (*v1.QueuedUri, error)
+	// Canonicalize URL for checking against already crawled queue.
+	// Examples of canonicalization could be:
+	// * Removing well known session id's (e.g. jsessionid) from query parameters.
+	// * Canonicalize according to the rules described for Google Safe Browsing (https://developers.google.com/safe-browsing/v4/urls-hashing)
+	CanonicalizeAlreadyIncludedUrl(context.Context, *v1.QueuedUri) (*v1.QueuedUri, error)
 	mustEmbedUnimplementedUrlCanonicalizerServiceServer()
 }
 
@@ -52,8 +79,11 @@ type UrlCanonicalizerServiceServer interface {
 type UnimplementedUrlCanonicalizerServiceServer struct {
 }
 
-func (UnimplementedUrlCanonicalizerServiceServer) CanonicalizeUrl(context.Context, *v1.QueuedUri) (*v1.QueuedUri, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CanonicalizeUrl not implemented")
+func (UnimplementedUrlCanonicalizerServiceServer) CanonicalizeCrawlUrl(context.Context, *v1.QueuedUri) (*v1.QueuedUri, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CanonicalizeCrawlUrl not implemented")
+}
+func (UnimplementedUrlCanonicalizerServiceServer) CanonicalizeAlreadyIncludedUrl(context.Context, *v1.QueuedUri) (*v1.QueuedUri, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CanonicalizeAlreadyIncludedUrl not implemented")
 }
 func (UnimplementedUrlCanonicalizerServiceServer) mustEmbedUnimplementedUrlCanonicalizerServiceServer() {
 }
@@ -69,20 +99,38 @@ func RegisterUrlCanonicalizerServiceServer(s grpc.ServiceRegistrar, srv UrlCanon
 	s.RegisterService(&_UrlCanonicalizerService_serviceDesc, srv)
 }
 
-func _UrlCanonicalizerService_CanonicalizeUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UrlCanonicalizerService_CanonicalizeCrawlUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(v1.QueuedUri)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UrlCanonicalizerServiceServer).CanonicalizeUrl(ctx, in)
+		return srv.(UrlCanonicalizerServiceServer).CanonicalizeCrawlUrl(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/veidemann.api.urlcanonicalizer.v1.UrlCanonicalizerService/CanonicalizeUrl",
+		FullMethod: "/veidemann.api.urlcanonicalizer.v1.UrlCanonicalizerService/CanonicalizeCrawlUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UrlCanonicalizerServiceServer).CanonicalizeUrl(ctx, req.(*v1.QueuedUri))
+		return srv.(UrlCanonicalizerServiceServer).CanonicalizeCrawlUrl(ctx, req.(*v1.QueuedUri))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _UrlCanonicalizerService_CanonicalizeAlreadyIncludedUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(v1.QueuedUri)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UrlCanonicalizerServiceServer).CanonicalizeAlreadyIncludedUrl(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/veidemann.api.urlcanonicalizer.v1.UrlCanonicalizerService/CanonicalizeAlreadyIncludedUrl",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UrlCanonicalizerServiceServer).CanonicalizeAlreadyIncludedUrl(ctx, req.(*v1.QueuedUri))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -92,8 +140,12 @@ var _UrlCanonicalizerService_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*UrlCanonicalizerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CanonicalizeUrl",
-			Handler:    _UrlCanonicalizerService_CanonicalizeUrl_Handler,
+			MethodName: "CanonicalizeCrawlUrl",
+			Handler:    _UrlCanonicalizerService_CanonicalizeCrawlUrl_Handler,
+		},
+		{
+			MethodName: "CanonicalizeAlreadyIncludedUrl",
+			Handler:    _UrlCanonicalizerService_CanonicalizeAlreadyIncludedUrl_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

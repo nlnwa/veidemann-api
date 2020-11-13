@@ -11,7 +11,16 @@ option java_outer_classname = "UrlCanonicalizer";
 
 // Service for URL canonicalization.
 service UrlCanonicalizerService {
-    // Canonicalize URL
-    rpc CanonicalizeUrl (veidemann.api.frontier.v1.QueuedUri) returns (veidemann.api.frontier.v1.QueuedUri) {
-    }
+    // Canonicalize URL for crawling.
+    // Examples of canonicalization could be:
+    // * Remove port numbers for well known schemes (i.e. http://example.com:80 => http://example.com)
+    // * Normalize slash for empty path (i.e. http://example.com => http://example.com/)
+    // * Normalize double slashes in path (i.e. http://example.com/a//b => http://example.com/a/b)
+    rpc CanonicalizeCrawlUrl (veidemann.api.frontier.v1.QueuedUri) returns (veidemann.api.frontier.v1.QueuedUri) {}
+
+    // Canonicalize URL for checking against already crawled queue.
+    // Examples of canonicalization could be:
+    // * Removing well known session id's (e.g. jsessionid) from query parameters.
+    // * Canonicalize according to the rules described for Google Safe Browsing (https://developers.google.com/safe-browsing/v4/urls-hashing)
+    rpc CanonicalizeAlreadyIncludedUrl (veidemann.api.frontier.v1.QueuedUri) returns (veidemann.api.frontier.v1.QueuedUri) {}
 }
