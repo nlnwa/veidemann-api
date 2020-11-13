@@ -4,6 +4,7 @@ package veidemann.api.scopechecker.v1;
 
 import "config/v1/resources.proto";
 import "frontier/v1/resources.proto";
+import "commons/v1/resources.proto";
 
 option go_package = "github.com/nlnwa/veidemann-api/go/scopechecker/v1;scopechecker";
 option java_multiple_files = true;
@@ -18,9 +19,12 @@ service ScopesCheckerService {
 }
 
 message ScopeCheckRequest {
+    // The uri to validate
     veidemann.api.frontier.v1.QueuedUri queued_uri = 1;
-    veidemann.api.config.v1.ConfigObject seed = 2;
-    veidemann.api.config.v1.ConfigObject scope_script = 3;
+    // The Script to evaluate. This is a ConfigObject with Kind: browserScript
+    veidemann.api.config.v1.ConfigObject scope_script = 2;
+    // Turn on debug messages
+    bool debug = 3;
 }
 
 message ScopeCheckResponse {
@@ -29,5 +33,11 @@ message ScopeCheckResponse {
         EXCLUDE = 1;
         CRAWLER_TRAP = 2;
     }
+
+    // The outcome of the scope evaluation
     Evaluation evaluation = 1;
+    // Error is present if script had errors
+    veidemann.api.commons.v1.Error = 2;
+    // If debug is turned on in the request, this field will contain the output
+    string debugMsg = 3;
 }
