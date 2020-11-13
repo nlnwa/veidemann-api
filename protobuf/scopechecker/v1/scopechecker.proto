@@ -37,7 +37,7 @@ message ScopeCheckResponse {
     // The outcome of the scope evaluation
     Evaluation evaluation = 1;
     // Error is present if script had errors
-    veidemann.api.commons.v1.Error = 2;
+    veidemann.api.commons.v1.Error error = 2;
     // If debug is turned on in the request, this field will contain the output
     string debugMsg = 3;
 }
