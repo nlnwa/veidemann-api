@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package veidemann.api.scopechecker.v1;
 
-import "config/v1/resources.proto";
 import "frontier/v1/resources.proto";
 import "commons/v1/resources.proto";
 
@@ -21,8 +20,8 @@ service ScopesCheckerService {
 message ScopeCheckRequest {
     // The uri to validate
     veidemann.api.frontier.v1.QueuedUri queued_uri = 1;
-    // The Script to evaluate. This is a ConfigObject with Kind: browserScript
-    veidemann.api.config.v1.ConfigObject scope_script = 2;
+    // The Script to evaluate.
+    string scope_script = 2;
     // Turn on debug messages
     bool debug = 3;
 }
