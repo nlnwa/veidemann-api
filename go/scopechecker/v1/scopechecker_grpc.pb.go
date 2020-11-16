@@ -17,7 +17,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ScopesCheckerServiceClient interface {
-	// Check if URL is in scope for this crawl
+	// Check if URI is in scope for this crawl
 	ScopeCheck(ctx context.Context, in *ScopeCheckRequest, opts ...grpc.CallOption) (*ScopeCheckResponse, error)
 }
 
@@ -42,7 +42,7 @@ func (c *scopesCheckerServiceClient) ScopeCheck(ctx context.Context, in *ScopeCh
 // All implementations must embed UnimplementedScopesCheckerServiceServer
 // for forward compatibility
 type ScopesCheckerServiceServer interface {
-	// Check if URL is in scope for this crawl
+	// Check if URI is in scope for this crawl
 	ScopeCheck(context.Context, *ScopeCheckRequest) (*ScopeCheckResponse, error)
 	mustEmbedUnimplementedScopesCheckerServiceServer()
 }

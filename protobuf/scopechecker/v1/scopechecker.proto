@@ -10,15 +10,16 @@ option java_multiple_files = true;
 option java_package = "no.nb.nna.veidemann.api.scopechecker.v1";
 option java_outer_classname = "ScopeChecker";
 
-// Service for URL scope check.
+// Service for URI scope check.
 service ScopesCheckerService {
-    // Check if URL is in scope for this crawl
+    // Check if URI is in scope for this crawl
     rpc ScopeCheck (veidemann.api.scopechecker.v1.ScopeCheckRequest) returns (veidemann.api.scopechecker.v1.ScopeCheckResponse) {
     }
 }
 
 message ScopeCheckRequest {
-    // The uri to validate
+    // The uri to validate.
+    // The type QueuedUri includes all the context needed to do scope check
     veidemann.api.frontier.v1.QueuedUri queued_uri = 1;
     // The Script to evaluate.
     string scope_script = 2;
@@ -30,13 +31,30 @@ message ScopeCheckResponse {
     enum Evaluation {
         INCLUDE = 0;
         EXCLUDE = 1;
-        CRAWLER_TRAP = 2;
     }
 
     // The outcome of the scope evaluation
     Evaluation evaluation = 1;
+
+    // Heritrix status code indicating reason for exclude.
+    // Most relevant reasons are:
+    //   * -4000 CHAFF_DETECTION             Chaff detection of traps/content with negligible value applied.
+    //   * -4001 TOO_MANY_HOPS               The URI is too many link hops away from the seed.
+    //   * -4002 TOO_MANY_TRANSITIVE_HOPS    The URI is too many embed/transitive hops away from the last URI in scope.
+    //   * -5001 BLOCKED                     Blocked from fetch by user setting.
+    //   * -5002 BLOCKED_BY_CUSTOM_PROCESSOR Blocked by a custom processor.
+    int32 exclude_reason = 2;
+
+    // URI canonicalized for checking against already included list.
+    // Examples of canonicalization could be:
+    // * Removing well known session id's (e.g. jsessionid) from query parameters.
+    // * Canonicalize according to the rules described for Google Safe Browsing (https://developers.google.com/safe-browsing/v4/urls-hashing)
+    string include_check_uri = 3;
+
     // Error is present if script had errors
-    veidemann.api.commons.v1.Error error = 2;
-    // If debug is turned on in the request, this field will contain the output
-    string debugMsg = 3;
+    veidemann.api.commons.v1.Error error = 4;
+
+    // If script outputs anything to the console (e.g. if debug is turned on in the request or script contains print() statements),
+    // this field will contain the output
+    string console = 5;
 }
