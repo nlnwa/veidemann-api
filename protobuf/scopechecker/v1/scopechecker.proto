@@ -21,10 +21,12 @@ message ScopeCheckRequest {
     // The uri to validate.
     // The type QueuedUri includes all the context needed to do scope check
     veidemann.api.frontier.v1.QueuedUri queued_uri = 1;
+    // Name of script. Used for logging.
+    string scope_script_name = 2;
     // The Script to evaluate.
-    string scope_script = 2;
+    string scope_script = 3;
     // Turn on debug messages
-    bool debug = 3;
+    bool debug = 4;
 }
 
 message ScopeCheckResponse {
@@ -38,6 +40,8 @@ message ScopeCheckResponse {
 
     // Heritrix status code indicating reason for exclude.
     // Most relevant reasons are:
+    //   *    -5 RUNTIME_EXCEPTION           Unexpected runtime exception.
+    //   *    -7 ILLEGAL_URI                 URI recognized as unsupported or illegal.
     //   * -4000 CHAFF_DETECTION             Chaff detection of traps/content with negligible value applied.
     //   * -4001 TOO_MANY_HOPS               The URI is too many link hops away from the seed.
     //   * -4002 TOO_MANY_TRANSITIVE_HOPS    The URI is too many embed/transitive hops away from the last URI in scope.
