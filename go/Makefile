@@ -6,7 +6,7 @@ DIRS=commons config contentwriter dnsresolver frontier robotsevaluator browserco
 .PHONY: distclean
 .PHONY: build
 
-all:	tools #build
+all:	tools build
 
 clean:
 	rm -rf $(DIRS)
