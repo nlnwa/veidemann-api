@@ -4,7 +4,6 @@ package uricanonicalizer
 
 import (
 	context "context"
-	v1 "github.com/nlnwa/veidemann-api/go/frontier/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -23,7 +22,7 @@ type UriCanonicalizerServiceClient interface {
 	// * Remove port numbers for well known schemes (i.e. http://example.com:80 => http://example.com)
 	// * Normalize slash for empty path (i.e. http://example.com => http://example.com/)
 	// * Normalize path (i.e. http://example.com/a//b/./c => http://example.com/a/b/c)
-	Canonicalize(ctx context.Context, in *v1.QueuedUri, opts ...grpc.CallOption) (*v1.QueuedUri, error)
+	Canonicalize(ctx context.Context, in *UriMessage, opts ...grpc.CallOption) (*UriMessage, error)
 }
 
 type uriCanonicalizerServiceClient struct {
@@ -34,8 +33,8 @@ func NewUriCanonicalizerServiceClient(cc grpc.ClientConnInterface) UriCanonicali
 	return &uriCanonicalizerServiceClient{cc}
 }
 
-func (c *uriCanonicalizerServiceClient) Canonicalize(ctx context.Context, in *v1.QueuedUri, opts ...grpc.CallOption) (*v1.QueuedUri, error) {
-	out := new(v1.QueuedUri)
+func (c *uriCanonicalizerServiceClient) Canonicalize(ctx context.Context, in *UriMessage, opts ...grpc.CallOption) (*UriMessage, error) {
+	out := new(UriMessage)
 	err := c.cc.Invoke(ctx, "/veidemann.api.uricanonicalizer.v1.UriCanonicalizerService/Canonicalize", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -52,7 +51,7 @@ type UriCanonicalizerServiceServer interface {
 	// * Remove port numbers for well known schemes (i.e. http://example.com:80 => http://example.com)
 	// * Normalize slash for empty path (i.e. http://example.com => http://example.com/)
 	// * Normalize path (i.e. http://example.com/a//b/./c => http://example.com/a/b/c)
-	Canonicalize(context.Context, *v1.QueuedUri) (*v1.QueuedUri, error)
+	Canonicalize(context.Context, *UriMessage) (*UriMessage, error)
 	mustEmbedUnimplementedUriCanonicalizerServiceServer()
 }
 
@@ -60,7 +59,7 @@ type UriCanonicalizerServiceServer interface {
 type UnimplementedUriCanonicalizerServiceServer struct {
 }
 
-func (UnimplementedUriCanonicalizerServiceServer) Canonicalize(context.Context, *v1.QueuedUri) (*v1.QueuedUri, error) {
+func (UnimplementedUriCanonicalizerServiceServer) Canonicalize(context.Context, *UriMessage) (*UriMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Canonicalize not implemented")
 }
 func (UnimplementedUriCanonicalizerServiceServer) mustEmbedUnimplementedUriCanonicalizerServiceServer() {
@@ -78,7 +77,7 @@ func RegisterUriCanonicalizerServiceServer(s grpc.ServiceRegistrar, srv UriCanon
 }
 
 func _UriCanonicalizerService_Canonicalize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(v1.QueuedUri)
+	in := new(UriMessage)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -90,7 +89,7 @@ func _UriCanonicalizerService_Canonicalize_Handler(srv interface{}, ctx context.
 		FullMethod: "/veidemann.api.uricanonicalizer.v1.UriCanonicalizerService/Canonicalize",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UriCanonicalizerServiceServer).Canonicalize(ctx, req.(*v1.QueuedUri))
+		return srv.(UriCanonicalizerServiceServer).Canonicalize(ctx, req.(*UriMessage))
 	}
 	return interceptor(ctx, in, info, handler)
 }
