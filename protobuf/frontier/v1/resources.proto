@@ -99,6 +99,8 @@ message CrawlExecutionStatus {
     State state = 2;
     string job_id = 3;
     string seed_id = 4;
+    // Annotations used as parameters to scripts.
+    repeated veidemann.api.config.v1.Annotation annotation = 5;
     google.protobuf.Timestamp start_time = 6; // When this crawl execution started crawling
     google.protobuf.Timestamp end_time = 7; // When this crawl execution ended
     int64 documents_crawled = 8;
