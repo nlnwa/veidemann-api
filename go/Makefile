@@ -6,7 +6,7 @@ DIRS=commons config contentwriter dnsresolver frontier robotsevaluator browserco
 .PHONY: distclean
 .PHONY: build
 
-all:	tools build
+all:	tools #build
 
 clean:
 	rm -rf $(DIRS)
@@ -20,11 +20,12 @@ tools:
 	&& wget -q https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip \
 	&& unzip protoc-${PROTOC_VERSION}-linux-x86_64.zip \
 	&& rm protoc-${PROTOC_VERSION}-linux-x86_64.zip \
-	&& go get google.golang.org/protobuf/cmd/protoc-gen-go \
+	&& go get -x google.golang.org/protobuf/cmd/protoc-gen-go \
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc
+	echo ${PATH}
+	ls -Rl /home/runner/go
 
 $(DIRS): tools
-	ls -l /home/runner/go/bin
 	find ../protobuf -name *.proto -exec 'tools/bin/protoc' '-I../protobuf' '-Itools/include' '--go_out=.' '--go_opt=paths=source_relative' '--go-grpc_out=.' '--go-grpc_opt=paths=source_relative' '{}' ';'
 
 build: $(DIRS)
