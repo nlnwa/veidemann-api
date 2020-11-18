@@ -24,6 +24,7 @@ tools:
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
 $(DIRS): tools
+	ls -l /home/runner/go/bin
 	find ../protobuf -name *.proto -exec 'tools/bin/protoc' '-I../protobuf' '-Itools/include' '--go_out=.' '--go_opt=paths=source_relative' '--go-grpc_out=.' '--go-grpc_opt=paths=source_relative' '{}' ';'
 
 build: $(DIRS)
