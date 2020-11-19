@@ -18,7 +18,6 @@ message QueuedUri {
     // Sequence number to order the fetch of uris from a seed
     int64 sequence = 4;
     string uri = 5;
-    string surt = 6;
     string ip = 7;
 
     /**
@@ -165,7 +164,6 @@ message JobExecutionStatus {
 message CrawlLog {
     string warc_id = 1;
     google.protobuf.Timestamp time_stamp = 2;
-    string surt = 3;
     int32 status_code = 4;
     int64 size = 5;
     string requested_uri = 6;

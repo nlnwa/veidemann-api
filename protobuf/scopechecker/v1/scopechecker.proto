@@ -53,7 +53,7 @@ message ScopeCheckResponse {
     // Examples of canonicalization could be:
     // * Removing well known session id's (e.g. jsessionid) from query parameters.
     // * Canonicalize according to the rules described for Google Safe Browsing (https://developers.google.com/safe-browsing/v4/urls-hashing)
-    string include_check_uri = 3;
+    veidemann.api.commons.v1.ParsedUri include_check_uri = 3;
 
     // Error is present if script had errors
     veidemann.api.commons.v1.Error error = 4;
