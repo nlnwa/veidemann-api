@@ -22,7 +22,7 @@ type UriCanonicalizerServiceClient interface {
 	// * Remove port numbers for well known schemes (i.e. http://example.com:80 => http://example.com)
 	// * Normalize slash for empty path (i.e. http://example.com => http://example.com/)
 	// * Normalize path (i.e. http://example.com/a//b/./c => http://example.com/a/b/c)
-	Canonicalize(ctx context.Context, in *UriMessage, opts ...grpc.CallOption) (*UriMessage, error)
+	Canonicalize(ctx context.Context, in *CanonicalizeRequest, opts ...grpc.CallOption) (*CanonicalizeResponse, error)
 }
 
 type uriCanonicalizerServiceClient struct {
@@ -33,8 +33,8 @@ func NewUriCanonicalizerServiceClient(cc grpc.ClientConnInterface) UriCanonicali
 	return &uriCanonicalizerServiceClient{cc}
 }
 
-func (c *uriCanonicalizerServiceClient) Canonicalize(ctx context.Context, in *UriMessage, opts ...grpc.CallOption) (*UriMessage, error) {
-	out := new(UriMessage)
+func (c *uriCanonicalizerServiceClient) Canonicalize(ctx context.Context, in *CanonicalizeRequest, opts ...grpc.CallOption) (*CanonicalizeResponse, error) {
+	out := new(CanonicalizeResponse)
 	err := c.cc.Invoke(ctx, "/veidemann.api.uricanonicalizer.v1.UriCanonicalizerService/Canonicalize", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -51,7 +51,7 @@ type UriCanonicalizerServiceServer interface {
 	// * Remove port numbers for well known schemes (i.e. http://example.com:80 => http://example.com)
 	// * Normalize slash for empty path (i.e. http://example.com => http://example.com/)
 	// * Normalize path (i.e. http://example.com/a//b/./c => http://example.com/a/b/c)
-	Canonicalize(context.Context, *UriMessage) (*UriMessage, error)
+	Canonicalize(context.Context, *CanonicalizeRequest) (*CanonicalizeResponse, error)
 	mustEmbedUnimplementedUriCanonicalizerServiceServer()
 }
 
@@ -59,7 +59,7 @@ type UriCanonicalizerServiceServer interface {
 type UnimplementedUriCanonicalizerServiceServer struct {
 }
 
-func (UnimplementedUriCanonicalizerServiceServer) Canonicalize(context.Context, *UriMessage) (*UriMessage, error) {
+func (UnimplementedUriCanonicalizerServiceServer) Canonicalize(context.Context, *CanonicalizeRequest) (*CanonicalizeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Canonicalize not implemented")
 }
 func (UnimplementedUriCanonicalizerServiceServer) mustEmbedUnimplementedUriCanonicalizerServiceServer() {
@@ -77,7 +77,7 @@ func RegisterUriCanonicalizerServiceServer(s grpc.ServiceRegistrar, srv UriCanon
 }
 
 func _UriCanonicalizerService_Canonicalize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UriMessage)
+	in := new(CanonicalizeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -89,7 +89,7 @@ func _UriCanonicalizerService_Canonicalize_Handler(srv interface{}, ctx context.
 		FullMethod: "/veidemann.api.uricanonicalizer.v1.UriCanonicalizerService/Canonicalize",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UriCanonicalizerServiceServer).Canonicalize(ctx, req.(*UriMessage))
+		return srv.(UriCanonicalizerServiceServer).Canonicalize(ctx, req.(*CanonicalizeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

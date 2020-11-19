@@ -135,6 +135,126 @@ func (x *FieldMask) GetPaths() []string {
 	return nil
 }
 
+type ParsedUri struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// The entire uri
+	Href string `protobuf:"bytes,1,opt,name=href,proto3" json:"href,omitempty"`
+	// The scheme (protocol) part of the uri
+	Scheme string `protobuf:"bytes,2,opt,name=scheme,proto3" json:"scheme,omitempty"`
+	// The hostname of the uri
+	Host string `protobuf:"bytes,3,opt,name=host,proto3" json:"host,omitempty"`
+	// The port number of the uri
+	Port int32 `protobuf:"varint,4,opt,name=port,proto3" json:"port,omitempty"`
+	// The username part of the uri
+	Username string `protobuf:"bytes,5,opt,name=username,proto3" json:"username,omitempty"`
+	// The password part of the uri
+	Password string `protobuf:"bytes,6,opt,name=password,proto3" json:"password,omitempty"`
+	// The path part of the uri
+	Path string `protobuf:"bytes,7,opt,name=path,proto3" json:"path,omitempty"`
+	// The query (search) part of the uri
+	Query string `protobuf:"bytes,8,opt,name=query,proto3" json:"query,omitempty"`
+	// The fragment (hash) part of the uri
+	Fragment string `protobuf:"bytes,9,opt,name=fragment,proto3" json:"fragment,omitempty"`
+}
+
+func (x *ParsedUri) Reset() {
+	*x = ParsedUri{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_commons_v1_resources_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ParsedUri) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ParsedUri) ProtoMessage() {}
+
+func (x *ParsedUri) ProtoReflect() protoreflect.Message {
+	mi := &file_commons_v1_resources_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ParsedUri.ProtoReflect.Descriptor instead.
+func (*ParsedUri) Descriptor() ([]byte, []int) {
+	return file_commons_v1_resources_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ParsedUri) GetHref() string {
+	if x != nil {
+		return x.Href
+	}
+	return ""
+}
+
+func (x *ParsedUri) GetScheme() string {
+	if x != nil {
+		return x.Scheme
+	}
+	return ""
+}
+
+func (x *ParsedUri) GetHost() string {
+	if x != nil {
+		return x.Host
+	}
+	return ""
+}
+
+func (x *ParsedUri) GetPort() int32 {
+	if x != nil {
+		return x.Port
+	}
+	return 0
+}
+
+func (x *ParsedUri) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *ParsedUri) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+func (x *ParsedUri) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *ParsedUri) GetQuery() string {
+	if x != nil {
+		return x.Query
+	}
+	return ""
+}
+
+func (x *ParsedUri) GetFragment() string {
+	if x != nil {
+		return x.Fragment
+	}
+	return ""
+}
+
 type ExtractedText struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -153,7 +273,7 @@ type ExtractedText struct {
 func (x *ExtractedText) Reset() {
 	*x = ExtractedText{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_commons_v1_resources_proto_msgTypes[2]
+		mi := &file_commons_v1_resources_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -166,7 +286,7 @@ func (x *ExtractedText) String() string {
 func (*ExtractedText) ProtoMessage() {}
 
 func (x *ExtractedText) ProtoReflect() protoreflect.Message {
-	mi := &file_commons_v1_resources_proto_msgTypes[2]
+	mi := &file_commons_v1_resources_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -179,7 +299,7 @@ func (x *ExtractedText) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExtractedText.ProtoReflect.Descriptor instead.
 func (*ExtractedText) Descriptor() ([]byte, []int) {
-	return file_commons_v1_resources_proto_rawDescGZIP(), []int{2}
+	return file_commons_v1_resources_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ExtractedText) GetWarcId() string {
@@ -251,6 +371,20 @@ var file_commons_v1_resources_proto_rawDesc = []byte{
 	0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x64, 0x65, 0x74, 0x61, 0x69, 0x6c, 0x22, 0x21, 0x0a,
 	0x09, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x4d, 0x61, 0x73, 0x6b, 0x12, 0x14, 0x0a, 0x05, 0x70, 0x61,
 	0x74, 0x68, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x05, 0x70, 0x61, 0x74, 0x68, 0x73,
+	0x22, 0xdd, 0x01, 0x0a, 0x09, 0x50, 0x61, 0x72, 0x73, 0x65, 0x64, 0x55, 0x72, 0x69, 0x12, 0x12,
+	0x0a, 0x04, 0x68, 0x72, 0x65, 0x66, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x68, 0x72,
+	0x65, 0x66, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x63, 0x68, 0x65, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x73, 0x63, 0x68, 0x65, 0x6d, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x68, 0x6f,
+	0x73, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x68, 0x6f, 0x73, 0x74, 0x12, 0x12,
+	0x0a, 0x04, 0x70, 0x6f, 0x72, 0x74, 0x18, 0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x6f,
+	0x72, 0x74, 0x12, 0x1a, 0x0a, 0x08, 0x75, 0x73, 0x65, 0x72, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x05,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x75, 0x73, 0x65, 0x72, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1a,
+	0x0a, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61,
+	0x74, 0x68, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x61, 0x74, 0x68, 0x12, 0x14,
+	0x0a, 0x05, 0x71, 0x75, 0x65, 0x72, 0x79, 0x18, 0x08, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x71,
+	0x75, 0x65, 0x72, 0x79, 0x12, 0x1a, 0x0a, 0x08, 0x66, 0x72, 0x61, 0x67, 0x6d, 0x65, 0x6e, 0x74,
+	0x18, 0x09, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x66, 0x72, 0x61, 0x67, 0x6d, 0x65, 0x6e, 0x74,
 	0x22, 0x81, 0x02, 0x0a, 0x0d, 0x45, 0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x65, 0x64, 0x54, 0x65,
 	0x78, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x77, 0x61, 0x72, 0x63, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x06, 0x77, 0x61, 0x72, 0x63, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x74,
@@ -289,11 +423,12 @@ func file_commons_v1_resources_proto_rawDescGZIP() []byte {
 	return file_commons_v1_resources_proto_rawDescData
 }
 
-var file_commons_v1_resources_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_commons_v1_resources_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_commons_v1_resources_proto_goTypes = []interface{}{
 	(*Error)(nil),         // 0: veidemann.api.commons.v1.Error
 	(*FieldMask)(nil),     // 1: veidemann.api.commons.v1.FieldMask
-	(*ExtractedText)(nil), // 2: veidemann.api.commons.v1.ExtractedText
+	(*ParsedUri)(nil),     // 2: veidemann.api.commons.v1.ParsedUri
+	(*ExtractedText)(nil), // 3: veidemann.api.commons.v1.ExtractedText
 }
 var file_commons_v1_resources_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -334,6 +469,18 @@ func file_commons_v1_resources_proto_init() {
 			}
 		}
 		file_commons_v1_resources_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ParsedUri); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_commons_v1_resources_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ExtractedText); i {
 			case 0:
 				return &v.state
@@ -352,7 +499,7 @@ func file_commons_v1_resources_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_commons_v1_resources_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
