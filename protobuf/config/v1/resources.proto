@@ -103,7 +103,6 @@ message CrawlConfig {
 }
 
 message ExtraConfig {
-    bool extract_text = 5; // Not implemented
     bool create_screenshot = 6;
 }
 
