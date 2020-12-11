@@ -6,7 +6,7 @@ import "commons/v1/resources.proto";
 import "config/v1/resources.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/nlnwa/veidemann-api-go/frontier/v1;frontier";
+option go_package = "github.com/nlnwa/veidemann-api/go/frontier/v1;frontier";
 option java_multiple_files = true;
 option java_package = "no.nb.nna.veidemann.api.frontier.v1";
 option java_outer_classname = "FrontierResources";
@@ -18,7 +18,6 @@ message QueuedUri {
     // Sequence number to order the fetch of uris from a seed
     int64 sequence = 4;
     string uri = 5;
-    string surt = 6;
     string ip = 7;
 
     /**
@@ -44,6 +43,10 @@ message QueuedUri {
     // The weighting between jobs when two jobs compete on fetching resources from the same hosts.
     // Copied from CrawlConfig for efficiency.
     double priority_weight = 20;
+    // The seed uri which was the starting point for this uri.
+    string seed_uri = 21;
+    // Annotations used as parameters to scripts.
+    repeated veidemann.api.config.v1.Annotation annotation = 22;
 }
 
 message Cookie {
@@ -95,7 +98,6 @@ message CrawlExecutionStatus {
     State state = 2;
     string job_id = 3;
     string seed_id = 4;
-    veidemann.api.config.v1.CrawlScope scope = 5;
     google.protobuf.Timestamp start_time = 6; // When this crawl execution started crawling
     google.protobuf.Timestamp end_time = 7; // When this crawl execution ended
     int64 documents_crawled = 8;
@@ -160,7 +162,6 @@ message JobExecutionStatus {
 message CrawlLog {
     string warc_id = 1;
     google.protobuf.Timestamp time_stamp = 2;
-    string surt = 3;
     int32 status_code = 4;
     int64 size = 5;
     string requested_uri = 6;

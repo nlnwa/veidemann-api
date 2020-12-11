@@ -4,7 +4,7 @@ package veidemann.api.config.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/nlnwa/veidemann-api-go/config/v1;config";
+option go_package = "github.com/nlnwa/veidemann-api/go/config/v1;config";
 option java_multiple_files = true;
 option java_package = "no.nb.nna.veidemann.api.config.v1";
 option java_outer_classname = "ConfigResources";
@@ -77,7 +77,6 @@ message CrawlEntity {
 
 message Seed {
     veidemann.api.config.v1.ConfigRef entity_ref = 3;
-    CrawlScope scope = 4;
     repeated veidemann.api.config.v1.ConfigRef job_ref = 5;
     bool disabled = 18;
 }
@@ -86,6 +85,7 @@ message CrawlJob {
     veidemann.api.config.v1.ConfigRef schedule_ref = 3;
     CrawlLimitsConfig limits = 4;
     veidemann.api.config.v1.ConfigRef crawl_config_ref = 5;
+    veidemann.api.config.v1.ConfigRef scope_script_ref = 6;
     bool disabled = 18;
 }
 
@@ -103,7 +103,6 @@ message CrawlConfig {
 }
 
 message ExtraConfig {
-    bool extract_text = 5; // Not implemented
     bool create_screenshot = 6;
 }
 
@@ -113,13 +112,7 @@ message CrawlScheduleConfig {
     google.protobuf.Timestamp valid_to = 5;
 }
 
-message CrawlScope {
-    string surt_prefix = 1;
-}
-
 message CrawlLimitsConfig {
-    // How deep from a seed to crawl
-    int32 depth = 1;
     // Maximum time in seconds allowed for crawl to finish
     int64 max_duration_s = 2;
     // Maximum number of bytes to fetch before ending crawl
@@ -229,6 +222,7 @@ message BrowserScript {
         REPLACEMENT = 2;
         ON_LOAD = 3;
         ON_NEW_DOCUMENT = 4;
+        SCOPE_CHECK = 5;
     }
     string script = 3;
     repeated string url_regexp = 4;
@@ -263,13 +257,13 @@ enum Role {
 }
 
 message ApiKey {
-    string token=1;
-    google.protobuf.Timestamp validUntil=2;
+    string token = 1;
+    google.protobuf.Timestamp validUntil = 2;
 }
 
 message RoleMapping {
     oneof email_or_group {
-        ApiKey api_key=1;
+        ApiKey api_key = 1;
         string email = 2;
         string group = 3;
     }

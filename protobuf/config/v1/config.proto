@@ -6,7 +6,7 @@ import "config/v1/resources.proto";
 import "commons/v1/resources.proto";
 import "google/protobuf/empty.proto";
 
-option go_package = "github.com/nlnwa/veidemann-api-go/config/v1;config";
+option go_package = "github.com/nlnwa/veidemann-api/go/config/v1;config";
 option java_multiple_files = true;
 option java_package = "no.nb.nna.veidemann.api.config.v1";
 option java_outer_classname = "ConfigService";
@@ -31,6 +31,20 @@ service Config {
     rpc GetLogConfig (google.protobuf.Empty) returns (LogLevels) {}
 
     rpc SaveLogConfig (LogLevels) returns (LogLevels) {}
+
+    rpc GetScriptAnnotations (veidemann.api.config.v1.GetScriptAnnotationsRequest) returns (veidemann.api.config.v1.GetScriptAnnotationsResponse) {}
+}
+
+message GetScriptAnnotationsRequest {
+    // A job configuration referencing scripts from which to extract annotations (required).
+    veidemann.api.config.v1.ConfigRef job = 1;
+    // A seed which could contain overrides for the annotations (optional).
+    // Also the seed's entity is considered.
+    veidemann.api.config.v1.ConfigRef seed = 2;
+}
+
+message GetScriptAnnotationsResponse {
+    repeated veidemann.api.config.v1.Annotation annotation = 1;
 }
 
 message GetLabelKeysRequest {
