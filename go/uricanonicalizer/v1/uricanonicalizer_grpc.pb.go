@@ -11,6 +11,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // UriCanonicalizerServiceClient is the client API for UriCanonicalizerService service.
@@ -73,7 +74,7 @@ type UnsafeUriCanonicalizerServiceServer interface {
 }
 
 func RegisterUriCanonicalizerServiceServer(s grpc.ServiceRegistrar, srv UriCanonicalizerServiceServer) {
-	s.RegisterService(&_UriCanonicalizerService_serviceDesc, srv)
+	s.RegisterService(&UriCanonicalizerService_ServiceDesc, srv)
 }
 
 func _UriCanonicalizerService_Canonicalize_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -94,7 +95,10 @@ func _UriCanonicalizerService_Canonicalize_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
-var _UriCanonicalizerService_serviceDesc = grpc.ServiceDesc{
+// UriCanonicalizerService_ServiceDesc is the grpc.ServiceDesc for UriCanonicalizerService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var UriCanonicalizerService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "veidemann.api.uricanonicalizer.v1.UriCanonicalizerService",
 	HandlerType: (*UriCanonicalizerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{

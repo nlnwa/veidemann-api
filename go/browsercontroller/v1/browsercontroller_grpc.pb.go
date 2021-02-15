@@ -11,6 +11,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // BrowserControllerClient is the client API for BrowserController service.
@@ -29,7 +30,7 @@ func NewBrowserControllerClient(cc grpc.ClientConnInterface) BrowserControllerCl
 }
 
 func (c *browserControllerClient) Do(ctx context.Context, opts ...grpc.CallOption) (BrowserController_DoClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_BrowserController_serviceDesc.Streams[0], "/veidemann.api.browsercontroller.v1.BrowserController/do", opts...)
+	stream, err := c.cc.NewStream(ctx, &BrowserController_ServiceDesc.Streams[0], "/veidemann.api.browsercontroller.v1.BrowserController/do", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +85,7 @@ type UnsafeBrowserControllerServer interface {
 }
 
 func RegisterBrowserControllerServer(s grpc.ServiceRegistrar, srv BrowserControllerServer) {
-	s.RegisterService(&_BrowserController_serviceDesc, srv)
+	s.RegisterService(&BrowserController_ServiceDesc, srv)
 }
 
 func _BrowserController_Do_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -113,7 +114,10 @@ func (x *browserControllerDoServer) Recv() (*DoRequest, error) {
 	return m, nil
 }
 
-var _BrowserController_serviceDesc = grpc.ServiceDesc{
+// BrowserController_ServiceDesc is the grpc.ServiceDesc for BrowserController service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var BrowserController_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "veidemann.api.browsercontroller.v1.BrowserController",
 	HandlerType: (*BrowserControllerServer)(nil),
 	Methods:     []grpc.MethodDesc{},

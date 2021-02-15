@@ -11,6 +11,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // ScopesCheckerServiceClient is the client API for ScopesCheckerService service.
@@ -64,7 +65,7 @@ type UnsafeScopesCheckerServiceServer interface {
 }
 
 func RegisterScopesCheckerServiceServer(s grpc.ServiceRegistrar, srv ScopesCheckerServiceServer) {
-	s.RegisterService(&_ScopesCheckerService_serviceDesc, srv)
+	s.RegisterService(&ScopesCheckerService_ServiceDesc, srv)
 }
 
 func _ScopesCheckerService_ScopeCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -85,7 +86,10 @@ func _ScopesCheckerService_ScopeCheck_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-var _ScopesCheckerService_serviceDesc = grpc.ServiceDesc{
+// ScopesCheckerService_ServiceDesc is the grpc.ServiceDesc for ScopesCheckerService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var ScopesCheckerService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "veidemann.api.scopechecker.v1.ScopesCheckerService",
 	HandlerType: (*ScopesCheckerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{

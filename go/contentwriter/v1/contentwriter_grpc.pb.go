@@ -11,6 +11,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // ContentWriterClient is the client API for ContentWriter service.
@@ -29,7 +30,7 @@ func NewContentWriterClient(cc grpc.ClientConnInterface) ContentWriterClient {
 }
 
 func (c *contentWriterClient) Write(ctx context.Context, opts ...grpc.CallOption) (ContentWriter_WriteClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_ContentWriter_serviceDesc.Streams[0], "/veidemann.api.contentwriter.v1.ContentWriter/write", opts...)
+	stream, err := c.cc.NewStream(ctx, &ContentWriter_ServiceDesc.Streams[0], "/veidemann.api.contentwriter.v1.ContentWriter/write", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +88,7 @@ type UnsafeContentWriterServer interface {
 }
 
 func RegisterContentWriterServer(s grpc.ServiceRegistrar, srv ContentWriterServer) {
-	s.RegisterService(&_ContentWriter_serviceDesc, srv)
+	s.RegisterService(&ContentWriter_ServiceDesc, srv)
 }
 
 func _ContentWriter_Write_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -116,7 +117,10 @@ func (x *contentWriterWriteServer) Recv() (*WriteRequest, error) {
 	return m, nil
 }
 
-var _ContentWriter_serviceDesc = grpc.ServiceDesc{
+// ContentWriter_ServiceDesc is the grpc.ServiceDesc for ContentWriter service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var ContentWriter_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "veidemann.api.contentwriter.v1.ContentWriter",
 	HandlerType: (*ContentWriterServer)(nil),
 	Methods:     []grpc.MethodDesc{},

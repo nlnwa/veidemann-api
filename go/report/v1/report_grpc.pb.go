@@ -12,6 +12,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // ReportClient is the client API for Report service.
@@ -43,7 +44,7 @@ func NewReportClient(cc grpc.ClientConnInterface) ReportClient {
 }
 
 func (c *reportClient) ListCrawlLogs(ctx context.Context, in *CrawlLogListRequest, opts ...grpc.CallOption) (Report_ListCrawlLogsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Report_serviceDesc.Streams[0], "/veidemann.api.report.v1.Report/ListCrawlLogs", opts...)
+	stream, err := c.cc.NewStream(ctx, &Report_ServiceDesc.Streams[0], "/veidemann.api.report.v1.Report/ListCrawlLogs", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +85,7 @@ func (c *reportClient) CountCrawlLogs(ctx context.Context, in *CrawlLogListReque
 }
 
 func (c *reportClient) ListPageLogs(ctx context.Context, in *PageLogListRequest, opts ...grpc.CallOption) (Report_ListPageLogsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Report_serviceDesc.Streams[1], "/veidemann.api.report.v1.Report/ListPageLogs", opts...)
+	stream, err := c.cc.NewStream(ctx, &Report_ServiceDesc.Streams[1], "/veidemann.api.report.v1.Report/ListPageLogs", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +126,7 @@ func (c *reportClient) CountPageLogs(ctx context.Context, in *PageLogListRequest
 }
 
 func (c *reportClient) ExecuteDbQuery(ctx context.Context, in *ExecuteDbQueryRequest, opts ...grpc.CallOption) (Report_ExecuteDbQueryClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Report_serviceDesc.Streams[2], "/veidemann.api.report.v1.Report/ExecuteDbQuery", opts...)
+	stream, err := c.cc.NewStream(ctx, &Report_ServiceDesc.Streams[2], "/veidemann.api.report.v1.Report/ExecuteDbQuery", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +158,7 @@ func (x *reportExecuteDbQueryClient) Recv() (*ExecuteDbQueryReply, error) {
 }
 
 func (c *reportClient) ListExecutions(ctx context.Context, in *CrawlExecutionsListRequest, opts ...grpc.CallOption) (Report_ListExecutionsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Report_serviceDesc.Streams[3], "/veidemann.api.report.v1.Report/ListExecutions", opts...)
+	stream, err := c.cc.NewStream(ctx, &Report_ServiceDesc.Streams[3], "/veidemann.api.report.v1.Report/ListExecutions", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +190,7 @@ func (x *reportListExecutionsClient) Recv() (*v1.CrawlExecutionStatus, error) {
 }
 
 func (c *reportClient) ListJobExecutions(ctx context.Context, in *JobExecutionsListRequest, opts ...grpc.CallOption) (Report_ListJobExecutionsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Report_serviceDesc.Streams[4], "/veidemann.api.report.v1.Report/ListJobExecutions", opts...)
+	stream, err := c.cc.NewStream(ctx, &Report_ServiceDesc.Streams[4], "/veidemann.api.report.v1.Report/ListJobExecutions", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -276,7 +277,7 @@ type UnsafeReportServer interface {
 }
 
 func RegisterReportServer(s grpc.ServiceRegistrar, srv ReportServer) {
-	s.RegisterService(&_Report_serviceDesc, srv)
+	s.RegisterService(&Report_ServiceDesc, srv)
 }
 
 func _Report_ListCrawlLogs_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -420,7 +421,10 @@ func (x *reportListJobExecutionsServer) Send(m *v1.JobExecutionStatus) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-var _Report_serviceDesc = grpc.ServiceDesc{
+// Report_ServiceDesc is the grpc.ServiceDesc for Report service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Report_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "veidemann.api.report.v1.Report",
 	HandlerType: (*ReportServer)(nil),
 	Methods: []grpc.MethodDesc{
