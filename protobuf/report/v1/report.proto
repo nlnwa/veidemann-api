@@ -4,6 +4,7 @@ package veidemann.api.report.v1;
 
 import "commons/v1/resources.proto";
 import "frontier/v1/resources.proto";
+import "log/v1/resources.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/nlnwa/veidemann-api/go/report/v1;report";
@@ -14,14 +15,10 @@ option java_outer_classname = "ReportService";
 // Service for crawler reports.
 service Report {
     // List crawl logs
-    rpc ListCrawlLogs (CrawlLogListRequest) returns (stream veidemann.api.frontier.v1.CrawlLog) {}
-    // Count crawl logs objects
-    rpc CountCrawlLogs (CrawlLogListRequest) returns (ListCountResponse) {}
+    rpc ListCrawlLogs (CrawlLogListRequest) returns (stream veidemann.api.log.v1.CrawlLog) {}
 
     // List page logs
-    rpc ListPageLogs (PageLogListRequest) returns (stream veidemann.api.frontier.v1.PageLog) {}
-    // Count page logs objects
-    rpc CountPageLogs (PageLogListRequest) returns (ListCountResponse) {}
+    rpc ListPageLogs (PageLogListRequest) returns (stream veidemann.api.log.v1.PageLog) {}
 
     // Execute a query against the database
     rpc ExecuteDbQuery (ExecuteDbQueryRequest) returns (stream ExecuteDbQueryReply) {}
@@ -37,7 +34,7 @@ service Report {
 message CrawlLogListRequest {
     // Select objects by one or more id's
     repeated string warc_id = 2;
-    veidemann.api.frontier.v1.CrawlLog query_template = 5;
+    veidemann.api.log.v1.CrawlLog query_template = 5;
     veidemann.api.commons.v1.FieldMask query_mask = 6;
     veidemann.api.commons.v1.FieldMask returned_fields_mask = 7;
     string order_by_path = 8;
@@ -50,7 +47,7 @@ message CrawlLogListRequest {
 message PageLogListRequest {
     // Select objects by one or more id's
     repeated string warc_id = 2;
-    veidemann.api.frontier.v1.PageLog query_template = 5;
+    veidemann.api.log.v1.PageLog query_template = 5;
     veidemann.api.commons.v1.FieldMask query_mask = 6;
     veidemann.api.commons.v1.FieldMask returned_fields_mask = 7;
     string order_by_path = 8;
