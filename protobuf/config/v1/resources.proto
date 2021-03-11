@@ -178,27 +178,6 @@ message PolitenessConfig {
     int32 minimum_robots_validity_duration_s = 11;
     string custom_robots = 20;
 
-    // Default lover limit for time between pageloads from this CrawlHostGroup.
-    // Value might be overridden on a per CrawlHostGroup basis.
-    int64 default_min_time_between_page_load_ms = 4;
-    // Default upper limit for time between pageloads from this CrawlHostGroup.
-    // This is the upper limit for calculation of dealy time, but actual time might be higher depending on
-    // the harvesters capacity.
-    // Value might be overridden on a per CrawlHostGroup basis.
-    int64 default_max_time_between_page_load_ms = 5;
-    // The fetch time of the URI is multiplied with this value to get the delay time before fetching the next URI.
-    // If min_time_between_page_load_ms and/or max_time_between_page_load_ms are set, then those values are used as
-    // the upper/lower limits for delay.
-    // If delay_factor is unset or zero, then a delay_facor of one is assumed. If delay_factor is negative,
-    // a delay_factor of zero is assumed.
-    // Value might be overridden on a per CrawlHostGroup basis.
-    float default_delay_factor = 6;
-    // Default maximum number of retries before giving up fetching a uri.
-    // Value might be overridden on a per CrawlHostGroup basis.
-    int32 default_max_retries = 7;
-    // Default minimum time before a failed page load is retried.
-    // Value might be overridden on a per CrawlHostGroup basis.
-    int32 default_retry_delay_seconds = 8;
     // If true, use hostname instead of ip for politeness
     bool use_hostname = 10;
 }
