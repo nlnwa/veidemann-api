@@ -12,6 +12,7 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
+// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // FrontierClient is the client API for Frontier service.
@@ -51,7 +52,7 @@ func (c *frontierClient) CrawlSeed(ctx context.Context, in *CrawlSeedRequest, op
 }
 
 func (c *frontierClient) GetNextPage(ctx context.Context, opts ...grpc.CallOption) (Frontier_GetNextPageClient, error) {
-	stream, err := c.cc.NewStream(ctx, &_Frontier_serviceDesc.Streams[0], "/veidemann.api.frontier.v1.Frontier/GetNextPage", opts...)
+	stream, err := c.cc.NewStream(ctx, &Frontier_ServiceDesc.Streams[0], "/veidemann.api.frontier.v1.Frontier/GetNextPage", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -169,7 +170,7 @@ type UnsafeFrontierServer interface {
 }
 
 func RegisterFrontierServer(s grpc.ServiceRegistrar, srv FrontierServer) {
-	s.RegisterService(&_Frontier_serviceDesc, srv)
+	s.RegisterService(&Frontier_ServiceDesc, srv)
 }
 
 func _Frontier_CrawlSeed_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -288,7 +289,10 @@ func _Frontier_QueueCountForCrawlHostGroup_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
-var _Frontier_serviceDesc = grpc.ServiceDesc{
+// Frontier_ServiceDesc is the grpc.ServiceDesc for Frontier service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Frontier_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "veidemann.api.frontier.v1.Frontier",
 	HandlerType: (*FrontierServer)(nil),
 	Methods: []grpc.MethodDesc{

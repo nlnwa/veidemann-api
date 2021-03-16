@@ -37,6 +37,8 @@ message QueuedUri {
     string crawl_host_group_id = 14; // The Crawl Host Group calculated for this uri
     veidemann.api.config.v1.ConfigRef politeness_ref = 15; // Ref to the politeness config used when discovering this uri
     veidemann.api.commons.v1.Error error = 16; // Contains the error reason if fetch failed
+    // Id of the job execution for this uri.
+    // A job execution is an instance of a job
     string job_execution_id = 17;
     bool unresolved = 18; // If true, then this uri is just added to the queue and no resolution of ip or robots.txt checks are done yet.
     google.protobuf.Timestamp fetch_start_time_stamp = 19;
@@ -73,9 +75,33 @@ message Cookie {
 }
 
 message CrawlHostGroup {
-    string id = 1; // SHA-1 hash of uri or crawlgroup config id
-    string politeness_id = 2; // The politeness config this group is valid for
-    int64 queued_uri_count = 5; // The number of queued Uri's belonging to this CrawlHostGroup
+    // If IP-address is not resolved this is SHA-1 of URL.
+    // After IP-resolution this is SHA-1 hash of IP or CrawlHostGroupConfig id if one such config matched.
+    string id = 1;
+    // Lover limit for time between pageloads from this CrawlHostGroup.
+    int64 min_time_between_page_load_ms = 2;
+    // Upper limit for time between pageloads from this CrawlHostGroup.
+    // This is the upper limit for calculation of dealy time, but actual time might be higher depending on
+    // the harvesters capacity.
+    int64 max_time_between_page_load_ms = 3;
+    // The fetch time of the URI is multiplied with this value to get the delay time before fetching the next URI.
+    // If min_time_between_page_load_ms and/or max_time_between_page_load_ms are set, then those values are used as
+    // the upper/lower limits for delay.
+    // If delay_factor is unset or zero, then a delay_facor of one is assumed. If delay_factor is negative,
+    // a delay_factor of zero is assumed.
+    float delay_factor = 4;
+    // The maximum number of retries before giving up fetching a uri.
+    int32 max_retries = 5;
+    // The minimum time before a failed page load is retried.
+    int32 retry_delay_seconds = 6;
+    // The number of queued Uri's belonging to this CrawlHostGroup
+    int64 queued_uri_count = 7;
+    // If this CrawlHostGroup is busy, this field contains the id of the uri currently beeing fetched.
+    string current_uri_id = 8;
+    // Token to guard against two harvesters responding to the same request.
+    string session_token = 9;
+    // The time when frontier sent a PageHarvestSpec to a harvester.
+    google.protobuf.Timestamp fetch_start_time_stamp = 10;
 }
 
 // Metadata about a crawl execution.

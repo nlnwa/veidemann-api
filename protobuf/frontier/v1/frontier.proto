@@ -72,6 +72,8 @@ message PageHarvest {
         // If the overall page fetch failed. Should not be used for a singel uri failure
         veidemann.api.commons.v1.Error error = 4;
     }
+
+    string session_token = 5;
 }
 
 // A specification of the page to fetch.
@@ -80,6 +82,8 @@ message PageHarvestSpec {
     veidemann.api.frontier.v1.QueuedUri queued_uri = 1;
     // The configuration for the fetch
     veidemann.api.config.v1.ConfigObject crawl_config = 2;
+    // Session token for this request. The Harvester is responsible for setting the same session token in all responses.
+    string session_token = 3;
 }
 
 message CountResponse {
