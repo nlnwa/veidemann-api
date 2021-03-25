@@ -138,6 +138,7 @@ message CrawlExecutionStatus {
     repeated string current_uri_id = 20;
     string job_execution_id = 21;
     veidemann.api.commons.v1.Error error = 22; // Extra description of error state
+    State desired_state = 23; // Used when external process want to abort execution
 }
 
 message CrawlExecutionStatusChange {
@@ -183,6 +184,7 @@ message JobExecutionStatus {
     int64 documents_retried = 13;
     int64 documents_denied = 14;
     veidemann.api.commons.v1.Error error = 15; // Extra description of error state
+    State desired_state = 16; // Used when external process want to abort execution
 }
 
 message CrawlLog {
