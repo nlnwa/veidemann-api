@@ -18,6 +18,7 @@ service DnsResolver {
 message ResolveRequest {
     string host = 1;
     int32 port = 2;
+    string execution_id = 6;
     veidemann.api.config.v1.ConfigRef collection_ref = 7;
 }
 
