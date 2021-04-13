@@ -3,7 +3,7 @@ syntax = "proto3";
 package veidemann.api.browsercontroller.v1;
 
 import "config/v1/resources.proto";
-import "frontier/v1/resources.proto";
+import "log/v1/resources.proto";
 
 option go_package = "github.com/nlnwa/veidemann-api/go/browsercontroller/v1;browsercontroller";
 option java_multiple_files = true;
@@ -34,7 +34,7 @@ message NotifyActivity {
 }
 
 message Completed {
-    veidemann.api.frontier.v1.CrawlLog crawl_log = 1;
+    veidemann.api.log.v1.CrawlLog crawl_log = 1;
     bool cached = 2;
 }
 

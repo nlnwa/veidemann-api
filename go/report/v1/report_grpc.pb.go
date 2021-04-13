@@ -4,7 +4,8 @@ package report
 
 import (
 	context "context"
-	v1 "github.com/nlnwa/veidemann-api/go/frontier/v1"
+	v11 "github.com/nlnwa/veidemann-api/go/frontier/v1"
+	v1 "github.com/nlnwa/veidemann-api/go/log/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -21,12 +22,8 @@ const _ = grpc.SupportPackageIsVersion7
 type ReportClient interface {
 	// List crawl logs
 	ListCrawlLogs(ctx context.Context, in *CrawlLogListRequest, opts ...grpc.CallOption) (Report_ListCrawlLogsClient, error)
-	// Count crawl logs objects
-	CountCrawlLogs(ctx context.Context, in *CrawlLogListRequest, opts ...grpc.CallOption) (*ListCountResponse, error)
 	// List page logs
 	ListPageLogs(ctx context.Context, in *PageLogListRequest, opts ...grpc.CallOption) (Report_ListPageLogsClient, error)
-	// Count page logs objects
-	CountPageLogs(ctx context.Context, in *PageLogListRequest, opts ...grpc.CallOption) (*ListCountResponse, error)
 	// Execute a query against the database
 	ExecuteDbQuery(ctx context.Context, in *ExecuteDbQueryRequest, opts ...grpc.CallOption) (Report_ExecuteDbQueryClient, error)
 	// List a set of crawl executions
@@ -75,15 +72,6 @@ func (x *reportListCrawlLogsClient) Recv() (*v1.CrawlLog, error) {
 	return m, nil
 }
 
-func (c *reportClient) CountCrawlLogs(ctx context.Context, in *CrawlLogListRequest, opts ...grpc.CallOption) (*ListCountResponse, error) {
-	out := new(ListCountResponse)
-	err := c.cc.Invoke(ctx, "/veidemann.api.report.v1.Report/CountCrawlLogs", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *reportClient) ListPageLogs(ctx context.Context, in *PageLogListRequest, opts ...grpc.CallOption) (Report_ListPageLogsClient, error) {
 	stream, err := c.cc.NewStream(ctx, &Report_ServiceDesc.Streams[1], "/veidemann.api.report.v1.Report/ListPageLogs", opts...)
 	if err != nil {
@@ -114,15 +102,6 @@ func (x *reportListPageLogsClient) Recv() (*v1.PageLog, error) {
 		return nil, err
 	}
 	return m, nil
-}
-
-func (c *reportClient) CountPageLogs(ctx context.Context, in *PageLogListRequest, opts ...grpc.CallOption) (*ListCountResponse, error) {
-	out := new(ListCountResponse)
-	err := c.cc.Invoke(ctx, "/veidemann.api.report.v1.Report/CountPageLogs", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *reportClient) ExecuteDbQuery(ctx context.Context, in *ExecuteDbQueryRequest, opts ...grpc.CallOption) (Report_ExecuteDbQueryClient, error) {
@@ -173,7 +152,7 @@ func (c *reportClient) ListExecutions(ctx context.Context, in *CrawlExecutionsLi
 }
 
 type Report_ListExecutionsClient interface {
-	Recv() (*v1.CrawlExecutionStatus, error)
+	Recv() (*v11.CrawlExecutionStatus, error)
 	grpc.ClientStream
 }
 
@@ -181,8 +160,8 @@ type reportListExecutionsClient struct {
 	grpc.ClientStream
 }
 
-func (x *reportListExecutionsClient) Recv() (*v1.CrawlExecutionStatus, error) {
-	m := new(v1.CrawlExecutionStatus)
+func (x *reportListExecutionsClient) Recv() (*v11.CrawlExecutionStatus, error) {
+	m := new(v11.CrawlExecutionStatus)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -205,7 +184,7 @@ func (c *reportClient) ListJobExecutions(ctx context.Context, in *JobExecutionsL
 }
 
 type Report_ListJobExecutionsClient interface {
-	Recv() (*v1.JobExecutionStatus, error)
+	Recv() (*v11.JobExecutionStatus, error)
 	grpc.ClientStream
 }
 
@@ -213,8 +192,8 @@ type reportListJobExecutionsClient struct {
 	grpc.ClientStream
 }
 
-func (x *reportListJobExecutionsClient) Recv() (*v1.JobExecutionStatus, error) {
-	m := new(v1.JobExecutionStatus)
+func (x *reportListJobExecutionsClient) Recv() (*v11.JobExecutionStatus, error) {
+	m := new(v11.JobExecutionStatus)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -227,12 +206,8 @@ func (x *reportListJobExecutionsClient) Recv() (*v1.JobExecutionStatus, error) {
 type ReportServer interface {
 	// List crawl logs
 	ListCrawlLogs(*CrawlLogListRequest, Report_ListCrawlLogsServer) error
-	// Count crawl logs objects
-	CountCrawlLogs(context.Context, *CrawlLogListRequest) (*ListCountResponse, error)
 	// List page logs
 	ListPageLogs(*PageLogListRequest, Report_ListPageLogsServer) error
-	// Count page logs objects
-	CountPageLogs(context.Context, *PageLogListRequest) (*ListCountResponse, error)
 	// Execute a query against the database
 	ExecuteDbQuery(*ExecuteDbQueryRequest, Report_ExecuteDbQueryServer) error
 	// List a set of crawl executions
@@ -249,14 +224,8 @@ type UnimplementedReportServer struct {
 func (UnimplementedReportServer) ListCrawlLogs(*CrawlLogListRequest, Report_ListCrawlLogsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListCrawlLogs not implemented")
 }
-func (UnimplementedReportServer) CountCrawlLogs(context.Context, *CrawlLogListRequest) (*ListCountResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CountCrawlLogs not implemented")
-}
 func (UnimplementedReportServer) ListPageLogs(*PageLogListRequest, Report_ListPageLogsServer) error {
 	return status.Errorf(codes.Unimplemented, "method ListPageLogs not implemented")
-}
-func (UnimplementedReportServer) CountPageLogs(context.Context, *PageLogListRequest) (*ListCountResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CountPageLogs not implemented")
 }
 func (UnimplementedReportServer) ExecuteDbQuery(*ExecuteDbQueryRequest, Report_ExecuteDbQueryServer) error {
 	return status.Errorf(codes.Unimplemented, "method ExecuteDbQuery not implemented")
@@ -301,24 +270,6 @@ func (x *reportListCrawlLogsServer) Send(m *v1.CrawlLog) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _Report_CountCrawlLogs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CrawlLogListRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ReportServer).CountCrawlLogs(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/veidemann.api.report.v1.Report/CountCrawlLogs",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ReportServer).CountCrawlLogs(ctx, req.(*CrawlLogListRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Report_ListPageLogs_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(PageLogListRequest)
 	if err := stream.RecvMsg(m); err != nil {
@@ -338,24 +289,6 @@ type reportListPageLogsServer struct {
 
 func (x *reportListPageLogsServer) Send(m *v1.PageLog) error {
 	return x.ServerStream.SendMsg(m)
-}
-
-func _Report_CountPageLogs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PageLogListRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ReportServer).CountPageLogs(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/veidemann.api.report.v1.Report/CountPageLogs",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ReportServer).CountPageLogs(ctx, req.(*PageLogListRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Report_ExecuteDbQuery_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -388,7 +321,7 @@ func _Report_ListExecutions_Handler(srv interface{}, stream grpc.ServerStream) e
 }
 
 type Report_ListExecutionsServer interface {
-	Send(*v1.CrawlExecutionStatus) error
+	Send(*v11.CrawlExecutionStatus) error
 	grpc.ServerStream
 }
 
@@ -396,7 +329,7 @@ type reportListExecutionsServer struct {
 	grpc.ServerStream
 }
 
-func (x *reportListExecutionsServer) Send(m *v1.CrawlExecutionStatus) error {
+func (x *reportListExecutionsServer) Send(m *v11.CrawlExecutionStatus) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -409,7 +342,7 @@ func _Report_ListJobExecutions_Handler(srv interface{}, stream grpc.ServerStream
 }
 
 type Report_ListJobExecutionsServer interface {
-	Send(*v1.JobExecutionStatus) error
+	Send(*v11.JobExecutionStatus) error
 	grpc.ServerStream
 }
 
@@ -417,7 +350,7 @@ type reportListJobExecutionsServer struct {
 	grpc.ServerStream
 }
 
-func (x *reportListJobExecutionsServer) Send(m *v1.JobExecutionStatus) error {
+func (x *reportListJobExecutionsServer) Send(m *v11.JobExecutionStatus) error {
 	return x.ServerStream.SendMsg(m)
 }
 
@@ -427,16 +360,7 @@ func (x *reportListJobExecutionsServer) Send(m *v1.JobExecutionStatus) error {
 var Report_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "veidemann.api.report.v1.Report",
 	HandlerType: (*ReportServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "CountCrawlLogs",
-			Handler:    _Report_CountCrawlLogs_Handler,
-		},
-		{
-			MethodName: "CountPageLogs",
-			Handler:    _Report_CountPageLogs_Handler,
-		},
-	},
+	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "ListCrawlLogs",
