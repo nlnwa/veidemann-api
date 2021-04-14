@@ -4,7 +4,6 @@ package veidemann.api.report.v1;
 
 import "commons/v1/resources.proto";
 import "frontier/v1/resources.proto";
-import "log/v1/resources.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/nlnwa/veidemann-api/go/report/v1;report";
@@ -14,12 +13,6 @@ option java_outer_classname = "ReportService";
 
 // Service for crawler reports.
 service Report {
-    // List crawl logs
-    rpc ListCrawlLogs (CrawlLogListRequest) returns (stream veidemann.api.log.v1.CrawlLog) {}
-
-    // List page logs
-    rpc ListPageLogs (PageLogListRequest) returns (stream veidemann.api.log.v1.PageLog) {}
-
     // Execute a query against the database
     rpc ExecuteDbQuery (ExecuteDbQueryRequest) returns (stream ExecuteDbQueryReply) {}
 
@@ -28,33 +21,6 @@ service Report {
 
     // List a set of job executions
     rpc ListJobExecutions (JobExecutionsListRequest) returns (stream veidemann.api.frontier.v1.JobExecutionStatus) {}
-}
-
-// Specification of which entities to get.
-message CrawlLogListRequest {
-    // Select objects by one or more id's
-    repeated string warc_id = 2;
-    veidemann.api.log.v1.CrawlLog query_template = 5;
-    veidemann.api.commons.v1.FieldMask query_mask = 6;
-    veidemann.api.commons.v1.FieldMask returned_fields_mask = 7;
-    string order_by_path = 8;
-    bool order_descending = 9;
-    bool watch = 13;
-    int32 page_size = 14;
-    int32 offset = 15;
-}
-
-message PageLogListRequest {
-    // Select objects by one or more id's
-    repeated string warc_id = 2;
-    veidemann.api.log.v1.PageLog query_template = 5;
-    veidemann.api.commons.v1.FieldMask query_mask = 6;
-    veidemann.api.commons.v1.FieldMask returned_fields_mask = 7;
-    string order_by_path = 8;
-    bool order_descending = 9;
-    bool watch = 13;
-    int32 page_size = 14;
-    int32 offset = 15;
 }
 
 message ExecuteDbQueryRequest {
@@ -66,11 +32,6 @@ message ExecuteDbQueryRequest {
 
 message ExecuteDbQueryReply {
     string record = 1;
-}
-
-message ListCountResponse {
-    int64 count = 1;
-    bool approximate = 2;
 }
 
 message CrawlExecutionsListRequest {
