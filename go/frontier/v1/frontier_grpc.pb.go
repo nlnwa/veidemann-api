@@ -21,9 +21,13 @@ const _ = grpc.SupportPackageIsVersion7
 type FrontierClient interface {
 	// Start crawling seed
 	CrawlSeed(ctx context.Context, in *CrawlSeedRequest, opts ...grpc.CallOption) (*CrawlExecutionId, error)
-	// Request a URI from the Frontiers queue
-	// Used by a Harvester to fetch a new page
-	GetNextPage(ctx context.Context, opts ...grpc.CallOption) (Frontier_GetNextPageClient, error)
+	// Request a URI from the Frontiers queue.
+	// Used by a Harvester to fetch a new page. If no URI is ready for harvesting, Frontier should return
+	// gRPC status NOT_FOUND. Harvester should then retry the request after a reasonable backoff time.
+	GetNextPage(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*PageHarvestSpec, error)
+	// Inform Frontier that a page fetch was finished.
+	// Contains metrics, outlinks and error as a stream of messages. Client closes stream when finished.
+	PageCompleted(ctx context.Context, opts ...grpc.CallOption) (Frontier_PageCompletedClient, error)
 	// The number of busy CrawlHostGroups which essentially is the number of web pages currently downloading
 	BusyCrawlHostGroupCount(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*CountResponse, error)
 	// Total number of queued URI's
@@ -51,31 +55,43 @@ func (c *frontierClient) CrawlSeed(ctx context.Context, in *CrawlSeedRequest, op
 	return out, nil
 }
 
-func (c *frontierClient) GetNextPage(ctx context.Context, opts ...grpc.CallOption) (Frontier_GetNextPageClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Frontier_ServiceDesc.Streams[0], "/veidemann.api.frontier.v1.Frontier/GetNextPage", opts...)
+func (c *frontierClient) GetNextPage(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*PageHarvestSpec, error) {
+	out := new(PageHarvestSpec)
+	err := c.cc.Invoke(ctx, "/veidemann.api.frontier.v1.Frontier/GetNextPage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &frontierGetNextPageClient{stream}
+	return out, nil
+}
+
+func (c *frontierClient) PageCompleted(ctx context.Context, opts ...grpc.CallOption) (Frontier_PageCompletedClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Frontier_ServiceDesc.Streams[0], "/veidemann.api.frontier.v1.Frontier/PageCompleted", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &frontierPageCompletedClient{stream}
 	return x, nil
 }
 
-type Frontier_GetNextPageClient interface {
+type Frontier_PageCompletedClient interface {
 	Send(*PageHarvest) error
-	Recv() (*PageHarvestSpec, error)
+	CloseAndRecv() (*empty.Empty, error)
 	grpc.ClientStream
 }
 
-type frontierGetNextPageClient struct {
+type frontierPageCompletedClient struct {
 	grpc.ClientStream
 }
 
-func (x *frontierGetNextPageClient) Send(m *PageHarvest) error {
+func (x *frontierPageCompletedClient) Send(m *PageHarvest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *frontierGetNextPageClient) Recv() (*PageHarvestSpec, error) {
-	m := new(PageHarvestSpec)
+func (x *frontierPageCompletedClient) CloseAndRecv() (*empty.Empty, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(empty.Empty)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -124,9 +140,13 @@ func (c *frontierClient) QueueCountForCrawlHostGroup(ctx context.Context, in *Cr
 type FrontierServer interface {
 	// Start crawling seed
 	CrawlSeed(context.Context, *CrawlSeedRequest) (*CrawlExecutionId, error)
-	// Request a URI from the Frontiers queue
-	// Used by a Harvester to fetch a new page
-	GetNextPage(Frontier_GetNextPageServer) error
+	// Request a URI from the Frontiers queue.
+	// Used by a Harvester to fetch a new page. If no URI is ready for harvesting, Frontier should return
+	// gRPC status NOT_FOUND. Harvester should then retry the request after a reasonable backoff time.
+	GetNextPage(context.Context, *empty.Empty) (*PageHarvestSpec, error)
+	// Inform Frontier that a page fetch was finished.
+	// Contains metrics, outlinks and error as a stream of messages. Client closes stream when finished.
+	PageCompleted(Frontier_PageCompletedServer) error
 	// The number of busy CrawlHostGroups which essentially is the number of web pages currently downloading
 	BusyCrawlHostGroupCount(context.Context, *empty.Empty) (*CountResponse, error)
 	// Total number of queued URI's
@@ -145,8 +165,11 @@ type UnimplementedFrontierServer struct {
 func (UnimplementedFrontierServer) CrawlSeed(context.Context, *CrawlSeedRequest) (*CrawlExecutionId, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CrawlSeed not implemented")
 }
-func (UnimplementedFrontierServer) GetNextPage(Frontier_GetNextPageServer) error {
-	return status.Errorf(codes.Unimplemented, "method GetNextPage not implemented")
+func (UnimplementedFrontierServer) GetNextPage(context.Context, *empty.Empty) (*PageHarvestSpec, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNextPage not implemented")
+}
+func (UnimplementedFrontierServer) PageCompleted(Frontier_PageCompletedServer) error {
+	return status.Errorf(codes.Unimplemented, "method PageCompleted not implemented")
 }
 func (UnimplementedFrontierServer) BusyCrawlHostGroupCount(context.Context, *empty.Empty) (*CountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BusyCrawlHostGroupCount not implemented")
@@ -191,25 +214,43 @@ func _Frontier_CrawlSeed_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Frontier_GetNextPage_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(FrontierServer).GetNextPage(&frontierGetNextPageServer{stream})
+func _Frontier_GetNextPage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(empty.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FrontierServer).GetNextPage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/veidemann.api.frontier.v1.Frontier/GetNextPage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FrontierServer).GetNextPage(ctx, req.(*empty.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
-type Frontier_GetNextPageServer interface {
-	Send(*PageHarvestSpec) error
+func _Frontier_PageCompleted_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(FrontierServer).PageCompleted(&frontierPageCompletedServer{stream})
+}
+
+type Frontier_PageCompletedServer interface {
+	SendAndClose(*empty.Empty) error
 	Recv() (*PageHarvest, error)
 	grpc.ServerStream
 }
 
-type frontierGetNextPageServer struct {
+type frontierPageCompletedServer struct {
 	grpc.ServerStream
 }
 
-func (x *frontierGetNextPageServer) Send(m *PageHarvestSpec) error {
+func (x *frontierPageCompletedServer) SendAndClose(m *empty.Empty) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *frontierGetNextPageServer) Recv() (*PageHarvest, error) {
+func (x *frontierPageCompletedServer) Recv() (*PageHarvest, error) {
 	m := new(PageHarvest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -301,6 +342,10 @@ var Frontier_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Frontier_CrawlSeed_Handler,
 		},
 		{
+			MethodName: "GetNextPage",
+			Handler:    _Frontier_GetNextPage_Handler,
+		},
+		{
 			MethodName: "BusyCrawlHostGroupCount",
 			Handler:    _Frontier_BusyCrawlHostGroupCount_Handler,
 		},
@@ -319,9 +364,8 @@ var Frontier_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "GetNextPage",
-			Handler:       _Frontier_GetNextPage_Handler,
-			ServerStreams: true,
+			StreamName:    "PageCompleted",
+			Handler:       _Frontier_PageCompleted_Handler,
 			ClientStreams: true,
 		},
 	},

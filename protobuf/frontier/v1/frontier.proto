@@ -18,9 +18,14 @@ service Frontier {
     // Start crawling seed
     rpc CrawlSeed (CrawlSeedRequest) returns (CrawlExecutionId) {}
 
-    // Request a URI from the Frontiers queue
-    // Used by a Harvester to fetch a new page
-    rpc GetNextPage (stream PageHarvest) returns (stream PageHarvestSpec) {}
+    // Request a URI from the Frontiers queue.
+    // Used by a Harvester to fetch a new page. If no URI is ready for harvesting, Frontier should return
+    // gRPC status NOT_FOUND. Harvester should then retry the request after a reasonable backoff time.
+    rpc GetNextPage (google.protobuf.Empty) returns (PageHarvestSpec) {}
+
+    // Inform Frontier that a page fetch was finished.
+    // Contains metrics, outlinks and error as a stream of messages. Client closes stream when finished.
+    rpc PageCompleted (stream PageHarvest) returns (google.protobuf.Empty) {}
 
     // The number of busy CrawlHostGroups which essentially is the number of web pages currently downloading
     rpc BusyCrawlHostGroupCount (google.protobuf.Empty) returns (CountResponse) {}
@@ -48,8 +53,7 @@ message CrawlExecutionId {
     string id = 1;
 }
 
-// Message sent from Harvester to request a new page to fetch and also used to return the harvest result.
-// First message should set requestNextPage to true to tell frontier to respond with a page to fetch.
+// Message sent from Harvester to return the harvest result.
 // When the fetch is done, a stream of PageHarvest objects are returned:
 // The first object contains metrics.
 // Subsequent objects contain outlinks until all outlinks are sent.
@@ -63,8 +67,6 @@ message PageHarvest {
     }
 
     oneof msg {
-        // True if this is the initial request to start a new fetch
-        bool requestNextPage = 1;
         // Collected metrics for the page fetched
         Metrics metrics = 2;
         // The outlinks found in the harvested page
@@ -73,6 +75,7 @@ message PageHarvest {
         veidemann.api.commons.v1.Error error = 4;
     }
 
+    // Session token from the PageHarvestSpec.
     string session_token = 5;
 }
 
@@ -82,7 +85,8 @@ message PageHarvestSpec {
     veidemann.api.frontier.v1.QueuedUri queued_uri = 1;
     // The configuration for the fetch
     veidemann.api.config.v1.ConfigObject crawl_config = 2;
-    // Session token for this request. The Harvester is responsible for setting the same session token in all responses.
+    // Session token for this request.
+    // The Harvester is responsible for setting the same session token in all responses to this request.
     string session_token = 3;
 }
 
