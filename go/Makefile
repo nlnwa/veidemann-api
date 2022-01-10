@@ -1,4 +1,4 @@
-PROTOC_VERSION=3.13.0
+PROTOC_VERSION=3.19.2
 DIRS=commons config contentwriter dnsresolver frontier robotsevaluator browsercontroller eventhandler ooshandler controller report scopechecker uricanonicalizer log
 
 .PHONY: all
