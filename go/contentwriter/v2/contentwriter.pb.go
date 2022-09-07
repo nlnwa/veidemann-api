@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.28.1
 // 	protoc        v3.19.2
-// source: contentwriter/v1/contentwriter.proto
+// source: contentwriter/v2/contentwriter.proto
 
 package contentwriter
 
@@ -34,7 +34,7 @@ type Data struct {
 func (x *Data) Reset() {
 	*x = Data{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[0]
+		mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -47,7 +47,7 @@ func (x *Data) String() string {
 func (*Data) ProtoMessage() {}
 
 func (x *Data) ProtoReflect() protoreflect.Message {
-	mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[0]
+	mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -60,7 +60,7 @@ func (x *Data) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Data.ProtoReflect.Descriptor instead.
 func (*Data) Descriptor() ([]byte, []int) {
-	return file_contentwriter_v1_contentwriter_proto_rawDescGZIP(), []int{0}
+	return file_contentwriter_v2_contentwriter_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Data) GetRecordNum() int32 {
@@ -93,7 +93,7 @@ type WriteRequestMeta struct {
 func (x *WriteRequestMeta) Reset() {
 	*x = WriteRequestMeta{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[1]
+		mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -106,7 +106,7 @@ func (x *WriteRequestMeta) String() string {
 func (*WriteRequestMeta) ProtoMessage() {}
 
 func (x *WriteRequestMeta) ProtoReflect() protoreflect.Message {
-	mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[1]
+	mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -119,7 +119,7 @@ func (x *WriteRequestMeta) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WriteRequestMeta.ProtoReflect.Descriptor instead.
 func (*WriteRequestMeta) Descriptor() ([]byte, []int) {
-	return file_contentwriter_v1_contentwriter_proto_rawDescGZIP(), []int{1}
+	return file_contentwriter_v2_contentwriter_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *WriteRequestMeta) GetExecutionId() string {
@@ -180,7 +180,7 @@ type WriteRequest struct {
 func (x *WriteRequest) Reset() {
 	*x = WriteRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[2]
+		mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -193,7 +193,7 @@ func (x *WriteRequest) String() string {
 func (*WriteRequest) ProtoMessage() {}
 
 func (x *WriteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[2]
+	mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -206,7 +206,7 @@ func (x *WriteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WriteRequest.ProtoReflect.Descriptor instead.
 func (*WriteRequest) Descriptor() ([]byte, []int) {
-	return file_contentwriter_v1_contentwriter_proto_rawDescGZIP(), []int{2}
+	return file_contentwriter_v2_contentwriter_proto_rawDescGZIP(), []int{2}
 }
 
 func (m *WriteRequest) GetValue() isWriteRequest_Value {
@@ -283,7 +283,7 @@ type WriteResponseMeta struct {
 func (x *WriteResponseMeta) Reset() {
 	*x = WriteResponseMeta{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[3]
+		mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -296,7 +296,7 @@ func (x *WriteResponseMeta) String() string {
 func (*WriteResponseMeta) ProtoMessage() {}
 
 func (x *WriteResponseMeta) ProtoReflect() protoreflect.Message {
-	mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[3]
+	mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -309,7 +309,7 @@ func (x *WriteResponseMeta) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WriteResponseMeta.ProtoReflect.Descriptor instead.
 func (*WriteResponseMeta) Descriptor() ([]byte, []int) {
-	return file_contentwriter_v1_contentwriter_proto_rawDescGZIP(), []int{3}
+	return file_contentwriter_v2_contentwriter_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *WriteResponseMeta) GetRecordMeta() map[int32]*WriteResponseMeta_RecordMeta {
@@ -330,7 +330,7 @@ type WriteReply struct {
 func (x *WriteReply) Reset() {
 	*x = WriteReply{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[4]
+		mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -343,7 +343,7 @@ func (x *WriteReply) String() string {
 func (*WriteReply) ProtoMessage() {}
 
 func (x *WriteReply) ProtoReflect() protoreflect.Message {
-	mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[4]
+	mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -356,7 +356,7 @@ func (x *WriteReply) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WriteReply.ProtoReflect.Descriptor instead.
 func (*WriteReply) Descriptor() ([]byte, []int) {
-	return file_contentwriter_v1_contentwriter_proto_rawDescGZIP(), []int{4}
+	return file_contentwriter_v2_contentwriter_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *WriteReply) GetMeta() *WriteResponseMeta {
@@ -384,7 +384,7 @@ type WriteRequestMeta_RecordMeta struct {
 func (x *WriteRequestMeta_RecordMeta) Reset() {
 	*x = WriteRequestMeta_RecordMeta{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[5]
+		mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -397,7 +397,7 @@ func (x *WriteRequestMeta_RecordMeta) String() string {
 func (*WriteRequestMeta_RecordMeta) ProtoMessage() {}
 
 func (x *WriteRequestMeta_RecordMeta) ProtoReflect() protoreflect.Message {
-	mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[5]
+	mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -410,7 +410,7 @@ func (x *WriteRequestMeta_RecordMeta) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WriteRequestMeta_RecordMeta.ProtoReflect.Descriptor instead.
 func (*WriteRequestMeta_RecordMeta) Descriptor() ([]byte, []int) {
-	return file_contentwriter_v1_contentwriter_proto_rawDescGZIP(), []int{1, 0}
+	return file_contentwriter_v2_contentwriter_proto_rawDescGZIP(), []int{1, 0}
 }
 
 func (x *WriteRequestMeta_RecordMeta) GetRecordNum() int32 {
@@ -488,7 +488,7 @@ type WriteResponseMeta_RecordMeta struct {
 func (x *WriteResponseMeta_RecordMeta) Reset() {
 	*x = WriteResponseMeta_RecordMeta{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[7]
+		mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -501,7 +501,7 @@ func (x *WriteResponseMeta_RecordMeta) String() string {
 func (*WriteResponseMeta_RecordMeta) ProtoMessage() {}
 
 func (x *WriteResponseMeta_RecordMeta) ProtoReflect() protoreflect.Message {
-	mi := &file_contentwriter_v1_contentwriter_proto_msgTypes[7]
+	mi := &file_contentwriter_v2_contentwriter_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -514,7 +514,7 @@ func (x *WriteResponseMeta_RecordMeta) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WriteResponseMeta_RecordMeta.ProtoReflect.Descriptor instead.
 func (*WriteResponseMeta_RecordMeta) Descriptor() ([]byte, []int) {
-	return file_contentwriter_v1_contentwriter_proto_rawDescGZIP(), []int{3, 0}
+	return file_contentwriter_v2_contentwriter_proto_rawDescGZIP(), []int{3, 0}
 }
 
 func (x *WriteResponseMeta_RecordMeta) GetRecordNum() int32 {
@@ -573,11 +573,11 @@ func (x *WriteResponseMeta_RecordMeta) GetCollectionFinalName() string {
 	return ""
 }
 
-var File_contentwriter_v1_contentwriter_proto protoreflect.FileDescriptor
+var File_contentwriter_v2_contentwriter_proto protoreflect.FileDescriptor
 
-var file_contentwriter_v1_contentwriter_proto_rawDesc = []byte{
+var file_contentwriter_v2_contentwriter_proto_rawDesc = []byte{
 	0x0a, 0x24, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x77, 0x72, 0x69, 0x74, 0x65, 0x72, 0x2f,
-	0x76, 0x31, 0x2f, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x77, 0x72, 0x69, 0x74, 0x65, 0x72,
+	0x76, 0x32, 0x2f, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x77, 0x72, 0x69, 0x74, 0x65, 0x72,
 	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x1e, 0x76, 0x65, 0x69, 0x64, 0x65, 0x6d, 0x61, 0x6e,
 	0x6e, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x77, 0x72, 0x69,
 	0x74, 0x65, 0x72, 0x2e, 0x76, 0x31, 0x1a, 0x19, 0x63, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x2f, 0x76,
@@ -724,19 +724,19 @@ var file_contentwriter_v1_contentwriter_proto_rawDesc = []byte{
 }
 
 var (
-	file_contentwriter_v1_contentwriter_proto_rawDescOnce sync.Once
-	file_contentwriter_v1_contentwriter_proto_rawDescData = file_contentwriter_v1_contentwriter_proto_rawDesc
+	file_contentwriter_v2_contentwriter_proto_rawDescOnce sync.Once
+	file_contentwriter_v2_contentwriter_proto_rawDescData = file_contentwriter_v2_contentwriter_proto_rawDesc
 )
 
-func file_contentwriter_v1_contentwriter_proto_rawDescGZIP() []byte {
-	file_contentwriter_v1_contentwriter_proto_rawDescOnce.Do(func() {
-		file_contentwriter_v1_contentwriter_proto_rawDescData = protoimpl.X.CompressGZIP(file_contentwriter_v1_contentwriter_proto_rawDescData)
+func file_contentwriter_v2_contentwriter_proto_rawDescGZIP() []byte {
+	file_contentwriter_v2_contentwriter_proto_rawDescOnce.Do(func() {
+		file_contentwriter_v2_contentwriter_proto_rawDescData = protoimpl.X.CompressGZIP(file_contentwriter_v2_contentwriter_proto_rawDescData)
 	})
-	return file_contentwriter_v1_contentwriter_proto_rawDescData
+	return file_contentwriter_v2_contentwriter_proto_rawDescData
 }
 
-var file_contentwriter_v1_contentwriter_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
-var file_contentwriter_v1_contentwriter_proto_goTypes = []interface{}{
+var file_contentwriter_v2_contentwriter_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_contentwriter_v2_contentwriter_proto_goTypes = []interface{}{
 	(*Data)(nil),                         // 0: veidemann.api.contentwriter.v1.Data
 	(*WriteRequestMeta)(nil),             // 1: veidemann.api.contentwriter.v1.WriteRequestMeta
 	(*WriteRequest)(nil),                 // 2: veidemann.api.contentwriter.v1.WriteRequest
@@ -751,7 +751,7 @@ var file_contentwriter_v1_contentwriter_proto_goTypes = []interface{}{
 	(RecordType)(0),                      // 11: veidemann.api.contentwriter.v1.RecordType
 	(v1.Collection_SubCollectionType)(0), // 12: veidemann.api.config.v1.Collection.SubCollectionType
 }
-var file_contentwriter_v1_contentwriter_proto_depIdxs = []int32{
+var file_contentwriter_v2_contentwriter_proto_depIdxs = []int32{
 	6,  // 0: veidemann.api.contentwriter.v1.WriteRequestMeta.record_meta:type_name -> veidemann.api.contentwriter.v1.WriteRequestMeta.RecordMetaEntry
 	9,  // 1: veidemann.api.contentwriter.v1.WriteRequestMeta.fetch_time_stamp:type_name -> google.protobuf.Timestamp
 	10, // 2: veidemann.api.contentwriter.v1.WriteRequestMeta.collection_ref:type_name -> veidemann.api.config.v1.ConfigRef
@@ -774,14 +774,14 @@ var file_contentwriter_v1_contentwriter_proto_depIdxs = []int32{
 	0,  // [0:13] is the sub-list for field type_name
 }
 
-func init() { file_contentwriter_v1_contentwriter_proto_init() }
-func file_contentwriter_v1_contentwriter_proto_init() {
-	if File_contentwriter_v1_contentwriter_proto != nil {
+func init() { file_contentwriter_v2_contentwriter_proto_init() }
+func file_contentwriter_v2_contentwriter_proto_init() {
+	if File_contentwriter_v2_contentwriter_proto != nil {
 		return
 	}
 	file_contentwriter_v1_resources_proto_init()
 	if !protoimpl.UnsafeEnabled {
-		file_contentwriter_v1_contentwriter_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_contentwriter_v2_contentwriter_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Data); i {
 			case 0:
 				return &v.state
@@ -793,7 +793,7 @@ func file_contentwriter_v1_contentwriter_proto_init() {
 				return nil
 			}
 		}
-		file_contentwriter_v1_contentwriter_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_contentwriter_v2_contentwriter_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*WriteRequestMeta); i {
 			case 0:
 				return &v.state
@@ -805,7 +805,7 @@ func file_contentwriter_v1_contentwriter_proto_init() {
 				return nil
 			}
 		}
-		file_contentwriter_v1_contentwriter_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+		file_contentwriter_v2_contentwriter_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*WriteRequest); i {
 			case 0:
 				return &v.state
@@ -817,7 +817,7 @@ func file_contentwriter_v1_contentwriter_proto_init() {
 				return nil
 			}
 		}
-		file_contentwriter_v1_contentwriter_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+		file_contentwriter_v2_contentwriter_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*WriteResponseMeta); i {
 			case 0:
 				return &v.state
@@ -829,7 +829,7 @@ func file_contentwriter_v1_contentwriter_proto_init() {
 				return nil
 			}
 		}
-		file_contentwriter_v1_contentwriter_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+		file_contentwriter_v2_contentwriter_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*WriteReply); i {
 			case 0:
 				return &v.state
@@ -841,7 +841,7 @@ func file_contentwriter_v1_contentwriter_proto_init() {
 				return nil
 			}
 		}
-		file_contentwriter_v1_contentwriter_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+		file_contentwriter_v2_contentwriter_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*WriteRequestMeta_RecordMeta); i {
 			case 0:
 				return &v.state
@@ -853,7 +853,7 @@ func file_contentwriter_v1_contentwriter_proto_init() {
 				return nil
 			}
 		}
-		file_contentwriter_v1_contentwriter_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+		file_contentwriter_v2_contentwriter_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*WriteResponseMeta_RecordMeta); i {
 			case 0:
 				return &v.state
@@ -866,7 +866,7 @@ func file_contentwriter_v1_contentwriter_proto_init() {
 			}
 		}
 	}
-	file_contentwriter_v1_contentwriter_proto_msgTypes[2].OneofWrappers = []interface{}{
+	file_contentwriter_v2_contentwriter_proto_msgTypes[2].OneofWrappers = []interface{}{
 		(*WriteRequest_Meta)(nil),
 		(*WriteRequest_ProtocolHeader)(nil),
 		(*WriteRequest_Payload)(nil),
@@ -876,18 +876,18 @@ func file_contentwriter_v1_contentwriter_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_contentwriter_v1_contentwriter_proto_rawDesc,
+			RawDescriptor: file_contentwriter_v2_contentwriter_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_contentwriter_v1_contentwriter_proto_goTypes,
-		DependencyIndexes: file_contentwriter_v1_contentwriter_proto_depIdxs,
-		MessageInfos:      file_contentwriter_v1_contentwriter_proto_msgTypes,
+		GoTypes:           file_contentwriter_v2_contentwriter_proto_goTypes,
+		DependencyIndexes: file_contentwriter_v2_contentwriter_proto_depIdxs,
+		MessageInfos:      file_contentwriter_v2_contentwriter_proto_msgTypes,
 	}.Build()
-	File_contentwriter_v1_contentwriter_proto = out.File
-	file_contentwriter_v1_contentwriter_proto_rawDesc = nil
-	file_contentwriter_v1_contentwriter_proto_goTypes = nil
-	file_contentwriter_v1_contentwriter_proto_depIdxs = nil
+	File_contentwriter_v2_contentwriter_proto = out.File
+	file_contentwriter_v2_contentwriter_proto_rawDesc = nil
+	file_contentwriter_v2_contentwriter_proto_goTypes = nil
+	file_contentwriter_v2_contentwriter_proto_depIdxs = nil
 }
