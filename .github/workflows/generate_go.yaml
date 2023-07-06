@@ -1,4 +1,4 @@
-name: generate-go-source
+name: Test generating sources
 
 on: [push]
 
@@ -14,11 +14,8 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
 
-      - name: Generate sources
+      - name: Test generate sources
         run: |
           PATH=/home/runner/go/bin:${PATH}
           make clean all
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Generate Golang source
