@@ -19,3 +19,13 @@ updates:
       commit-message:
           prefix: "build"
           include: "scope"
+
+    - package-ecosystem: "maven"
+      directory: "/"
+      schedule:
+          interval: "weekly"
+      labels:
+          - "dependencies"
+      commit-message:
+          prefix: "build"
+          include: "scope"
