@@ -1,5 +1,5 @@
 PROTOC_VERSION=23.3
-DIRS=commons config contentwriter dnsresolver frontier robotsevaluator browsercontroller eventhandler ooshandler controller report scopechecker uricanonicalizer log
+DIRS=$(shell ls ../protobuf)
 
 .PHONY: all
 .PHONY: clean
@@ -27,3 +27,4 @@ $(DIRS): tools
 	find ../protobuf -name *.proto -exec 'tools/bin/protoc' '-I../protobuf' '-Itools/include' '--go_out=.' '--go_opt=paths=source_relative' '--go-grpc_out=.' '--go-grpc_opt=paths=source_relative' '{}' ';'
 
 build: $(DIRS)
+	go mod tidy
