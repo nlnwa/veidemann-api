@@ -1,11 +1,15 @@
-name: Test generating sources
+name: Generate Go stubs
 
-on: [push]
+on:
+  release:
+    types: [published]
 
 jobs:
   build:
+    if: startsWith(github.event.release.tag_name, 'go/v') == false
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -14,8 +18,14 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v4
 
-      - name: Test generate sources
+      - name: Generate sources
         run: |
           PATH=/home/runner/go/bin:${PATH}
           make clean all
 
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        name: Commit changes and create tag
+        with:
+          commit_message: Generate Golang source
+          branch: master
+          tagging_message: ${{ format('go/{0}', github.event.release.tag_name) }}
