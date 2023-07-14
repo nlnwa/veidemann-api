@@ -8,7 +8,7 @@ with the following rights:
 
 | Service         | Access         |
 |-----------------|----------------|
-| Actions	       | Read-only      |
+| Actions         | Read-only      |
 | Commit statuses | Read and write |
 | Contents        | Read and write |
 | Metadata        | Read-only      |
