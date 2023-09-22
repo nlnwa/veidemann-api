@@ -26,7 +26,7 @@ go get github.com/nlnwa/veidemann-api/go
     <dependency>
         <groupId>com.github.nlnwa</groupId>
         <artifactId>veidemann-api</artifactId>
-        <version>v1.0.0-rc.1</version>
+        <version>v1.0.1</version>
     </dependency>
 </dependencies>
 ```
