@@ -24,7 +24,7 @@ jobs:
           PATH=/home/runner/go/bin:${PATH}
           make clean all
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v5
         name: Commit changes and create tag
         with:
           commit_message: Generate Golang source
