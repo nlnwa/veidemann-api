@@ -4,5 +4,5 @@ go 1.14
 
 require (
 	google.golang.org/grpc v1.61.1
-	google.golang.org/protobuf v1.31.0
+	google.golang.org/protobuf v1.32.0
 )
